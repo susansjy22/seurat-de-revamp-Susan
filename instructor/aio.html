@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<title>Lesson Title: All in One View</title>
+<title>Differential Expression with Seurat: All in One View</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script src="../assets/themetoggle.js"></script><link rel="stylesheet" type="text/css" href="../assets/styles.css">
 <script src="../assets/scripts.js" type="text/javascript"></script><!-- mathjax --><script type="text/x-mathjax-config">
@@ -20,21 +20,21 @@
         processEscapes: true
       }
     });
-    </script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><!-- Responsive Favicon for The Carpentries --><link rel="apple-touch-icon" sizes="180x180" href="../favicons/incubator/apple-touch-icon.png">
-<link rel="icon" type="image/png" sizes="32x32" href="../favicons/incubator/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="../favicons/incubator/favicon-16x16.png">
-<link rel="manifest" href="../favicons/incubator/site.webmanifest">
-<link rel="mask-icon" href="../favicons/incubator/safari-pinned-tab.svg" color="#5bbad5">
+    </script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><!-- Responsive Favicon for The Carpentries --><link rel="apple-touch-icon" sizes="180x180" href="../favicons/mb/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="../favicons/mb/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="../favicons/mb/favicon-16x16.png">
+<link rel="manifest" href="../favicons/mb/site.webmanifest">
+<link rel="mask-icon" href="../favicons/mb/safari-pinned-tab.svg" color="#5bbad5">
 <meta name="msapplication-TileColor" content="#da532c">
 <meta name="theme-color" media="(prefers-color-scheme: light)" content="white">
 <meta name="theme-color" media="(prefers-color-scheme: dark)" content="black">
 </head>
 <body>
-    <header id="top" class="navbar navbar-expand-md top-nav incubator"><svg xmlns="http://www.w3.org/2000/svg" class="d-none"><symbol id="check2" viewbox="0 0 16 16"><path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"></path></symbol><symbol id="circle-half" viewbox="0 0 16 16"><path d="M8 15A7 7 0 1 0 8 1v14zm0 1A8 8 0 1 1 8 0a8 8 0 0 1 0 16z"></path></symbol><symbol id="moon-stars-fill" viewbox="0 0 16 16"><path d="M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278z"></path><path d="M10.794 3.148a.217.217 0 0 1 .412 0l.387 1.162c.173.518.579.924 1.097 1.097l1.162.387a.217.217 0 0 1 0 .412l-1.162.387a1.734 1.734 0 0 0-1.097 1.097l-.387 1.162a.217.217 0 0 1-.412 0l-.387-1.162A1.734 1.734 0 0 0 9.31 6.593l-1.162-.387a.217.217 0 0 1 0-.412l1.162-.387a1.734 1.734 0 0 0 1.097-1.097l.387-1.162zM13.863.099a.145.145 0 0 1 .274 0l.258.774c.115.346.386.617.732.732l.774.258a.145.145 0 0 1 0 .274l-.774.258a1.156 1.156 0 0 0-.732.732l-.258.774a.145.145 0 0 1-.274 0l-.258-.774a1.156 1.156 0 0 0-.732-.732l-.774-.258a.145.145 0 0 1 0-.274l.774-.258c.346-.115.617-.386.732-.732L13.863.1z"></path></symbol><symbol id="sun-fill" viewbox="0 0 16 16"><path d="M8 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0zm0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13zm8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5zM3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8zm10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0zm-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707zM4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708z"></path></symbol></svg><a class="visually-hidden-focusable skip-link" href="#main-content">Skip to main content</a>
+    <header id="top" class="navbar navbar-expand-md top-nav mb"><svg xmlns="http://www.w3.org/2000/svg" class="d-none"><symbol id="check2" viewbox="0 0 16 16"><path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"></path></symbol><symbol id="circle-half" viewbox="0 0 16 16"><path d="M8 15A7 7 0 1 0 8 1v14zm0 1A8 8 0 1 1 8 0a8 8 0 0 1 0 16z"></path></symbol><symbol id="moon-stars-fill" viewbox="0 0 16 16"><path d="M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278z"></path><path d="M10.794 3.148a.217.217 0 0 1 .412 0l.387 1.162c.173.518.579.924 1.097 1.097l1.162.387a.217.217 0 0 1 0 .412l-1.162.387a1.734 1.734 0 0 0-1.097 1.097l-.387 1.162a.217.217 0 0 1-.412 0l-.387-1.162A1.734 1.734 0 0 0 9.31 6.593l-1.162-.387a.217.217 0 0 1 0-.412l1.162-.387a1.734 1.734 0 0 0 1.097-1.097l.387-1.162zM13.863.099a.145.145 0 0 1 .274 0l.258.774c.115.346.386.617.732.732l.774.258a.145.145 0 0 1 0 .274l-.774.258a1.156 1.156 0 0 0-.732.732l-.258.774a.145.145 0 0 1-.274 0l-.258-.774a1.156 1.156 0 0 0-.732-.732l-.774-.258a.145.145 0 0 1 0-.274l.774-.258c.346-.115.617-.386.732-.732L13.863.1z"></path></symbol><symbol id="sun-fill" viewbox="0 0 16 16"><path d="M8 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0zm0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13zm8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5zM3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8zm10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0zm-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707zM4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708z"></path></symbol></svg><a class="visually-hidden-focusable skip-link" href="#main-content">Skip to main content</a>
   <div class="container-fluid top-nav-container">
     <div class="col-md-8">
       <div class="large-logo">
-        <img id="incubator-logo" alt="Carpentries Incubator" src="../assets/images/incubator-logo.svg"><span class="badge text-bg-danger">
+        <img id="mb-logo" alt="Seurat DE" src="../assets/images/mb-logo.svg"><span class="badge text-bg-danger">
           <abbr title="This lesson is in the pre-alpha phase, which means that it is in early development, but has not yet been taught.">
             <a href="https://docs.carpentries.org/resources/curriculum/lesson-life-cycle.html" class="external-link alert-link">
               <i aria-hidden="true" class="icon" data-feather="alert-octagon" style="border-radius: 5px"></i>
@@ -75,6 +75,7 @@
 </li>
       </div>
 
+
       <div class="dropdown" id="instructor-dropdown">
         <button class="btn btn-secondary dropdown-toggle bordered-button" type="button" id="dropdownMenu1" data-bs-toggle="dropdown" aria-expanded="false">
           <i aria-hidden="true" class="icon" data-feather="eye"></i> Instructor View <i data-feather="chevron-down"></i>
@@ -85,16 +86,16 @@
 </div>
     </div>
   </div>
-  <hr></header><nav class="navbar navbar-expand-xl bottom-nav incubator" aria-label="Main Navigation"><div class="container-fluid nav-container">
+  <hr></header><nav class="navbar navbar-expand-xl bottom-nav mb" aria-label="Main Navigation"><div class="container-fluid nav-container">
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle Navigation">
       <span class="navbar-toggler-icon"></span>
       <span class="menu-title">Menu</span>
     </button>
     <div class="nav-logo">
-      <img class="small-logo" alt="Carpentries Incubator" src="../assets/images/incubator-logo-sm.svg">
+      <img class="small-logo" alt="Seurat DE" src="../assets/images/mb-logo-sm.svg">
 </div>
     <div class="lesson-title-md">
-      Lesson Title
+      Differential Expression with Seurat
     </div>
     <div class="search-icon-sm">
       <!-- TODO: do not show until we have search
@@ -105,7 +106,7 @@
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
 <li class="nav-item">
           <span class="lesson-title">
-            Lesson Title
+            Differential Expression with Seurat
           </span>
         </li>
         <li class="nav-item">
@@ -142,14 +143,14 @@
   </div>
 <!--/div.container-fluid -->
 </nav><div class="col-md-12 mobile-title">
-  Lesson Title
+  Differential Expression with Seurat
 </div>
 
 <aside class="col-md-12 lesson-progress"><div style="width: %" class="percentage">
     %
   </div>
-  <div class="progress incubator">
-    <div class="progress-bar incubator" role="progressbar" style="width: %" aria-valuenow="" aria-label="Lesson Progress" aria-valuemin="0" aria-valuemax="100">
+  <div class="progress mb">
+    <div class="progress-bar mb" role="progressbar" style="width: %" aria-valuenow="" aria-label="Lesson Progress" aria-valuemin="0" aria-valuemax="100">
     </div>
   </div>
 </aside><div class="container">
@@ -348,7 +349,7 @@
 <hr>
 <p>Last updated on 2025-11-20 |
 
-        <a href="https://example.com/template-source/lesson-example/edit/main/episodes/introduction.Rmd" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
+        <a href="https://github.com/melbournebioinformatics/workbench-template-rmd/edit/main/episodes/introduction.Rmd" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 <p>Estimated time: <i aria-hidden="true" data-feather="clock"></i> 12 minutes</p>
 <div class="text-end">
           <button role="button" aria-pressed="false" tabindex="0" id="expand-code" class="pull-right" data-expand="Expand All Solutions " data-collapse="Collapse All Solutions "> Expand All Solutions <i aria-hidden="true" data-feather="plus"></i></button>
@@ -445,7 +446,7 @@ any links that you are not going to use.
 <hr>
 <p>Last updated on 2025-11-20 |
 
-        <a href="https://example.com/template-source/lesson-example/edit/main/episodes/section1.Rmd" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
+        <a href="https://github.com/melbournebioinformatics/workbench-template-rmd/edit/main/episodes/section1.Rmd" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 <p>Estimated time: <i aria-hidden="true" data-feather="clock"></i> 12 minutes</p>
 <div class="text-end">
           <button role="button" aria-pressed="false" tabindex="0" id="expand-code" class="pull-right" data-expand="Expand All Solutions " data-collapse="Collapse All Solutions "> Expand All Solutions <i aria-hidden="true" data-feather="plus"></i></button>
@@ -564,7 +565,7 @@ you tell whether this seurat object is processed or unprocessed?</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
 <div class="accordion-body">
 <p>When loading in seurat objects, we can have a look at what processing
 steps have been performed on it by using the str() function. In the
@@ -600,7 +601,7 @@ thresholds for filtering.</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution2" aria-expanded="false" aria-controls="collapseSolution2">
   <h4 class="accordion-header" id="headingSolution2"> Show me the solution </h4>
 </button>
-<div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
+<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
 <div class="accordion-body">
 <p>In droplet-based protocols (e.g., 10x Genomics), millions of droplets
 are formed, but only some droplets contain exactly one real cell.
@@ -986,22 +987,22 @@ This message will be shown once per session</code></pre>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="output" tabindex="0"><code>13:20:17 UMAP embedding parameters a = 0.9922 b = 1.112</code></pre>
+<pre class="output" tabindex="0"><code>14:15:30 UMAP embedding parameters a = 0.9922 b = 1.112</code></pre>
 </div>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="output" tabindex="0"><code>13:20:17 Read 13548 rows and found 20 numeric columns</code></pre>
+<pre class="output" tabindex="0"><code>14:15:30 Read 13548 rows and found 20 numeric columns</code></pre>
 </div>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="output" tabindex="0"><code>13:20:17 Using Annoy for neighbor search, n_neighbors = 30</code></pre>
+<pre class="output" tabindex="0"><code>14:15:30 Using Annoy for neighbor search, n_neighbors = 30</code></pre>
 </div>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="output" tabindex="0"><code>13:20:17 Building Annoy index with metric = cosine, n_trees = 50</code></pre>
+<pre class="output" tabindex="0"><code>14:15:30 Building Annoy index with metric = cosine, n_trees = 50</code></pre>
 </div>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -1017,14 +1018,14 @@ This message will be shown once per session</code></pre>
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="output" tabindex="0"><code>**************************************************|
-13:20:18 Writing NN index file to temp file /tmp/RtmpjNohFO/file162c458dec7
-13:20:18 Searching Annoy index using 1 thread, search_k = 3000
-13:20:23 Annoy recall = 100%
-13:20:24 Commencing smooth kNN distance calibration using 1 thread with target n_neighbors = 30
-13:20:26 Initializing from normalized Laplacian + noise (using RSpectra)
-13:20:26 Commencing optimization for 200 epochs, with 582700 positive edges
-13:20:26 Using rng type: pcg
-13:20:32 Optimization finished</code></pre>
+14:15:32 Writing NN index file to temp file /tmp/RtmpawJcuM/file168268c9da2
+14:15:32 Searching Annoy index using 1 thread, search_k = 3000
+14:15:36 Annoy recall = 100%
+14:15:37 Commencing smooth kNN distance calibration using 1 thread with target n_neighbors = 30
+14:15:39 Initializing from normalized Laplacian + noise (using RSpectra)
+14:15:40 Commencing optimization for 200 epochs, with 582700 positive edges
+14:15:40 Using rng type: pcg
+14:15:45 Optimization finished</code></pre>
 </div>
 <div class="codewrapper sourceCode" id="cb51">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -1056,7 +1057,7 @@ pre-Harmony/CCA)</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution3" aria-expanded="false" aria-controls="collapseSolution3">
   <h4 class="accordion-header" id="headingSolution3"> Show me the solution </h4>
 </button>
-<div id="collapseSolution3" class="accordion-collapse collapse" aria-labelledby="headingSolution3" data-bs-parent="#accordionSolution3">
+<div id="collapseSolution3" class="accordion-collapse collapse" data-bs-parent="#accordionSolution3" aria-labelledby="headingSolution3">
 <div class="accordion-body">
 <div class="codewrapper sourceCode" id="cb53">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -1257,21 +1258,21 @@ This message is displayed once per session.</code></pre>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="output" tabindex="0"><code>13:20:48 UMAP embedding parameters a = 0.9922 b = 1.112
-13:20:48 Read 13548 rows and found 20 numeric columns
-13:20:48 Using Annoy for neighbor search, n_neighbors = 30
-13:20:48 Building Annoy index with metric = cosine, n_trees = 50
+<pre class="output" tabindex="0"><code>14:16:02 UMAP embedding parameters a = 0.9922 b = 1.112
+14:16:02 Read 13548 rows and found 20 numeric columns
+14:16:02 Using Annoy for neighbor search, n_neighbors = 30
+14:16:02 Building Annoy index with metric = cosine, n_trees = 50
 0%   10   20   30   40   50   60   70   80   90   100%
 [----|----|----|----|----|----|----|----|----|----|
 **************************************************|
-13:20:50 Writing NN index file to temp file /tmp/RtmpjNohFO/file162c6773923f
-13:20:50 Searching Annoy index using 1 thread, search_k = 3000
-13:20:54 Annoy recall = 100%
-13:20:55 Commencing smooth kNN distance calibration using 1 thread with target n_neighbors = 30
-13:20:57 Initializing from normalized Laplacian + noise (using RSpectra)
-13:20:58 Commencing optimization for 200 epochs, with 586822 positive edges
-13:20:58 Using rng type: pcg
-13:21:03 Optimization finished</code></pre>
+14:16:03 Writing NN index file to temp file /tmp/RtmpawJcuM/file16821266e9d8
+14:16:03 Searching Annoy index using 1 thread, search_k = 3000
+14:16:08 Annoy recall = 100%
+14:16:09 Commencing smooth kNN distance calibration using 1 thread with target n_neighbors = 30
+14:16:11 Initializing from normalized Laplacian + noise (using RSpectra)
+14:16:12 Commencing optimization for 200 epochs, with 586822 positive edges
+14:16:12 Using rng type: pcg
+14:16:18 Optimization finished</code></pre>
 </div>
 <div class="codewrapper sourceCode" id="cb73">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -1375,22 +1376,22 @@ looking at the PC1 and PC2 plots for harmony and seurat as well</p>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="output" tabindex="0"><code>13:23:54 UMAP embedding parameters a = 0.9922 b = 1.112</code></pre>
+<pre class="output" tabindex="0"><code>14:19:09 UMAP embedding parameters a = 0.9922 b = 1.112</code></pre>
 </div>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="output" tabindex="0"><code>13:23:54 Read 13548 rows and found 20 numeric columns</code></pre>
+<pre class="output" tabindex="0"><code>14:19:09 Read 13548 rows and found 20 numeric columns</code></pre>
 </div>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="output" tabindex="0"><code>13:23:54 Using Annoy for neighbor search, n_neighbors = 30</code></pre>
+<pre class="output" tabindex="0"><code>14:19:09 Using Annoy for neighbor search, n_neighbors = 30</code></pre>
 </div>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="output" tabindex="0"><code>13:23:54 Building Annoy index with metric = cosine, n_trees = 50</code></pre>
+<pre class="output" tabindex="0"><code>14:19:09 Building Annoy index with metric = cosine, n_trees = 50</code></pre>
 </div>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -1406,14 +1407,14 @@ looking at the PC1 and PC2 plots for harmony and seurat as well</p>
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="output" tabindex="0"><code>**************************************************|
-13:23:56 Writing NN index file to temp file /tmp/RtmpjNohFO/file162c2e67ba62
-13:23:56 Searching Annoy index using 1 thread, search_k = 3000
-13:24:00 Annoy recall = 100%
-13:24:01 Commencing smooth kNN distance calibration using 1 thread with target n_neighbors = 30
-13:24:03 Initializing from normalized Laplacian + noise (using RSpectra)
-13:24:04 Commencing optimization for 200 epochs, with 595526 positive edges
-13:24:04 Using rng type: pcg
-13:24:09 Optimization finished</code></pre>
+14:19:11 Writing NN index file to temp file /tmp/RtmpawJcuM/file16824b542f20
+14:19:11 Searching Annoy index using 1 thread, search_k = 3000
+14:19:15 Annoy recall = 100%
+14:19:17 Commencing smooth kNN distance calibration using 1 thread with target n_neighbors = 30
+14:19:19 Initializing from normalized Laplacian + noise (using RSpectra)
+14:19:19 Commencing optimization for 200 epochs, with 595526 positive edges
+14:19:19 Using rng type: pcg
+14:19:25 Optimization finished</code></pre>
 </div>
 <div class="codewrapper sourceCode" id="cb94">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -1532,7 +1533,7 @@ mathematical strategies.</li>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution4" aria-expanded="false" aria-controls="collapseSolution4">
   <h4 class="accordion-header" id="headingSolution4"> Show me the solution </h4>
 </button>
-<div id="collapseSolution4" class="accordion-collapse collapse" aria-labelledby="headingSolution4" data-bs-parent="#accordionSolution4">
+<div id="collapseSolution4" class="accordion-collapse collapse" data-bs-parent="#accordionSolution4" aria-labelledby="headingSolution4">
 <div class="accordion-body">
 <div class="codewrapper sourceCode" id="cb103">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -1579,7 +1580,7 @@ clustering)</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution5" aria-expanded="false" aria-controls="collapseSolution5">
   <h4 class="accordion-header" id="headingSolution5"> Show me the solution </h4>
 </button>
-<div id="collapseSolution5" class="accordion-collapse collapse" aria-labelledby="headingSolution5" data-bs-parent="#accordionSolution5">
+<div id="collapseSolution5" class="accordion-collapse collapse" data-bs-parent="#accordionSolution5" aria-labelledby="headingSolution5">
 <div class="accordion-body">
 <div class="codewrapper sourceCode" id="cb105">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -1618,7 +1619,7 @@ any links that you are not going to use.
 <hr>
 <p>Last updated on 2025-11-20 |
 
-        <a href="https://example.com/template-source/lesson-example/edit/main/episodes/section2.Rmd" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
+        <a href="https://github.com/melbournebioinformatics/workbench-template-rmd/edit/main/episodes/section2.Rmd" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 <p>Estimated time: <i aria-hidden="true" data-feather="clock"></i> 12 minutes</p>
 <div class="text-end">
           <button role="button" aria-pressed="false" tabindex="0" id="expand-code" class="pull-right" data-expand="Expand All Solutions " data-collapse="Collapse All Solutions "> Expand All Solutions <i aria-hidden="true" data-feather="plus"></i></button>
@@ -1971,7 +1972,7 @@ any links that you are not going to use.
 <hr>
 <p>Last updated on 2025-11-20 |
 
-        <a href="https://example.com/template-source/lesson-example/edit/main/episodes/section3.Rmd" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
+        <a href="https://github.com/melbournebioinformatics/workbench-template-rmd/edit/main/episodes/section3.Rmd" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 <p>Estimated time: <i aria-hidden="true" data-feather="clock"></i> 12 minutes</p>
 <div class="text-end">
           <button role="button" aria-pressed="false" tabindex="0" id="expand-code" class="pull-right" data-expand="Expand All Solutions " data-collapse="Collapse All Solutions "> Expand All Solutions <i aria-hidden="true" data-feather="plus"></i></button>
@@ -2584,7 +2585,7 @@ see any differences?</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
 <div class="accordion-body">
 <p>Run the same code as above but with the
 <code>treatment.response.CD16</code> variable instead of
@@ -2643,20 +2644,22 @@ any links that you are not going to use.
         <p>This lesson is subject to the <a href="CODE_OF_CONDUCT.html">Code of Conduct</a></p>
         <p>
 
-        <a href="https://example.com/template-source/lesson-example/edit/main/README.md" class="external-link">Edit on GitHub</a>
+        <a href="https://github.com/melbournebioinformatics/workbench-template-rmd/edit/main/README.md" class="external-link">Edit on GitHub</a>
 
 	
-        | <a href="https://example.com/template-source/lesson-example/blob/main/CONTRIBUTING.md" class="external-link">Contributing</a>
-        | <a href="https://example.com/template-source/lesson-example/" class="external-link">Source</a></p>
-				<p><a href="https://example.com/template-source/lesson-example/blob/main/CITATION.cff" class="external-link">Cite</a> | <a href="mailto:team@carpentries.org">Contact</a> | <a href="https://carpentries.org/about/" class="external-link">About</a></p>
-			</div>
-			<div class="col-md-6">
+        | <a href="https://github.com/melbournebioinformatics/workbench-template-rmd/blob/main/CONTRIBUTING.md" class="external-link">Contributing</a>
+        | <a href="https://github.com/melbournebioinformatics/workbench-template-rmd/" class="external-link">Source</a></p>
+        <p>
+        <a href="../citation.html">Cite</a>
+        | <a href="mailto:fixme@fixme.org">Contact</a> | <a href="https://carpentries.org/about/" class="external-link">About</a></p>
+		</div>
+		<div class="col-md-6">
 
-        <p>Materials licensed under <a href="LICENSE.html">CC-BY 4.0</a> by the authors</p>
+        <p>Materials licensed under <a href="LICENSE.html">CC-BY 4.0</a> by the authors.</p>
 
         <p>Template licensed under <a href="https://creativecommons.org/licenses/by-sa/4.0/" class="external-link">CC-BY 4.0</a> by <a href="https://carpentries.org/" class="external-link">The Carpentries</a></p>
-        <p>Built with <a href="https://github.com/carpentries/sandpaper/tree/0.17.1" class="external-link">sandpaper (0.17.1)</a>, <a href="https://github.com/carpentries/pegboard/tree/0.7.9" class="external-link">pegboard (0.7.9)</a>, and <a href="https://github.com/carpentries/varnish/tree/1.0.7" class="external-link">varnish (1.0.7)</a></p>
-			</div>
+        <p>Built with <a href="https://github.com/carpentries/sandpaper/tree/0.17.1" class="external-link">sandpaper (0.17.1)</a>, <a href="https://github.com/carpentries/pegboard/tree/0.7.9" class="external-link">pegboard (0.7.9)</a>, and <a href="https://github.com/melbournebioinformatics/uom-varnish/tree/main" class="external-link">varnish (1.0.7)</a></p>
+		</div>
 		</footer>
 </div> <!-- / div.container -->
 	<div id="to-top">
@@ -2668,16 +2671,16 @@ any links that you are not going to use.
     {
   "@context": "https://schema.org",
   "@type": "LearningResource",
-  "@id": "https://template-source.github.io/lesson-example/instructor/aio.html",
+  "@id": "melbournebioinformatics.github.io/uom-varnish/instructor/aio.html",
   "inLanguage": "en",
   "dct:conformsTo": "https://bioschemas.org/profiles/LearningResource/1.0-RELEASE",
   "description": "A Carpentries Lesson teaching foundational data and coding skills to researchers worldwide",
-  "keywords": "software, data, lesson, The Carpentries",
+  "keywords": "software, data, lesson",
   "name": "All in One View",
   "creativeWorkStatus": "active",
-  "url": "https://template-source.github.io/lesson-example/instructor/aio.html",
-  "identifier": "https://template-source.github.io/lesson-example/instructor/aio.html",
-  "dateCreated": "2025-09-30",
+  "url": "melbournebioinformatics.github.io/uom-varnish/instructor/aio.html",
+  "identifier": "melbournebioinformatics.github.io/uom-varnish/instructor/aio.html",
+  "dateCreated": "2025-11-01",
   "dateModified": "2025-11-20",
   "datePublished": "2025-11-20"
 }
