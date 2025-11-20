@@ -25,7 +25,7 @@ exercises: 2
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
 
-### Step 1. Load the packages and data
+## Step 1. Load the packages and data
 
 Today we'll be working with Seurat (a popular scRNA-seq analysis
 package). SeuratData will be used to load in the experimental data we're
@@ -104,7 +104,7 @@ When loading in seurat objects, we can have a look at what processing steps have
 
 :::::::::::::::::::::::::::::::::::
 
-### Step 2: Run QC, filter out low quality cells
+## Step 2: Run QC, filter out low quality cells
 
 Lets start by processing our data (run the standard seurat workflow
 steps including preprocessing and filtering).
@@ -364,7 +364,7 @@ Warning: Assay RNA changing from Assay to Assay5
 
 
 
-### Step 3: Before performing differential expression between the two conditions, let's assess whether we need to integrate our data
+## Step 3: Before performing differential expression between the two conditions, let's assess whether we need to integrate our data
 
 After filtering out low quality cells, we want to visualise our data to
 see how cells group by condition and if we need to perform batch-effect
@@ -467,19 +467,19 @@ This message will be shown once per session
 ```
 
 ``` output
-13:20:17 UMAP embedding parameters a = 0.9922 b = 1.112
+14:41:06 UMAP embedding parameters a = 0.9922 b = 1.112
 ```
 
 ``` output
-13:20:17 Read 13548 rows and found 20 numeric columns
+14:41:06 Read 13548 rows and found 20 numeric columns
 ```
 
 ``` output
-13:20:17 Using Annoy for neighbor search, n_neighbors = 30
+14:41:06 Using Annoy for neighbor search, n_neighbors = 30
 ```
 
 ``` output
-13:20:17 Building Annoy index with metric = cosine, n_trees = 50
+14:41:06 Building Annoy index with metric = cosine, n_trees = 50
 ```
 
 ``` output
@@ -492,14 +492,14 @@ This message will be shown once per session
 
 ``` output
 **************************************************|
-13:20:18 Writing NN index file to temp file /tmp/RtmpjNohFO/file162c458dec7
-13:20:18 Searching Annoy index using 1 thread, search_k = 3000
-13:20:23 Annoy recall = 100%
-13:20:24 Commencing smooth kNN distance calibration using 1 thread with target n_neighbors = 30
-13:20:26 Initializing from normalized Laplacian + noise (using RSpectra)
-13:20:26 Commencing optimization for 200 epochs, with 582700 positive edges
-13:20:26 Using rng type: pcg
-13:20:32 Optimization finished
+14:41:07 Writing NN index file to temp file /tmp/RtmpKtP6WI/file1587ab1960a
+14:41:07 Searching Annoy index using 1 thread, search_k = 3000
+14:41:12 Annoy recall = 100%
+14:41:13 Commencing smooth kNN distance calibration using 1 thread with target n_neighbors = 30
+14:41:15 Initializing from normalized Laplacian + noise (using RSpectra)
+14:41:15 Commencing optimization for 200 epochs, with 582700 positive edges
+14:41:15 Using rng type: pcg
+14:41:21 Optimization finished
 ```
 
 ``` r
@@ -660,7 +660,7 @@ from both conditions)?
 
 ::::
 
-### Step 4: Integrating our data using the harmony method
+## Step 4: Integrating our data using the harmony method
 
 Seurat v5 has made it really easy to test different integration methods
 quickly, let's use a really popular approach (harmony) first.
@@ -698,21 +698,21 @@ ifnb.filtered <- RunUMAP(ifnb.filtered, reduction = "harmony", dims = 1:20, redu
 ```
 
 ``` output
-13:20:48 UMAP embedding parameters a = 0.9922 b = 1.112
-13:20:48 Read 13548 rows and found 20 numeric columns
-13:20:48 Using Annoy for neighbor search, n_neighbors = 30
-13:20:48 Building Annoy index with metric = cosine, n_trees = 50
+14:41:40 UMAP embedding parameters a = 0.9922 b = 1.112
+14:41:40 Read 13548 rows and found 20 numeric columns
+14:41:40 Using Annoy for neighbor search, n_neighbors = 30
+14:41:40 Building Annoy index with metric = cosine, n_trees = 50
 0%   10   20   30   40   50   60   70   80   90   100%
 [----|----|----|----|----|----|----|----|----|----|
 **************************************************|
-13:20:50 Writing NN index file to temp file /tmp/RtmpjNohFO/file162c6773923f
-13:20:50 Searching Annoy index using 1 thread, search_k = 3000
-13:20:54 Annoy recall = 100%
-13:20:55 Commencing smooth kNN distance calibration using 1 thread with target n_neighbors = 30
-13:20:57 Initializing from normalized Laplacian + noise (using RSpectra)
-13:20:58 Commencing optimization for 200 epochs, with 586822 positive edges
-13:20:58 Using rng type: pcg
-13:21:03 Optimization finished
+14:41:41 Writing NN index file to temp file /tmp/RtmpKtP6WI/file15874b8216ca
+14:41:41 Searching Annoy index using 1 thread, search_k = 3000
+14:41:46 Annoy recall = 100%
+14:41:47 Commencing smooth kNN distance calibration using 1 thread with target n_neighbors = 30
+14:41:49 Initializing from normalized Laplacian + noise (using RSpectra)
+14:41:49 Commencing optimization for 200 epochs, with 586822 positive edges
+14:41:49 Using rng type: pcg
+14:41:55 Optimization finished
 ```
 
 ``` r
@@ -738,7 +738,7 @@ well
 
 
 
-### Step 5: Integrating our data using an alternative Seurat CCA
+## Step 5: Integrating our data using an alternative Seurat CCA
 method
 
 
@@ -798,19 +798,19 @@ ifnb.filtered <- RunUMAP(ifnb.filtered, reduction = "integrated.cca", dims = 1:2
 ```
 
 ``` output
-13:23:54 UMAP embedding parameters a = 0.9922 b = 1.112
+14:44:50 UMAP embedding parameters a = 0.9922 b = 1.112
 ```
 
 ``` output
-13:23:54 Read 13548 rows and found 20 numeric columns
+14:44:50 Read 13548 rows and found 20 numeric columns
 ```
 
 ``` output
-13:23:54 Using Annoy for neighbor search, n_neighbors = 30
+14:44:50 Using Annoy for neighbor search, n_neighbors = 30
 ```
 
 ``` output
-13:23:54 Building Annoy index with metric = cosine, n_trees = 50
+14:44:50 Building Annoy index with metric = cosine, n_trees = 50
 ```
 
 ``` output
@@ -823,14 +823,14 @@ ifnb.filtered <- RunUMAP(ifnb.filtered, reduction = "integrated.cca", dims = 1:2
 
 ``` output
 **************************************************|
-13:23:56 Writing NN index file to temp file /tmp/RtmpjNohFO/file162c2e67ba62
-13:23:56 Searching Annoy index using 1 thread, search_k = 3000
-13:24:00 Annoy recall = 100%
-13:24:01 Commencing smooth kNN distance calibration using 1 thread with target n_neighbors = 30
-13:24:03 Initializing from normalized Laplacian + noise (using RSpectra)
-13:24:04 Commencing optimization for 200 epochs, with 595526 positive edges
-13:24:04 Using rng type: pcg
-13:24:09 Optimization finished
+14:44:52 Writing NN index file to temp file /tmp/RtmpKtP6WI/file158712280efc
+14:44:52 Searching Annoy index using 1 thread, search_k = 3000
+14:44:57 Annoy recall = 100%
+14:44:58 Commencing smooth kNN distance calibration using 1 thread with target n_neighbors = 30
+14:45:00 Initializing from normalized Laplacian + noise (using RSpectra)
+14:45:00 Commencing optimization for 200 epochs, with 595526 positive edges
+14:45:00 Using rng type: pcg
+14:45:06 Optimization finished
 ```
 
 ``` r
@@ -867,7 +867,7 @@ What do you think of the integration results now?
 **Hint:** Also look at the PC1 and PC2 plots for each integration method.
 
 
-### Step 6: Perform standard clustering steps after integration
+## Step 6: Perform standard clustering steps after integration
 
 This step collapses individual control and treatment datasets together
 and needs to be done before differential expression analysis
