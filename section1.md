@@ -112,13 +112,20 @@ steps including preprocessing and filtering).
 First we need to take a look at QC metrics, then decide on the
 thresholds for filtering.
 
+::::::::::::::::::::::::::::::::::::: challenge 
 
-:::::::: discussion
+QC for droplet-based protocols 
 
-Looking at the violin plots of QC metrics, what do you
-think about the overall quality of the ifnb dataset?
+:::::::::::::::::::::::: solution 
 
-::::::::
+In droplet-based protocols (e.g., 10x Genomics), millions of droplets are formed, but only some droplets contain exactly one real cell. Several types of “bad droplets” appear:
+
+- Empty droplets (no real cell)
+- Doublets (two cells in one droplet)
+
+:::::::::::::::::::::::::::::::::
+
+:::::::::::::::::::::::::::::::::::
 
 
 
@@ -176,6 +183,12 @@ association.plt.raw
 
 <img src="fig/section1-rendered-unnamed-chunk-5-2.png" style="display: block; margin: auto;" />
 
+:::::::: discussion
+
+Looking at the violin plots of QC metrics, what do you
+think about the overall quality of the ifnb dataset?
+
+::::::::
 
 After visualising QC metrics, we'll move on to the actual filtering
 
@@ -327,17 +340,7 @@ An object of class Seurat
 Active assay: RNA (14053 features, 0 variable features)
  2 layers present: counts, data
 ```
-::::::::::::::::::::::::::::::::::::: challenge 
-Running `DropletUtils::barcodeRanks()` 
 
-:::::::::::::::::::::::: solution 
-
-<img src="fig/section1-rendered-unnamed-chunk-11-1.png" style="display: block; margin: auto;" />
-
-
-:::::::::::::::::::::::::::::::::
-
-:::::::::::::::::::::::::::::::::::
 
 
 Next we need to split our count matrices based on conditions. This step
@@ -448,7 +451,7 @@ Negative:  VMO1, FCGR3A, MS4A4A, CXCL16, MS4A7, PPM1N, HN1, LST1, SMPDL3A, ATP1B
 ElbowPlot(ifnb.filtered) # Visualise the dimensionality of the data, looks like 15 PCs is adequate to capture the majority of the variation in the data, but we'll air on the higher side and consider all 20 dimensions.
 ```
 
-<img src="fig/section1-rendered-unnamed-chunk-13-1.png" style="display: block; margin: auto;" />
+<img src="fig/section1-rendered-unnamed-chunk-12-1.png" style="display: block; margin: auto;" />
 
 
 
@@ -464,19 +467,19 @@ This message will be shown once per session
 ```
 
 ``` output
-00:56:54 UMAP embedding parameters a = 0.9922 b = 1.112
+13:20:17 UMAP embedding parameters a = 0.9922 b = 1.112
 ```
 
 ``` output
-00:56:54 Read 13548 rows and found 20 numeric columns
+13:20:17 Read 13548 rows and found 20 numeric columns
 ```
 
 ``` output
-00:56:54 Using Annoy for neighbor search, n_neighbors = 30
+13:20:17 Using Annoy for neighbor search, n_neighbors = 30
 ```
 
 ``` output
-00:56:54 Building Annoy index with metric = cosine, n_trees = 50
+13:20:17 Building Annoy index with metric = cosine, n_trees = 50
 ```
 
 ``` output
@@ -489,21 +492,21 @@ This message will be shown once per session
 
 ``` output
 **************************************************|
-00:56:55 Writing NN index file to temp file /tmp/RtmpxAA351/file14de3f93f732
-00:56:55 Searching Annoy index using 1 thread, search_k = 3000
-00:57:00 Annoy recall = 100%
-00:57:01 Commencing smooth kNN distance calibration using 1 thread with target n_neighbors = 30
-00:57:03 Initializing from normalized Laplacian + noise (using RSpectra)
-00:57:03 Commencing optimization for 200 epochs, with 582700 positive edges
-00:57:03 Using rng type: pcg
-00:57:09 Optimization finished
+13:20:18 Writing NN index file to temp file /tmp/RtmpjNohFO/file162c458dec7
+13:20:18 Searching Annoy index using 1 thread, search_k = 3000
+13:20:23 Annoy recall = 100%
+13:20:24 Commencing smooth kNN distance calibration using 1 thread with target n_neighbors = 30
+13:20:26 Initializing from normalized Laplacian + noise (using RSpectra)
+13:20:26 Commencing optimization for 200 epochs, with 582700 positive edges
+13:20:26 Using rng type: pcg
+13:20:32 Optimization finished
 ```
 
 ``` r
 DimPlot(ifnb.filtered, reduction = 'umap', group.by = 'stim') # lets see how our cells separate by condition and whether integration is necessary
 ```
 
-<img src="fig/section1-rendered-unnamed-chunk-14-1.png" style="display: block; margin: auto;" />
+<img src="fig/section1-rendered-unnamed-chunk-13-1.png" style="display: block; margin: auto;" />
 
 
 
@@ -512,7 +515,7 @@ DimPlot(ifnb.filtered, reduction = 'umap', group.by = 'stim') # lets see how our
 DimPlot(ifnb.filtered, reduction = 'pca', group.by = 'stim') # lets see how our cells separate by condition and whether integration is necessary
 ```
 
-<img src="fig/section1-rendered-unnamed-chunk-15-1.png" style="display: block; margin: auto;" />
+<img src="fig/section1-rendered-unnamed-chunk-14-1.png" style="display: block; margin: auto;" />
 
 
 ::::::::::::::::::::::::::::::::::::: challenge 
@@ -601,7 +604,7 @@ if (!"umap" %in% Reductions(ifnb.filtered)) {
 DimPlot(ifnb.filtered, reduction = "umap", group.by = "Phase", pt.size = 0.3)
 ```
 
-<img src="fig/section1-rendered-unnamed-chunk-16-1.png" style="display: block; margin: auto;" />
+<img src="fig/section1-rendered-unnamed-chunk-15-1.png" style="display: block; margin: auto;" />
 
 ``` r
 emb_pca <- Embeddings(ifnb.filtered, "pca")[,1:20]
@@ -695,21 +698,21 @@ ifnb.filtered <- RunUMAP(ifnb.filtered, reduction = "harmony", dims = 1:20, redu
 ```
 
 ``` output
-00:57:26 UMAP embedding parameters a = 0.9922 b = 1.112
-00:57:26 Read 13548 rows and found 20 numeric columns
-00:57:26 Using Annoy for neighbor search, n_neighbors = 30
-00:57:26 Building Annoy index with metric = cosine, n_trees = 50
+13:20:48 UMAP embedding parameters a = 0.9922 b = 1.112
+13:20:48 Read 13548 rows and found 20 numeric columns
+13:20:48 Using Annoy for neighbor search, n_neighbors = 30
+13:20:48 Building Annoy index with metric = cosine, n_trees = 50
 0%   10   20   30   40   50   60   70   80   90   100%
 [----|----|----|----|----|----|----|----|----|----|
 **************************************************|
-00:57:27 Writing NN index file to temp file /tmp/RtmpxAA351/file14de2fd07704
-00:57:27 Searching Annoy index using 1 thread, search_k = 3000
-00:57:32 Annoy recall = 100%
-00:57:33 Commencing smooth kNN distance calibration using 1 thread with target n_neighbors = 30
-00:57:35 Initializing from normalized Laplacian + noise (using RSpectra)
-00:57:35 Commencing optimization for 200 epochs, with 586822 positive edges
-00:57:35 Using rng type: pcg
-00:57:41 Optimization finished
+13:20:50 Writing NN index file to temp file /tmp/RtmpjNohFO/file162c6773923f
+13:20:50 Searching Annoy index using 1 thread, search_k = 3000
+13:20:54 Annoy recall = 100%
+13:20:55 Commencing smooth kNN distance calibration using 1 thread with target n_neighbors = 30
+13:20:57 Initializing from normalized Laplacian + noise (using RSpectra)
+13:20:58 Commencing optimization for 200 epochs, with 586822 positive edges
+13:20:58 Using rng type: pcg
+13:21:03 Optimization finished
 ```
 
 ``` r
@@ -721,7 +724,7 @@ before.integration <- DimPlot(ifnb.filtered, reduction = "umap", group.by = "sti
 before.integration | after.harmony
 ```
 
-<img src="fig/section1-rendered-unnamed-chunk-17-1.png" style="display: block; margin: auto;" />
+<img src="fig/section1-rendered-unnamed-chunk-16-1.png" style="display: block; margin: auto;" />
 
 
 :::: discussion
@@ -795,19 +798,19 @@ ifnb.filtered <- RunUMAP(ifnb.filtered, reduction = "integrated.cca", dims = 1:2
 ```
 
 ``` output
-01:00:33 UMAP embedding parameters a = 0.9922 b = 1.112
+13:23:54 UMAP embedding parameters a = 0.9922 b = 1.112
 ```
 
 ``` output
-01:00:33 Read 13548 rows and found 20 numeric columns
+13:23:54 Read 13548 rows and found 20 numeric columns
 ```
 
 ``` output
-01:00:33 Using Annoy for neighbor search, n_neighbors = 30
+13:23:54 Using Annoy for neighbor search, n_neighbors = 30
 ```
 
 ``` output
-01:00:33 Building Annoy index with metric = cosine, n_trees = 50
+13:23:54 Building Annoy index with metric = cosine, n_trees = 50
 ```
 
 ``` output
@@ -820,14 +823,14 @@ ifnb.filtered <- RunUMAP(ifnb.filtered, reduction = "integrated.cca", dims = 1:2
 
 ``` output
 **************************************************|
-01:00:34 Writing NN index file to temp file /tmp/RtmpxAA351/file14de6cc47c81
-01:00:34 Searching Annoy index using 1 thread, search_k = 3000
-01:00:39 Annoy recall = 100%
-01:00:40 Commencing smooth kNN distance calibration using 1 thread with target n_neighbors = 30
-01:00:42 Initializing from normalized Laplacian + noise (using RSpectra)
-01:00:42 Commencing optimization for 200 epochs, with 595526 positive edges
-01:00:42 Using rng type: pcg
-01:00:48 Optimization finished
+13:23:56 Writing NN index file to temp file /tmp/RtmpjNohFO/file162c2e67ba62
+13:23:56 Searching Annoy index using 1 thread, search_k = 3000
+13:24:00 Annoy recall = 100%
+13:24:01 Commencing smooth kNN distance calibration using 1 thread with target n_neighbors = 30
+13:24:03 Initializing from normalized Laplacian + noise (using RSpectra)
+13:24:04 Commencing optimization for 200 epochs, with 595526 positive edges
+13:24:04 Using rng type: pcg
+13:24:09 Optimization finished
 ```
 
 ``` r
@@ -837,7 +840,7 @@ after.seuratCCA <- DimPlot(ifnb.filtered, reduction = "umap.cca", group.by = "st
 before.integration | after.seuratCCA
 ```
 
-<img src="fig/section1-rendered-unnamed-chunk-18-1.png" style="display: block; margin: auto;" />
+<img src="fig/section1-rendered-unnamed-chunk-17-1.png" style="display: block; margin: auto;" />
 
 
 
@@ -846,7 +849,7 @@ before.integration | after.seuratCCA
 after.harmony | after.seuratCCA
 ```
 
-<img src="fig/section1-rendered-unnamed-chunk-19-1.png" style="display: block; margin: auto;" />
+<img src="fig/section1-rendered-unnamed-chunk-18-1.png" style="display: block; margin: auto;" />
 
 ``` r
 ## Show example slide of integration 'failing' but due to different cell types in each sample ***
@@ -931,7 +934,7 @@ p2 <- DimPlot(ifnb.filtered, reduction = "umap.cca", group.by = "kmeans_k5") + g
 p1 | p2
 ```
 
-<img src="fig/section1-rendered-unnamed-chunk-21-1.png" style="display: block; margin: auto;" />
+<img src="fig/section1-rendered-unnamed-chunk-20-1.png" style="display: block; margin: auto;" />
 
 ``` r
 # If you decide to proceed with k-means downstream:
@@ -956,7 +959,7 @@ Cell-Cycle Check 2 — AFTER integration (after umap.cca + clustering)
 DimPlot(ifnb.filtered, reduction = "umap.cca", group.by = "Phase", pt.size = 0.3)
 ```
 
-<img src="fig/section1-rendered-unnamed-chunk-22-1.png" style="display: block; margin: auto;" />
+<img src="fig/section1-rendered-unnamed-chunk-21-1.png" style="display: block; margin: auto;" />
 
 ``` r
 # Phase composition by cluster and by condition
@@ -965,13 +968,13 @@ tab_phase_cond    <- prop.table(table(ifnb.filtered$stim,            ifnb.filter
 pheatmap(tab_phase_cluster, main = "Phase (%) by cluster")
 ```
 
-<img src="fig/section1-rendered-unnamed-chunk-22-2.png" style="display: block; margin: auto;" />
+<img src="fig/section1-rendered-unnamed-chunk-21-2.png" style="display: block; margin: auto;" />
 
 ``` r
 pheatmap(tab_phase_cond,    main = "Phase (%) by condition (stim)")
 ```
 
-<img src="fig/section1-rendered-unnamed-chunk-22-3.png" style="display: block; margin: auto;" />
+<img src="fig/section1-rendered-unnamed-chunk-21-3.png" style="display: block; margin: auto;" />
 
 :::::::::::::::::::::::::::::::::
 
