@@ -235,8 +235,14 @@
 
     <div id="flush-collapsecurrent" class="accordion-collapse collapse show" aria-labelledby="flush-headingcurrent" data-bs-parent="#accordionFlushcurrent">
       <div class="accordion-body">
-        <ul><li><a href="#section-2-differential-gene-expression-when-dealing-with-two-treatment-conditions">Section 2: Differential Gene Expression when dealing with two
-treatment conditions</a></li>
+        <ul><li><a href="#step-1.-find-conserved-markers-to-label-our-celltypes">Step 1. Find Conserved Markers to label our celltypes</a></li>
+<li><a href="#step-2-set-the-identity-of-our-clusters-to-the-annotations-provided">Step 2: Set the identity of our clusters to the annotations
+provided</a></li>
+<li><a href="#step-3-find-differentially-expressed-genes-degs-between-our-two-conditions-using-cd16-mono-cells-as-an-example">Step 3: Find differentially expressed genes (DEGs) between our two
+conditions, using CD16 Mono cells as an example</a></li>
+<li><a href="#step-4-lets-plot-conserved-features-vs-degs-between-conditions">Step 4: Lets plot conserved features vs DEGs between conditions</a></li>
+<li><a href="#step-5-create-a-heatmap-to-visualise-degs-between-our-two-conditions-cell-types">Step 5: Create a Heatmap to visualise DEGs between our two
+conditions + cell types</a></li>
         </ul></div><!--/div.accordion-body-->
     </div><!--/div.accordion-collapse-->
 
@@ -369,9 +375,7 @@ Maximum modularity in 10 random starts: 0.9002
 Number of communities: 13
 Elapsed time: 2 seconds</code></pre>
 </div>
-<section><h2 class="section-heading" id="section-2-differential-gene-expression-when-dealing-with-two-treatment-conditions">Section 2: Differential Gene Expression when dealing with two
-treatment conditions<a class="anchor" aria-label="anchor" href="#section-2-differential-gene-expression-when-dealing-with-two-treatment-conditions"></a></h2>
-<hr class="half-width"><div class="codewrapper sourceCode" id="cb2">
+<div class="codewrapper sourceCode" id="cb2">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -383,9 +387,8 @@ treatment conditions<a class="anchor" aria-label="anchor" href="#section-2-diffe
 <pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">DimPlot</span><span class="op">(</span><span class="va">ifnb.filtered</span>, reduction <span class="op">=</span> <span class="st">"umap.cca"</span>, group.by <span class="op">=</span> <span class="st">"stim"</span><span class="op">)</span></span></code></pre>
 </div>
-<figure><img src="fig/section2-rendered-unnamed-chunk-3-1.png" style="display: block; margin: auto;" class="figure mx-auto d-block"></figure><div class="section level3">
-<h3 id="step-1--find-conserved-markers-to-label-our-celltypes">Step 1. Find Conserved Markers to label our celltypes<a class="anchor" aria-label="anchor" href="#step-1--find-conserved-markers-to-label-our-celltypes"></a></h3>
-<div class="codewrapper sourceCode" id="cb4">
+<figure><img src="fig/section2-rendered-unnamed-chunk-3-1.png" style="display: block; margin: auto;" class="figure mx-auto d-block"></figure><section><h2 class="section-heading" id="step-1--find-conserved-markers-to-label-our-celltypes">Step 1. Find Conserved Markers to label our celltypes<a class="anchor" aria-label="anchor" href="#step-1--find-conserved-markers-to-label-our-celltypes"></a></h2>
+<hr class="half-width"><div class="codewrapper sourceCode" id="cb4">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -491,11 +494,9 @@ min.cutoff, or changing the value of the min.cutoff parameter.</p>
 <code class="sourceCode R"><span><span class="fu">DimPlot</span><span class="op">(</span><span class="va">ifnb.filtered</span>, reduction <span class="op">=</span> <span class="st">"umap.cca"</span>, label <span class="op">=</span> <span class="cn">T</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">ggtitle</span><span class="op">(</span><span class="st">"After changing the identity of cluster 4"</span><span class="op">)</span></span></code></pre>
 </div>
-<figure><img src="fig/section2-rendered-unnamed-chunk-8-1.png" style="display: block; margin: auto;" class="figure mx-auto d-block"></figure></div>
-<div class="section level3">
-<h3 id="step-2-set-the-identity-of-our-clusters-to-the-annotations-provided">Step 2: Set the identity of our clusters to the annotations
-provided<a class="anchor" aria-label="anchor" href="#step-2-set-the-identity-of-our-clusters-to-the-annotations-provided"></a></h3>
-<div class="codewrapper sourceCode" id="cb14">
+<figure><img src="fig/section2-rendered-unnamed-chunk-8-1.png" style="display: block; margin: auto;" class="figure mx-auto d-block"></figure></section><section><h2 class="section-heading" id="step-2-set-the-identity-of-our-clusters-to-the-annotations-provided">Step 2: Set the identity of our clusters to the annotations
+provided<a class="anchor" aria-label="anchor" href="#step-2-set-the-identity-of-our-clusters-to-the-annotations-provided"></a></h2>
+<hr class="half-width"><div class="codewrapper sourceCode" id="cb14">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -522,11 +523,9 @@ detail in the Intro to scRNA-seq workshop material.</p>
 </div>
 </div>
 </div>
-</div>
-<div class="section level3">
-<h3 id="step-3-find-differentially-expressed-genes-degs-between-our-two-conditions-using-cd16-mono-cells-as-an-example">Step 3: Find differentially expressed genes (DEGs) between our two
-conditions, using CD16 Mono cells as an example<a class="anchor" aria-label="anchor" href="#step-3-find-differentially-expressed-genes-degs-between-our-two-conditions-using-cd16-mono-cells-as-an-example"></a></h3>
-<div class="codewrapper sourceCode" id="cb16">
+</section><section><h2 class="section-heading" id="step-3-find-differentially-expressed-genes-degs-between-our-two-conditions-using-cd16-mono-cells-as-an-example">Step 3: Find differentially expressed genes (DEGs) between our two
+conditions, using CD16 Mono cells as an example<a class="anchor" aria-label="anchor" href="#step-3-find-differentially-expressed-genes-degs-between-our-two-conditions-using-cd16-mono-cells-as-an-example"></a></h2>
+<hr class="half-width"><div class="codewrapper sourceCode" id="cb16">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -566,10 +565,8 @@ ISG20  6.983755e-164   4.088510 1.000 0.448 9.814270e-160
 IFITM3 1.056793e-161   3.191513 1.000 0.634 1.485111e-157
 IFIT2  7.334976e-159   4.622453 0.974 0.162 1.030784e-154</code></pre>
 </div>
-</div>
-<div class="section level3">
-<h3 id="step-4-lets-plot-conserved-features-vs-degs-between-conditions">Step 4: Lets plot conserved features vs DEGs between conditions<a class="anchor" aria-label="anchor" href="#step-4-lets-plot-conserved-features-vs-degs-between-conditions"></a></h3>
-<div class="codewrapper sourceCode" id="cb20">
+</section><section><h2 class="section-heading" id="step-4-lets-plot-conserved-features-vs-degs-between-conditions">Step 4: Lets plot conserved features vs DEGs between conditions<a class="anchor" aria-label="anchor" href="#step-4-lets-plot-conserved-features-vs-degs-between-conditions"></a></h2>
+<hr class="half-width"><div class="codewrapper sourceCode" id="cb20">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -577,11 +574,9 @@ IFIT2  7.334976e-159   4.622453 0.974 0.162 1.030784e-154</code></pre>
 <span>            features <span class="op">=</span> <span class="fu">c</span><span class="op">(</span><span class="st">'VMO1'</span>, <span class="st">'FCGR3A'</span>, <span class="st">'IFIT1'</span>, <span class="st">'ISG15'</span><span class="op">)</span>,</span>
 <span>            split.by <span class="op">=</span> <span class="st">'stim'</span>, min.cutoff <span class="op">=</span> <span class="st">'q10'</span><span class="op">)</span></span></code></pre>
 </div>
-<figure><img src="fig/section2-rendered-unnamed-chunk-14-1.png" style="display: block; margin: auto;" class="figure mx-auto d-block"></figure></div>
-<div class="section level3">
-<h3 id="step-5-create-a-heatmap-to-visualise-degs-between-our-two-conditions-cell-types">Step 5: Create a Heatmap to visualise DEGs between our two
-conditions + cell types<a class="anchor" aria-label="anchor" href="#step-5-create-a-heatmap-to-visualise-degs-between-our-two-conditions-cell-types"></a></h3>
-<div class="codewrapper sourceCode" id="cb21">
+<figure><img src="fig/section2-rendered-unnamed-chunk-14-1.png" style="display: block; margin: auto;" class="figure mx-auto d-block"></figure></section><section><h2 class="section-heading" id="step-5-create-a-heatmap-to-visualise-degs-between-our-two-conditions-cell-types">Step 5: Create a Heatmap to visualise DEGs between our two
+conditions + cell types<a class="anchor" aria-label="anchor" href="#step-5-create-a-heatmap-to-visualise-degs-between-our-two-conditions-cell-types"></a></h2>
+<hr class="half-width"><div class="codewrapper sourceCode" id="cb21">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -650,7 +645,6 @@ mathematical strategies.</li>
 Place links that you need to refer to multiple times across pages here. Delete
 any links that you are not going to use.
  -->
-</div>
 </section></div> <!-- / div.lesson-content -->
     </main><!-- / main#main-content.main-content --><nav class="bottom-pagination mx-md-4" aria-label="Previous and Next Chapter"><div class="d-block d-sm-block d-md-none">
         <a class="chapter-link" href="section1.html"><i aria-hidden="true" class="small-arrow" data-feather="arrow-left"></i>Previous</a>

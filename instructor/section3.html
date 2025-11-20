@@ -244,8 +244,17 @@
 
     <div id="flush-collapsecurrent" class="accordion-collapse collapse show" aria-labelledby="flush-headingcurrent" data-bs-parent="#accordionFlushcurrent">
       <div class="accordion-body">
-        <ul><li><a href="#section-3-differential-expression-using-a-pseudobulk-approach-and-deseq2">Section 3 : Differential Expression using a pseudobulk approach and
-DESeq2</a></li>
+        <ul><li><a href="#step-1-we-need-to-import-sample-information-for-each-cell-from-the-original-paper">Step 1: We need to import sample information for each cell from the
+original paper</a></li>
+<li><a href="#step-2-aggregate-our-counts-based-on-treatment-group-cell-type-and-donor-id">Step 2: Aggregate our counts based on treatment group, cell-type,
+and donor id</a></li>
+<li><a href="#step-3-perform-differential-expression-using-deseq2">Step 3: Perform Differential Expression using DESeq2</a></li>
+<li><a href="#step-4-assessing-differences-between-our-pseudbulk-degs-and-single-cell-degs">Step 4: Assessing differences between our pseudbulk DEGs and
+single-cell DEGs</a></li>
+<li><a href="#step-5-investigate-the-differences-between-pseudobulk-de-and-single-cell-de-closer">Step 5: Investigate the differences between pseudobulk DE and
+single-cell DE closer</a></li>
+<li><a href="#step-6-creating-our-own-custom-visualisations-for-deg-analysis-between-cell-types-in-two-different-experimental-groups">Step 6: Creating our own custom visualisations for DEG analysis
+between cell-types in two different experimental groups</a></li>
         </ul></div><!--/div.accordion-body-->
     </div><!--/div.accordion-collapse-->
 
@@ -372,12 +381,9 @@ Maximum modularity in 10 random starts: 0.9002
 Number of communities: 13
 Elapsed time: 2 seconds</code></pre>
 </div>
-<section><h2 class="section-heading" id="section-3-differential-expression-using-a-pseudobulk-approach-and-deseq2">Section 3 : Differential Expression using a pseudobulk approach and
-DESeq2<a class="anchor" aria-label="anchor" href="#section-3-differential-expression-using-a-pseudobulk-approach-and-deseq2"></a></h2>
-<hr class="half-width"><div class="section level3">
-<h3 id="step-1-we-need-to-import-sample-information-for-each-cell-from-the-original-paper">Step 1: We need to import sample information for each cell from the
-original paper<a class="anchor" aria-label="anchor" href="#step-1-we-need-to-import-sample-information-for-each-cell-from-the-original-paper"></a></h3>
-<div id="discussion1" class="callout discussion">
+<section><h2 class="section-heading" id="step-1-we-need-to-import-sample-information-for-each-cell-from-the-original-paper">Step 1: We need to import sample information for each cell from the
+original paper<a class="anchor" aria-label="anchor" href="#step-1-we-need-to-import-sample-information-for-each-cell-from-the-original-paper"></a></h2>
+<hr class="half-width"><div id="discussion1" class="callout discussion">
 <div class="callout-square">
 <i class="callout-icon" data-feather="message-circle"></i>
 </div>
@@ -424,11 +430,9 @@ we’ve done here?</p>
 <span></span>
 <span><span class="va">ifnb.filtered</span> <span class="op">&lt;-</span> <span class="fu">loadDonorMetadata</span><span class="op">(</span><span class="va">ifnb.filtered</span><span class="op">)</span></span></code></pre>
 </div>
-</div>
-<div class="section level3">
-<h3 id="step-2-aggregate-our-counts-based-on-treatment-group-cell-type-and-donor-id">Step 2: Aggregate our counts based on treatment group, cell-type,
-and donor id<a class="anchor" aria-label="anchor" href="#step-2-aggregate-our-counts-based-on-treatment-group-cell-type-and-donor-id"></a></h3>
-<p>Collapsing our single-cell matrix in this manner is referred to as
+</section><section><h2 class="section-heading" id="step-2-aggregate-our-counts-based-on-treatment-group-cell-type-and-donor-id">Step 2: Aggregate our counts based on treatment group, cell-type,
+and donor id<a class="anchor" aria-label="anchor" href="#step-2-aggregate-our-counts-based-on-treatment-group-cell-type-and-donor-id"></a></h2>
+<hr class="half-width"><p>Collapsing our single-cell matrix in this manner is referred to as
 creating a ‘pseudo-bulk’ count matrix.. We’re making a condensed count
 matrix that looks more like a bulk matrix so that we can use bulk
 differential expression algorithms like DESeq2. We can see this clearly
@@ -464,10 +468,8 @@ code block.</p>
 <pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">head</span><span class="op">(</span><span class="va">ifnb.pseudobulk.df</span><span class="op">)</span></span></code></pre>
 </div>
-</div>
-<div class="section level3">
-<h3 id="step-3-perform-differential-expression-using-deseq2">Step 3: Perform Differential Expression using DESeq2<a class="anchor" aria-label="anchor" href="#step-3-perform-differential-expression-using-deseq2"></a></h3>
-<p>Just like before, lets make a new column containing the cell type and
+</section><section><h2 class="section-heading" id="step-3-perform-differential-expression-using-deseq2">Step 3: Perform Differential Expression using DESeq2<a class="anchor" aria-label="anchor" href="#step-3-perform-differential-expression-using-deseq2"></a></h2>
+<hr class="half-width"><p>Just like before, lets make a new column containing the cell type and
 treatment group before DE with DESeq2. We do this so that we can
 leverage the Idents() function combined with the FindMarkers
 function.</p>
@@ -548,11 +550,9 @@ OASL    1.186412e-63   4.025025     1     1  1.667265e-59</code></pre>
 [3] "CTRL_SNG-101_CD4 Memory T" "CTRL_SNG-101_CD16 Mono"
 [5] "CTRL_SNG-101_B"            "CTRL_SNG-101_CD8 T"       </code></pre>
 </div>
-</div>
-<div class="section level3">
-<h3 id="step-4-assessing-differences-between-our-pseudbulk-degs-and-single-cell-degs">Step 4: Assessing differences between our pseudbulk DEGs and
-single-cell DEGs<a class="anchor" aria-label="anchor" href="#step-4-assessing-differences-between-our-pseudbulk-degs-and-single-cell-degs"></a></h3>
-<p>First lets take a look at the DEG dataframes we made for both.</p>
+</section><section><h2 class="section-heading" id="step-4-assessing-differences-between-our-pseudbulk-degs-and-single-cell-degs">Step 4: Assessing differences between our pseudbulk DEGs and
+single-cell DEGs<a class="anchor" aria-label="anchor" href="#step-4-assessing-differences-between-our-pseudbulk-degs-and-single-cell-degs"></a></h2>
+<hr class="half-width"><p>First lets take a look at the DEG dataframes we made for both.</p>
 <div id="discussion2" class="callout discussion">
 <div class="callout-square">
 <i class="callout-icon" data-feather="message-circle"></i>
@@ -713,11 +713,9 @@ two methods here?</p>
 </div>
 </div>
 </div>
-</div>
-<div class="section level3">
-<h3 id="step-5-investigate-the-differences-between-pseudobulk-de-and-single-cell-de-closer">Step 5: Investigate the differences between pseudobulk DE and
-single-cell DE closer<a class="anchor" aria-label="anchor" href="#step-5-investigate-the-differences-between-pseudobulk-de-and-single-cell-de-closer"></a></h3>
-<p>Let’s create lists of genes in each of our categories first</p>
+</section><section><h2 class="section-heading" id="step-5-investigate-the-differences-between-pseudobulk-de-and-single-cell-de-closer">Step 5: Investigate the differences between pseudobulk DE and
+single-cell DE closer<a class="anchor" aria-label="anchor" href="#step-5-investigate-the-differences-between-pseudobulk-de-and-single-cell-de-closer"></a></h2>
+<hr class="half-width"><p>Let’s create lists of genes in each of our categories first</p>
 <div class="codewrapper sourceCode" id="cb24">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
@@ -783,11 +781,9 @@ and pseudobulk deg tests</p>
 <span>        idents <span class="op">=</span> <span class="fu">c</span><span class="op">(</span><span class="st">"CD16 Mono_CTRL"</span>, <span class="st">"CD16 Mono_STIM"</span><span class="op">)</span>, </span>
 <span>        group.by <span class="op">=</span> <span class="st">"donor_id.and.stim"</span>, ncol <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> </span></code></pre>
 </div>
-<figure><img src="../fig/section3-rendered-unnamed-chunk-13-1.png" style="display: block; margin: auto;" class="figure mx-auto d-block"></figure></div>
-<div class="section level3">
-<h3 id="step-6-creating-our-own-custom-visualisations-for-deg-analysis-between-cell-types-in-two-different-experimental-groups">Step 6: Creating our own custom visualisations for DEG analysis
-between cell-types in two different experimental groups<a class="anchor" aria-label="anchor" href="#step-6-creating-our-own-custom-visualisations-for-deg-analysis-between-cell-types-in-two-different-experimental-groups"></a></h3>
-<p>So far, we’ve been using functions wrapped within Seurat to plot and
+<figure><img src="../fig/section3-rendered-unnamed-chunk-13-1.png" style="display: block; margin: auto;" class="figure mx-auto d-block"></figure></section><section><h2 class="section-heading" id="step-6-creating-our-own-custom-visualisations-for-deg-analysis-between-cell-types-in-two-different-experimental-groups">Step 6: Creating our own custom visualisations for DEG analysis
+between cell-types in two different experimental groups<a class="anchor" aria-label="anchor" href="#step-6-creating-our-own-custom-visualisations-for-deg-analysis-between-cell-types-in-two-different-experimental-groups"></a></h2>
+<hr class="half-width"><p>So far, we’ve been using functions wrapped within Seurat to plot and
 visualise our data. But we’re not limited to those functions. Let’s use
 the pheatmap (‘pretty heatmap’) package to visualise our DEGs with
 adjusted p values &lt; 0.05.</p>
@@ -962,7 +958,6 @@ cell type.</li>
 Place links that you need to refer to multiple times across pages here. Delete
 any links that you are not going to use.
  -->
-</div>
 </section></div> <!-- / div.lesson-content -->
     </main><!-- / main#main-content.main-content --><nav class="bottom-pagination mx-md-4" aria-label="Previous and Next Chapter"><div class="d-block d-sm-block d-md-none">
         <a class="chapter-link" href="../instructor/section2.html"><i aria-hidden="true" class="small-arrow" data-feather="arrow-left"></i>Previous</a>
