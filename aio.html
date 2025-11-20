@@ -344,7 +344,7 @@
         
 <section id="aio-introduction"><p>Content from <a href="introduction.html">Introduction</a></p>
 <hr>
-<p>Last updated on 2025-11-18 |
+<p>Last updated on 2025-11-20 |
 
         <a href="https://example.com/template-source/lesson-example/edit/main/episodes/introduction.Rmd" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 <div class="text-end">
@@ -356,8 +356,8 @@
 <p><a href="files/Seurate-DE-slides-NEW.pdf"><strong>Slides available
 here.</strong></a></p>
 <p><strong>Author:</strong> Manveer Chauhan, Clark Lab, The University
-of Melbourne.<br><strong>Contributors:</strong> Vini Salazar, Melbourne
-Bioinformatics.</p>
+of Melbourne.<br><strong>Contributors:</strong> Vini Salazar, Susan (Jiayi) Si, Raymond
+(Bibo) Zhao, Melbourne Bioinformatics.</p>
 <p>Last updated October 2024.</p>
 <div class="section level2">
 <h2 id="overview">Overview<a class="anchor" aria-label="anchor" href="#overview"></a>
@@ -440,7 +440,7 @@ any links that you are not going to use.
 </div>
 </div></section><section id="aio-section1"><p>Content from <a href="section1.html">Section 1: Setup, Quality Control and Sample Integration</a></p>
 <hr>
-<p>Last updated on 2025-11-18 |
+<p>Last updated on 2025-11-20 |
 
         <a href="https://example.com/template-source/lesson-example/edit/main/episodes/section1.Rmd" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 <div class="text-end">
@@ -579,15 +579,33 @@ and no dimensionality reduction functions have been performed.</p>
 steps including preprocessing and filtering).</p>
 <p>First we need to take a look at QC metrics, then decide on the
 thresholds for filtering.</p>
-<div id="discussion1" class="callout discussion">
+<div id="challenge2" class="callout challenge">
 <div class="callout-square">
-<i class="callout-icon" data-feather="message-circle"></i>
+<i class="callout-icon" data-feather="zap"></i>
 </div>
-<span class="callout-header">Discussion</span>
+<span class="callout-header">Challenge</span>
 <div class="callout-inner">
+<h3 class="callout-title">Challenge</h3>
 <div class="callout-content">
-<p>Looking at the violin plots of QC metrics, what do you think about
-the overall quality of the ifnb dataset?</p>
+<p>QC for droplet-based protocols</p>
+</div>
+</div>
+</div>
+<div id="accordionSolution2" class="accordion challenge-accordion accordion-flush">
+<div class="accordion-item">
+<button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution2" aria-expanded="false" aria-controls="collapseSolution2">
+  <h4 class="accordion-header" id="headingSolution2"> Show me the solution </h4>
+</button>
+<div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
+<div class="accordion-body">
+<p>In droplet-based protocols (e.g., 10x Genomics), millions of droplets
+are formed, but only some droplets contain exactly one real cell.
+Several types of “bad droplets” appear:</p>
+<ul>
+<li>Empty droplets (no real cell)</li>
+<li>Doublets (two cells in one droplet)</li>
+</ul>
+</div>
 </div>
 </div>
 </div>
@@ -652,7 +670,19 @@ idents, : All cells have the same value of percent.mt.</code></pre>
 </h3>
 <pre class="output" tabindex="0"><code>`geom_smooth()` using formula = 'y ~ x'</code></pre>
 </div>
-<figure><img src="fig/section1-rendered-unnamed-chunk-5-2.png" style="display: block; margin: auto;" class="figure mx-auto d-block"></figure><p>After visualising QC metrics, we’ll move on to the actual
+<figure><img src="fig/section1-rendered-unnamed-chunk-5-2.png" style="display: block; margin: auto;" class="figure mx-auto d-block"></figure><div id="discussion1" class="callout discussion">
+<div class="callout-square">
+<i class="callout-icon" data-feather="message-circle"></i>
+</div>
+<span class="callout-header">Discussion</span>
+<div class="callout-inner">
+<div class="callout-content">
+<p>Looking at the violin plots of QC metrics, what do you think about
+the overall quality of the ifnb dataset?</p>
+</div>
+</div>
+</div>
+<p>After visualising QC metrics, we’ll move on to the actual
 filtering</p>
 <div class="codewrapper sourceCode" id="cb11">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -810,30 +840,6 @@ Active assay: RNA (14053 features, 0 variable features)
 Active assay: RNA (14053 features, 0 variable features)
  2 layers present: counts, data</code></pre>
 </div>
-<div id="challenge2" class="callout challenge">
-<div class="callout-square">
-<i class="callout-icon" data-feather="zap"></i>
-</div>
-<span class="callout-header">Challenge</span>
-<div class="callout-inner">
-<h3 class="callout-title">Challenge</h3>
-<div class="callout-content">
-<p>Running <code>DropletUtils::barcodeRanks()</code></p>
-</div>
-</div>
-</div>
-<div id="accordionSolution2" class="accordion challenge-accordion accordion-flush">
-<div class="accordion-item">
-<button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution2" aria-expanded="false" aria-controls="collapseSolution2">
-  <h4 class="accordion-header" id="headingSolution2"> Show me the solution </h4>
-</button>
-<div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
-<div class="accordion-body">
-<figure><img src="fig/section1-rendered-unnamed-chunk-11-1.png" style="display: block; margin: auto;" class="figure mx-auto d-block"></figure>
-</div>
-</div>
-</div>
-</div>
 <p>Next we need to split our count matrices based on conditions. This
 step stores stimulated versus unstimulated expression information
 separately, creating a list of RNA assays grouped by the “stim”
@@ -960,7 +966,7 @@ Negative:  VMO1, FCGR3A, MS4A4A, CXCL16, MS4A7, PPM1N, HN1, LST1, SMPDL3A, ATP1B
 <pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">ElbowPlot</span><span class="op">(</span><span class="va">ifnb.filtered</span><span class="op">)</span> <span class="co"># Visualise the dimensionality of the data, looks like 15 PCs is adequate to capture the majority of the variation in the data, but we'll air on the higher side and consider all 20 dimensions.</span></span></code></pre>
 </div>
-<figure><img src="fig/section1-rendered-unnamed-chunk-13-1.png" style="display: block; margin: auto;" class="figure mx-auto d-block"></figure><div class="codewrapper sourceCode" id="cb42">
+<figure><img src="fig/section1-rendered-unnamed-chunk-12-1.png" style="display: block; margin: auto;" class="figure mx-auto d-block"></figure><div class="codewrapper sourceCode" id="cb42">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -976,22 +982,22 @@ This message will be shown once per session</code></pre>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="output" tabindex="0"><code>00:56:54 UMAP embedding parameters a = 0.9922 b = 1.112</code></pre>
+<pre class="output" tabindex="0"><code>13:20:17 UMAP embedding parameters a = 0.9922 b = 1.112</code></pre>
 </div>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="output" tabindex="0"><code>00:56:54 Read 13548 rows and found 20 numeric columns</code></pre>
+<pre class="output" tabindex="0"><code>13:20:17 Read 13548 rows and found 20 numeric columns</code></pre>
 </div>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="output" tabindex="0"><code>00:56:54 Using Annoy for neighbor search, n_neighbors = 30</code></pre>
+<pre class="output" tabindex="0"><code>13:20:17 Using Annoy for neighbor search, n_neighbors = 30</code></pre>
 </div>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="output" tabindex="0"><code>00:56:54 Building Annoy index with metric = cosine, n_trees = 50</code></pre>
+<pre class="output" tabindex="0"><code>13:20:17 Building Annoy index with metric = cosine, n_trees = 50</code></pre>
 </div>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -1007,14 +1013,14 @@ This message will be shown once per session</code></pre>
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="output" tabindex="0"><code>**************************************************|
-00:56:55 Writing NN index file to temp file /tmp/RtmpxAA351/file14de3f93f732
-00:56:55 Searching Annoy index using 1 thread, search_k = 3000
-00:57:00 Annoy recall = 100%
-00:57:01 Commencing smooth kNN distance calibration using 1 thread with target n_neighbors = 30
-00:57:03 Initializing from normalized Laplacian + noise (using RSpectra)
-00:57:03 Commencing optimization for 200 epochs, with 582700 positive edges
-00:57:03 Using rng type: pcg
-00:57:09 Optimization finished</code></pre>
+13:20:18 Writing NN index file to temp file /tmp/RtmpjNohFO/file162c458dec7
+13:20:18 Searching Annoy index using 1 thread, search_k = 3000
+13:20:23 Annoy recall = 100%
+13:20:24 Commencing smooth kNN distance calibration using 1 thread with target n_neighbors = 30
+13:20:26 Initializing from normalized Laplacian + noise (using RSpectra)
+13:20:26 Commencing optimization for 200 epochs, with 582700 positive edges
+13:20:26 Using rng type: pcg
+13:20:32 Optimization finished</code></pre>
 </div>
 <div class="codewrapper sourceCode" id="cb51">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -1022,13 +1028,13 @@ This message will be shown once per session</code></pre>
 <pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">DimPlot</span><span class="op">(</span><span class="va">ifnb.filtered</span>, reduction <span class="op">=</span> <span class="st">'umap'</span>, group.by <span class="op">=</span> <span class="st">'stim'</span><span class="op">)</span> <span class="co"># lets see how our cells separate by condition and whether integration is necessary</span></span></code></pre>
 </div>
-<figure><img src="fig/section1-rendered-unnamed-chunk-14-1.png" style="display: block; margin: auto;" class="figure mx-auto d-block"></figure><div class="codewrapper sourceCode" id="cb52">
+<figure><img src="fig/section1-rendered-unnamed-chunk-13-1.png" style="display: block; margin: auto;" class="figure mx-auto d-block"></figure><div class="codewrapper sourceCode" id="cb52">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">DimPlot</span><span class="op">(</span><span class="va">ifnb.filtered</span>, reduction <span class="op">=</span> <span class="st">'pca'</span>, group.by <span class="op">=</span> <span class="st">'stim'</span><span class="op">)</span> <span class="co"># lets see how our cells separate by condition and whether integration is necessary</span></span></code></pre>
 </div>
-<figure><img src="fig/section1-rendered-unnamed-chunk-15-1.png" style="display: block; margin: auto;" class="figure mx-auto d-block"></figure><div id="challenge3" class="callout challenge">
+<figure><img src="fig/section1-rendered-unnamed-chunk-14-1.png" style="display: block; margin: auto;" class="figure mx-auto d-block"></figure><div id="challenge3" class="callout challenge">
 <div class="callout-square">
 <i class="callout-icon" data-feather="zap"></i>
 </div>
@@ -1144,7 +1150,7 @@ CKAP2L, HJURP, JPT1, CDC25C, KIF2C, DLGAP5, ANLN</code></pre>
 <span><span class="co"># Visual + quick quant</span></span>
 <span><span class="fu">DimPlot</span><span class="op">(</span><span class="va">ifnb.filtered</span>, reduction <span class="op">=</span> <span class="st">"umap"</span>, group.by <span class="op">=</span> <span class="st">"Phase"</span>, pt.size <span class="op">=</span> <span class="fl">0.3</span><span class="op">)</span></span></code></pre>
 </div>
-<figure><img src="fig/section1-rendered-unnamed-chunk-16-1.png" style="display: block; margin: auto;" class="figure mx-auto d-block"></figure><div class="codewrapper sourceCode" id="cb67">
+<figure><img src="fig/section1-rendered-unnamed-chunk-15-1.png" style="display: block; margin: auto;" class="figure mx-auto d-block"></figure><div class="codewrapper sourceCode" id="cb67">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -1247,21 +1253,21 @@ This message is displayed once per session.</code></pre>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="output" tabindex="0"><code>00:57:26 UMAP embedding parameters a = 0.9922 b = 1.112
-00:57:26 Read 13548 rows and found 20 numeric columns
-00:57:26 Using Annoy for neighbor search, n_neighbors = 30
-00:57:26 Building Annoy index with metric = cosine, n_trees = 50
+<pre class="output" tabindex="0"><code>13:20:48 UMAP embedding parameters a = 0.9922 b = 1.112
+13:20:48 Read 13548 rows and found 20 numeric columns
+13:20:48 Using Annoy for neighbor search, n_neighbors = 30
+13:20:48 Building Annoy index with metric = cosine, n_trees = 50
 0%   10   20   30   40   50   60   70   80   90   100%
 [----|----|----|----|----|----|----|----|----|----|
 **************************************************|
-00:57:27 Writing NN index file to temp file /tmp/RtmpxAA351/file14de2fd07704
-00:57:27 Searching Annoy index using 1 thread, search_k = 3000
-00:57:32 Annoy recall = 100%
-00:57:33 Commencing smooth kNN distance calibration using 1 thread with target n_neighbors = 30
-00:57:35 Initializing from normalized Laplacian + noise (using RSpectra)
-00:57:35 Commencing optimization for 200 epochs, with 586822 positive edges
-00:57:35 Using rng type: pcg
-00:57:41 Optimization finished</code></pre>
+13:20:50 Writing NN index file to temp file /tmp/RtmpjNohFO/file162c6773923f
+13:20:50 Searching Annoy index using 1 thread, search_k = 3000
+13:20:54 Annoy recall = 100%
+13:20:55 Commencing smooth kNN distance calibration using 1 thread with target n_neighbors = 30
+13:20:57 Initializing from normalized Laplacian + noise (using RSpectra)
+13:20:58 Commencing optimization for 200 epochs, with 586822 positive edges
+13:20:58 Using rng type: pcg
+13:21:03 Optimization finished</code></pre>
 </div>
 <div class="codewrapper sourceCode" id="cb73">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -1274,7 +1280,7 @@ This message is displayed once per session.</code></pre>
 <span></span>
 <span><span class="va">before.integration</span> <span class="op">|</span> <span class="va">after.harmony</span></span></code></pre>
 </div>
-<figure><img src="fig/section1-rendered-unnamed-chunk-17-1.png" style="display: block; margin: auto;" class="figure mx-auto d-block"></figure><div id="discussion3" class="callout discussion">
+<figure><img src="fig/section1-rendered-unnamed-chunk-16-1.png" style="display: block; margin: auto;" class="figure mx-auto d-block"></figure><div id="discussion3" class="callout discussion">
 <div class="callout-square">
 <i class="callout-icon" data-feather="message-circle"></i>
 </div>
@@ -1365,22 +1371,22 @@ looking at the PC1 and PC2 plots for harmony and seurat as well</p>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="output" tabindex="0"><code>01:00:33 UMAP embedding parameters a = 0.9922 b = 1.112</code></pre>
+<pre class="output" tabindex="0"><code>13:23:54 UMAP embedding parameters a = 0.9922 b = 1.112</code></pre>
 </div>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="output" tabindex="0"><code>01:00:33 Read 13548 rows and found 20 numeric columns</code></pre>
+<pre class="output" tabindex="0"><code>13:23:54 Read 13548 rows and found 20 numeric columns</code></pre>
 </div>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="output" tabindex="0"><code>01:00:33 Using Annoy for neighbor search, n_neighbors = 30</code></pre>
+<pre class="output" tabindex="0"><code>13:23:54 Using Annoy for neighbor search, n_neighbors = 30</code></pre>
 </div>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="output" tabindex="0"><code>01:00:33 Building Annoy index with metric = cosine, n_trees = 50</code></pre>
+<pre class="output" tabindex="0"><code>13:23:54 Building Annoy index with metric = cosine, n_trees = 50</code></pre>
 </div>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -1396,14 +1402,14 @@ looking at the PC1 and PC2 plots for harmony and seurat as well</p>
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="output" tabindex="0"><code>**************************************************|
-01:00:34 Writing NN index file to temp file /tmp/RtmpxAA351/file14de6cc47c81
-01:00:34 Searching Annoy index using 1 thread, search_k = 3000
-01:00:39 Annoy recall = 100%
-01:00:40 Commencing smooth kNN distance calibration using 1 thread with target n_neighbors = 30
-01:00:42 Initializing from normalized Laplacian + noise (using RSpectra)
-01:00:42 Commencing optimization for 200 epochs, with 595526 positive edges
-01:00:42 Using rng type: pcg
-01:00:48 Optimization finished</code></pre>
+13:23:56 Writing NN index file to temp file /tmp/RtmpjNohFO/file162c2e67ba62
+13:23:56 Searching Annoy index using 1 thread, search_k = 3000
+13:24:00 Annoy recall = 100%
+13:24:01 Commencing smooth kNN distance calibration using 1 thread with target n_neighbors = 30
+13:24:03 Initializing from normalized Laplacian + noise (using RSpectra)
+13:24:04 Commencing optimization for 200 epochs, with 595526 positive edges
+13:24:04 Using rng type: pcg
+13:24:09 Optimization finished</code></pre>
 </div>
 <div class="codewrapper sourceCode" id="cb94">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -1414,13 +1420,13 @@ looking at the PC1 and PC2 plots for harmony and seurat as well</p>
 <span></span>
 <span><span class="va">before.integration</span> <span class="op">|</span> <span class="va">after.seuratCCA</span></span></code></pre>
 </div>
-<figure><img src="fig/section1-rendered-unnamed-chunk-18-1.png" style="display: block; margin: auto;" class="figure mx-auto d-block"></figure><div class="codewrapper sourceCode" id="cb95">
+<figure><img src="fig/section1-rendered-unnamed-chunk-17-1.png" style="display: block; margin: auto;" class="figure mx-auto d-block"></figure><div class="codewrapper sourceCode" id="cb95">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">after.harmony</span> <span class="op">|</span> <span class="va">after.seuratCCA</span></span></code></pre>
 </div>
-<figure><img src="fig/section1-rendered-unnamed-chunk-19-1.png" style="display: block; margin: auto;" class="figure mx-auto d-block"></figure><div class="codewrapper sourceCode" id="cb96">
+<figure><img src="fig/section1-rendered-unnamed-chunk-18-1.png" style="display: block; margin: auto;" class="figure mx-auto d-block"></figure><div class="codewrapper sourceCode" id="cb96">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -1540,7 +1546,7 @@ mathematical strategies.</li>
 <span><span class="va">p2</span> <span class="op">&lt;-</span> <span class="fu">DimPlot</span><span class="op">(</span><span class="va">ifnb.filtered</span>, reduction <span class="op">=</span> <span class="st">"umap.cca"</span>, group.by <span class="op">=</span> <span class="st">"kmeans_k5"</span><span class="op">)</span> <span class="op">+</span> <span class="fu">ggtitle</span><span class="op">(</span><span class="st">"k-means (K=5)"</span><span class="op">)</span></span>
 <span><span class="va">p1</span> <span class="op">|</span> <span class="va">p2</span></span></code></pre>
 </div>
-<figure><img src="fig/section1-rendered-unnamed-chunk-21-1.png" style="display: block; margin: auto;" class="figure mx-auto d-block"></figure><div class="codewrapper sourceCode" id="cb104">
+<figure><img src="fig/section1-rendered-unnamed-chunk-20-1.png" style="display: block; margin: auto;" class="figure mx-auto d-block"></figure><div class="codewrapper sourceCode" id="cb104">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -1580,7 +1586,7 @@ clustering)</p>
 <span><span class="co"># Visual on integrated embedding</span></span>
 <span><span class="fu">DimPlot</span><span class="op">(</span><span class="va">ifnb.filtered</span>, reduction <span class="op">=</span> <span class="st">"umap.cca"</span>, group.by <span class="op">=</span> <span class="st">"Phase"</span>, pt.size <span class="op">=</span> <span class="fl">0.3</span><span class="op">)</span></span></code></pre>
 </div>
-<figure><img src="fig/section1-rendered-unnamed-chunk-22-1.png" style="display: block; margin: auto;" class="figure mx-auto d-block"></figure><div class="codewrapper sourceCode" id="cb106">
+<figure><img src="fig/section1-rendered-unnamed-chunk-21-1.png" style="display: block; margin: auto;" class="figure mx-auto d-block"></figure><div class="codewrapper sourceCode" id="cb106">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -1589,13 +1595,13 @@ clustering)</p>
 <span><span class="va">tab_phase_cond</span>    <span class="op">&lt;-</span> <span class="fu">prop.table</span><span class="op">(</span><span class="fu">table</span><span class="op">(</span><span class="va">ifnb.filtered</span><span class="op">$</span><span class="va">stim</span>,            <span class="va">ifnb.filtered</span><span class="op">$</span><span class="va">Phase</span><span class="op">)</span>, <span class="fl">1</span><span class="op">)</span> <span class="op">*</span> <span class="fl">100</span></span>
 <span><span class="fu">pheatmap</span><span class="op">(</span><span class="va">tab_phase_cluster</span>, main <span class="op">=</span> <span class="st">"Phase (%) by cluster"</span><span class="op">)</span></span></code></pre>
 </div>
-<figure><img src="fig/section1-rendered-unnamed-chunk-22-2.png" style="display: block; margin: auto;" class="figure mx-auto d-block"></figure><div class="codewrapper sourceCode" id="cb107">
+<figure><img src="fig/section1-rendered-unnamed-chunk-21-2.png" style="display: block; margin: auto;" class="figure mx-auto d-block"></figure><div class="codewrapper sourceCode" id="cb107">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">pheatmap</span><span class="op">(</span><span class="va">tab_phase_cond</span>,    main <span class="op">=</span> <span class="st">"Phase (%) by condition (stim)"</span><span class="op">)</span></span></code></pre>
 </div>
-<figure><img src="fig/section1-rendered-unnamed-chunk-22-3.png" style="display: block; margin: auto;" class="figure mx-auto d-block"></figure>
+<figure><img src="fig/section1-rendered-unnamed-chunk-21-3.png" style="display: block; margin: auto;" class="figure mx-auto d-block"></figure>
 </div>
 </div>
 </div>
@@ -1606,7 +1612,7 @@ any links that you are not going to use.
  -->
 </div></section><section id="aio-section2"><p>Content from <a href="section2.html">Section 2: Differential Gene Expression when dealing with two treatment conditions</a></p>
 <hr>
-<p>Last updated on 2025-11-18 |
+<p>Last updated on 2025-11-20 |
 
         <a href="https://example.com/template-source/lesson-example/edit/main/episodes/section2.Rmd" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 <div class="text-end">
@@ -1958,7 +1964,7 @@ any links that you are not going to use.
 </div>
 </section></section><section id="aio-section3"><p>Content from <a href="section3.html">Section 3 : Differential Expression using a pseudobulk approach and DESeq2</a></p>
 <hr>
-<p>Last updated on 2025-11-18 |
+<p>Last updated on 2025-11-20 |
 
         <a href="https://example.com/template-source/lesson-example/edit/main/episodes/section3.Rmd" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 <div class="text-end">
@@ -2666,8 +2672,8 @@ any links that you are not going to use.
   "url": "https://template-source.github.io/lesson-example/aio.html",
   "identifier": "https://template-source.github.io/lesson-example/aio.html",
   "dateCreated": "2025-09-30",
-  "dateModified": "2025-11-18",
-  "datePublished": "2025-11-18"
+  "dateModified": "2025-11-20",
+  "datePublished": "2025-11-20"
 }
 
   </script><script>
