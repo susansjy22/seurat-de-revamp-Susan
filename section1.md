@@ -203,14 +203,6 @@ ifnb.filtered <- subset(ifnb, subset = nCount_RNA > 800 &
 
 qc.metric.plts.filtered <- VlnPlot(ifnb.filtered, features = c("nFeature_RNA", "nCount_RNA", "percent.mt"), ncol = 3) +
   ggtitle("After Filtering")
-```
-
-``` warning
-Warning in SingleExIPlot(type = type, data = data[, x, drop = FALSE], idents =
-idents, : All cells have the same value of percent.mt.
-```
-
-``` r
 association.plt.filtered <- FeatureScatter(ifnb.filtered, feature1 = "nCount_RNA", feature2 = "nFeature_RNA") + geom_smooth(method = "lm") +
   ggtitle("After Filtering")
 
@@ -221,10 +213,6 @@ qc.metric.plts.filtered
 
 ``` r
 association.plt.filtered
-```
-
-``` output
-`geom_smooth()` using formula = 'y ~ x'
 ```
 
 <img src="fig/section1-rendered-unnamed-chunk-6-2.png" style="display: block; margin: auto;" />
@@ -281,33 +269,7 @@ wrap_plots(list(qc.metric.plts, qc.metric.plts.filtered),
 ``` r
 association.plts <- standardise_plt_scale(association.plt.raw,
                                           association.plt.filtered)
-```
-
-``` output
-`geom_smooth()` using formula = 'y ~ x'
-`geom_smooth()` using formula = 'y ~ x'
-```
-
-``` r
 association.plts
-```
-
-``` output
-`geom_smooth()` using formula = 'y ~ x'
-```
-
-``` warning
-Warning: Removed 2 rows containing missing values or values outside the scale range
-(`geom_smooth()`).
-```
-
-``` output
-`geom_smooth()` using formula = 'y ~ x'
-```
-
-``` warning
-Warning: Removed 2 rows containing missing values or values outside the scale range
-(`geom_smooth()`).
 ```
 
 <img src="fig/section1-rendered-unnamed-chunk-8-1.png" style="display: block; margin: auto;" />
@@ -341,8 +303,6 @@ Active assay: RNA (14053 features, 0 variable features)
  2 layers present: counts, data
 ```
 
-
-
 Next we need to split our count matrices based on conditions. This step
 stores stimulated versus unstimulated expression information separately,
 creating a list of RNA assays grouped by the "stim" condition. Note:
@@ -351,15 +311,6 @@ this is important for downstream integration steps in Seurat v5.
 
 ``` r
 ifnb.filtered[["RNA"]] <- split(ifnb.filtered[["RNA"]], f = ifnb.filtered$stim) # Lets split our count matrices based on conditions (stored within different layers) -> needed for integration steps in Seurat v5
-```
-
-``` warning
-Warning: Input is a v3 assay and `split()` only works for v5 assays; converting
-• to a v5 assay
-```
-
-``` warning
-Warning: Assay RNA changing from Assay to Assay5
 ```
 
 
@@ -455,57 +406,6 @@ ElbowPlot(ifnb.filtered) # Visualise the dimensionality of the data, looks like 
 
 
 
-
-``` r
-ifnb.filtered <- RunUMAP(ifnb.filtered, dims = 1:20, reduction = 'pca')
-```
-
-``` warning
-Warning: The default method for RunUMAP has changed from calling Python UMAP via reticulate to the R-native UWOT using the cosine metric
-To use Python UMAP via reticulate, set umap.method to 'umap-learn' and metric to 'correlation'
-This message will be shown once per session
-```
-
-``` output
-14:41:06 UMAP embedding parameters a = 0.9922 b = 1.112
-```
-
-``` output
-14:41:06 Read 13548 rows and found 20 numeric columns
-```
-
-``` output
-14:41:06 Using Annoy for neighbor search, n_neighbors = 30
-```
-
-``` output
-14:41:06 Building Annoy index with metric = cosine, n_trees = 50
-```
-
-``` output
-0%   10   20   30   40   50   60   70   80   90   100%
-```
-
-``` output
-[----|----|----|----|----|----|----|----|----|----|
-```
-
-``` output
-**************************************************|
-14:41:07 Writing NN index file to temp file /tmp/RtmpKtP6WI/file1587ab1960a
-14:41:07 Searching Annoy index using 1 thread, search_k = 3000
-14:41:12 Annoy recall = 100%
-14:41:13 Commencing smooth kNN distance calibration using 1 thread with target n_neighbors = 30
-14:41:15 Initializing from normalized Laplacian + noise (using RSpectra)
-14:41:15 Commencing optimization for 200 epochs, with 582700 positive edges
-14:41:15 Using rng type: pcg
-14:41:21 Optimization finished
-```
-
-``` r
-DimPlot(ifnb.filtered, reduction = 'umap', group.by = 'stim') # lets see how our cells separate by condition and whether integration is necessary
-```
-
 <img src="fig/section1-rendered-unnamed-chunk-13-1.png" style="display: block; margin: auto;" />
 
 
@@ -536,65 +436,7 @@ ifnb.filtered <- CellCycleScoring(
   set.ident    = FALSE,
   search       = TRUE
 )
-```
 
-``` warning
-Warning: The following features are not present in the object: DTL, UHRF1,
-CDC45, EXO1, CASP8AP2, E2F8, attempting to find updated synonyms
-```
-
-``` warning
-Warning: No updated symbols found
-```
-
-``` warning
-Warning: The following features are still not present in the object: DTL,
-UHRF1, CDC45, EXO1, CASP8AP2, E2F8
-```
-
-``` warning
-Warning: The following features are not present in the object: PIMREG, CKAP2L,
-HJURP, JPT1, CDC25C, KIF2C, DLGAP5, ANLN, attempting to find updated synonyms
-```
-
-``` warning
-Warning: No updated symbols found
-```
-
-``` warning
-Warning: The following features are still not present in the object: PIMREG,
-CKAP2L, HJURP, JPT1, CDC25C, KIF2C, DLGAP5, ANLN
-```
-
-``` warning
-Warning: The following features are not present in the object: DTL, UHRF1,
-CDC45, EXO1, CASP8AP2, E2F8, attempting to find updated synonyms
-```
-
-``` warning
-Warning: No updated symbols found
-```
-
-``` warning
-Warning: The following features are still not present in the object: DTL,
-UHRF1, CDC45, EXO1, CASP8AP2, E2F8
-```
-
-``` warning
-Warning: The following features are not present in the object: PIMREG, CKAP2L,
-HJURP, JPT1, CDC25C, KIF2C, DLGAP5, ANLN, attempting to find updated synonyms
-```
-
-``` warning
-Warning: No updated symbols found
-```
-
-``` warning
-Warning: The following features are still not present in the object: PIMREG,
-CKAP2L, HJURP, JPT1, CDC25C, KIF2C, DLGAP5, ANLN
-```
-
-``` r
 # Quick UMAP on PCA (if you haven't already run it)
 if (!"umap" %in% Reductions(ifnb.filtered)) {
   ifnb.filtered <- RunUMAP(ifnb.filtered, dims = 1:20, reduction = "pca")
@@ -698,21 +540,21 @@ ifnb.filtered <- RunUMAP(ifnb.filtered, reduction = "harmony", dims = 1:20, redu
 ```
 
 ``` output
-14:41:40 UMAP embedding parameters a = 0.9922 b = 1.112
-14:41:40 Read 13548 rows and found 20 numeric columns
-14:41:40 Using Annoy for neighbor search, n_neighbors = 30
-14:41:40 Building Annoy index with metric = cosine, n_trees = 50
+05:22:47 UMAP embedding parameters a = 0.9922 b = 1.112
+05:22:47 Read 13548 rows and found 20 numeric columns
+05:22:47 Using Annoy for neighbor search, n_neighbors = 30
+05:22:47 Building Annoy index with metric = cosine, n_trees = 50
 0%   10   20   30   40   50   60   70   80   90   100%
 [----|----|----|----|----|----|----|----|----|----|
 **************************************************|
-14:41:41 Writing NN index file to temp file /tmp/RtmpKtP6WI/file15874b8216ca
-14:41:41 Searching Annoy index using 1 thread, search_k = 3000
-14:41:46 Annoy recall = 100%
-14:41:47 Commencing smooth kNN distance calibration using 1 thread with target n_neighbors = 30
-14:41:49 Initializing from normalized Laplacian + noise (using RSpectra)
-14:41:49 Commencing optimization for 200 epochs, with 586822 positive edges
-14:41:49 Using rng type: pcg
-14:41:55 Optimization finished
+05:22:48 Writing NN index file to temp file /tmp/Rtmp4rCzRk/file1e9b279437f8
+05:22:48 Searching Annoy index using 1 thread, search_k = 3000
+05:22:52 Annoy recall = 100%
+05:22:53 Commencing smooth kNN distance calibration using 1 thread with target n_neighbors = 30
+05:22:55 Initializing from normalized Laplacian + noise (using RSpectra)
+05:22:56 Commencing optimization for 200 epochs, with 586822 positive edges
+05:22:56 Using rng type: pcg
+05:23:02 Optimization finished
 ```
 
 ``` r
@@ -798,19 +640,19 @@ ifnb.filtered <- RunUMAP(ifnb.filtered, reduction = "integrated.cca", dims = 1:2
 ```
 
 ``` output
-14:44:50 UMAP embedding parameters a = 0.9922 b = 1.112
+05:25:52 UMAP embedding parameters a = 0.9922 b = 1.112
 ```
 
 ``` output
-14:44:50 Read 13548 rows and found 20 numeric columns
+05:25:52 Read 13548 rows and found 20 numeric columns
 ```
 
 ``` output
-14:44:50 Using Annoy for neighbor search, n_neighbors = 30
+05:25:52 Using Annoy for neighbor search, n_neighbors = 30
 ```
 
 ``` output
-14:44:50 Building Annoy index with metric = cosine, n_trees = 50
+05:25:52 Building Annoy index with metric = cosine, n_trees = 50
 ```
 
 ``` output
@@ -823,14 +665,14 @@ ifnb.filtered <- RunUMAP(ifnb.filtered, reduction = "integrated.cca", dims = 1:2
 
 ``` output
 **************************************************|
-14:44:52 Writing NN index file to temp file /tmp/RtmpKtP6WI/file158712280efc
-14:44:52 Searching Annoy index using 1 thread, search_k = 3000
-14:44:57 Annoy recall = 100%
-14:44:58 Commencing smooth kNN distance calibration using 1 thread with target n_neighbors = 30
-14:45:00 Initializing from normalized Laplacian + noise (using RSpectra)
-14:45:00 Commencing optimization for 200 epochs, with 595526 positive edges
-14:45:00 Using rng type: pcg
-14:45:06 Optimization finished
+05:25:53 Writing NN index file to temp file /tmp/Rtmp4rCzRk/file1e9b3dffef59
+05:25:53 Searching Annoy index using 1 thread, search_k = 3000
+05:25:58 Annoy recall = 100%
+05:25:59 Commencing smooth kNN distance calibration using 1 thread with target n_neighbors = 30
+05:26:01 Initializing from normalized Laplacian + noise (using RSpectra)
+05:26:01 Commencing optimization for 200 epochs, with 595526 positive edges
+05:26:01 Using rng type: pcg
+05:26:07 Optimization finished
 ```
 
 ``` r
@@ -965,7 +807,10 @@ DimPlot(ifnb.filtered, reduction = "umap.cca", group.by = "Phase", pt.size = 0.3
 # Phase composition by cluster and by condition
 tab_phase_cluster <- prop.table(table(ifnb.filtered$seurat_clusters, ifnb.filtered$Phase), 1) * 100
 tab_phase_cond    <- prop.table(table(ifnb.filtered$stim,            ifnb.filtered$Phase), 1) * 100
-pheatmap(tab_phase_cluster, main = "Phase (%) by cluster")
+pheatmap(tab_phase_cluster,
+         main = "Phase (%) by cluster",
+         display_numbers = TRUE,
+         number_format = "%.1f")
 ```
 
 <img src="fig/section1-rendered-unnamed-chunk-21-2.png" style="display: block; margin: auto;" />

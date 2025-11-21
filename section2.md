@@ -23,16 +23,24 @@ exercises: 2
 ::::::::::::::::::::::::::::::::::::::::::::::::
 
 
-``` output
-Modularity Optimizer version 1.3.0 by Ludo Waltman and Nees Jan van Eck
+``` error
+Error in getGlobalsAndPackages(expr, envir = envir, globals = globals): The total size of the 7 globals exported for future expression ('FUN()') is 500.01 MiB. This exceeds the maximum allowed size 500.00 MiB per by R option "future.globals.maxSize". This limit is set to protect against transfering too large objects to parallel workers by mistake, which may not be intended and could be costly. See help("future.globals.maxSize", package = "future") for further explainations and how to adjust or remove this threshold The three largest globals are 'FUN' (250.83 MiB of class 'function'), 'index' (247.59 MiB of class 'S4') and 'query' (1.59 MiB of class 'numeric')
+```
 
-Number of nodes: 13548
-Number of edges: 521570
+``` error
+Error in `object[[reduction]]` at Seurat/R/dimensional_reduction.R:1912:5:
+! 'integrated.cca' not found in this Seurat object
+ 
+```
 
-Running Louvain algorithm...
-Maximum modularity in 10 random starts: 0.9002
-Number of communities: 13
-Elapsed time: 2 seconds
+``` error
+Error in `object[[reduction]]` at Seurat/R/clustering.R:798:5:
+! 'integrated.cca' not found in this Seurat object
+ 
+```
+
+``` error
+Error in FindClusters.Seurat(ifnb.filtered, resolution = 0.5): Provided graph.name not present in Seurat object
 ```
 
 
@@ -41,7 +49,11 @@ Elapsed time: 2 seconds
 DimPlot(ifnb.filtered, reduction = "umap.cca", label = T)
 ```
 
-<img src="fig/section2-rendered-unnamed-chunk-2-1.png" style="display: block; margin: auto;" />
+``` error
+Error in `object[[reduction]]` at Seurat/R/visualization.R:901:3:
+! 'umap.cca' not found in this Seurat object
+ 
+```
 
 
 
@@ -49,7 +61,11 @@ DimPlot(ifnb.filtered, reduction = "umap.cca", label = T)
 DimPlot(ifnb.filtered, reduction = "umap.cca", group.by = "stim")
 ```
 
-<img src="fig/section2-rendered-unnamed-chunk-3-1.png" style="display: block; margin: auto;" />
+``` error
+Error in `object[[reduction]]` at Seurat/R/visualization.R:901:3:
+! 'umap.cca' not found in this Seurat object
+ 
+```
 
 
 ## Step 1. Find Conserved Markers to label our celltypes
@@ -61,52 +77,24 @@ markers.cluster.4 <- FindConservedMarkers(ifnb.filtered, ident.1 = 4,
                      grouping.var = 'stim')
 ```
 
-``` output
-Testing group CTRL: (4) vs (0, 11, 2, 7, 1, 5, 10, 9, 3, 6, 8, 12)
+``` warning
+Warning: Identity: 4 not present in group CTRL. Skipping CTRL
 ```
 
-``` output
-For a (much!) faster implementation of the Wilcoxon Rank Sum Test,
-(default method for FindMarkers) please install the presto package
---------------------------------------------
-install.packages('devtools')
-devtools::install_github('immunogenomics/presto')
---------------------------------------------
-After installation of presto, Seurat will automatically use the more 
-efficient implementation (no further action necessary).
-This message will be shown once per session
+``` warning
+Warning: Identity: 4 not present in group STIM. Skipping STIM
 ```
 
-``` output
-Testing group STIM: (4) vs (5, 11, 1, 3, 0, 7, 9, 2, 6, 8, 10, 12)
+``` error
+Error in marker.test[[i]]: subscript out of bounds
 ```
 
 ``` r
 head(markers.cluster.4)
 ```
 
-``` output
-          CTRL_p_val CTRL_avg_log2FC CTRL_pct.1 CTRL_pct.2 CTRL_p_val_adj
-VMO1    0.000000e+00        6.020340      0.843      0.060   0.000000e+00
-FCGR3A  0.000000e+00        4.127801      0.980      0.204   0.000000e+00
-MS4A7   0.000000e+00        3.734967      0.957      0.196   0.000000e+00
-MS4A4A  0.000000e+00        5.200846      0.587      0.025   0.000000e+00
-CXCL16 1.976263e-323        2.928346      0.949      0.234  2.777242e-319
-LST1   8.070733e-289        2.861452      0.929      0.251  1.134180e-284
-       STIM_p_val STIM_avg_log2FC STIM_pct.1 STIM_pct.2 STIM_p_val_adj
-VMO1            0        7.585467      0.721      0.022              0
-FCGR3A          0        5.121272      0.989      0.128              0
-MS4A7           0        3.916774      0.992      0.219              0
-MS4A4A          0        4.824831      0.901      0.073              0
-CXCL16          0        3.854043      0.924      0.148              0
-LST1            0        3.059542      0.887      0.193              0
-            max_pval minimump_p_val
-VMO1    0.000000e+00              0
-FCGR3A  0.000000e+00              0
-MS4A7   0.000000e+00              0
-MS4A4A  0.000000e+00              0
-CXCL16 1.976263e-323              0
-LST1   8.070733e-289              0
+``` error
+Error in h(simpleError(msg, call)): error in evaluating the argument 'x' in selecting a method for function 'head': object 'markers.cluster.4' not found
 ```
 
 Let's visualise the top upregulated, conserved between condition,
@@ -129,7 +117,11 @@ FeaturePlot(ifnb.filtered, reduction = "umap.cca",
             features = c('VMO1', 'FCGR3A', 'MS4A7', 'CXCL16'), min.cutoff = 'q10')
 ```
 
-<img src="fig/section2-rendered-unnamed-chunk-5-1.png" style="display: block; margin: auto;" />
+``` error
+Error in `object[[reduction]]` at Seurat/R/visualization.R:1216:3:
+! 'umap.cca' not found in this Seurat object
+ 
+```
 
 
 
@@ -143,6 +135,13 @@ FeaturePlot(ifnb.filtered, reduction = "umap.cca",
 
 ``` r
 ifnb.filtered <- RenameIdents(ifnb.filtered, '4' = 'CD16 Mono') # Let's rename cells in cluster 3 with a new cell type label
+```
+
+``` error
+Error in RenameIdents.Seurat(ifnb.filtered, `4` = "CD16 Mono"): Cannot find any of the provided identities
+```
+
+``` r
 # Idents(ifnb.filtered) # we can take a look at the cell identities again
 ```
 
@@ -153,7 +152,11 @@ DimPlot(ifnb.filtered, reduction = "umap.cca", label = T) +
   ggtitle("After changing the identity of cluster 4")
 ```
 
-<img src="fig/section2-rendered-unnamed-chunk-8-1.png" style="display: block; margin: auto;" />
+``` error
+Error in `object[[reduction]]` at Seurat/R/visualization.R:901:3:
+! 'umap.cca' not found in this Seurat object
+ 
+```
 
 
 ## Step 2: Set the identity of our clusters to the annotations provided
@@ -170,7 +173,11 @@ Idents(ifnb.filtered) <- ifnb.filtered@meta.data$seurat_annotations
 DimPlot(ifnb.filtered, reduction = "umap.cca", label = T)
 ```
 
-<img src="fig/section2-rendered-unnamed-chunk-10-1.png" style="display: block; margin: auto;" />
+``` error
+Error in `object[[reduction]]` at Seurat/R/visualization.R:901:3:
+! 'umap.cca' not found in this Seurat object
+ 
+```
 
 
 :::: callout
@@ -196,7 +203,11 @@ Idents(ifnb.filtered) <- ifnb.filtered$celltype.and.stim
 DimPlot(ifnb.filtered, reduction = "umap.cca", label = T) # each cluster is now made up of two labels (control or stimulated)
 ```
 
-<img src="fig/section2-rendered-unnamed-chunk-11-1.png" style="display: block; margin: auto;" />
+``` error
+Error in `object[[reduction]]` at Seurat/R/visualization.R:901:3:
+! 'umap.cca' not found in this Seurat object
+ 
+```
 
 
 
@@ -206,9 +217,49 @@ DimPlot(ifnb.filtered, reduction = "umap.cca",
         label = T, split.by = "stim") # Lets separate by condition to see what we've done a bit more clearly
 ```
 
-<img src="fig/section2-rendered-unnamed-chunk-12-1.png" style="display: block; margin: auto;" />
+``` error
+Error in `object[[reduction]]` at Seurat/R/visualization.R:901:3:
+! 'umap.cca' not found in this Seurat object
+ 
+```
 
 
+::::::::::::::::::::::::::::::::::::: challenge 
+Automated Cell Type Annotation
+
+:::::::::::::::::::::::: solution 
+
+
+``` r
+# Load reference data 
+# Blood & immune lineages
+ref.set <- celldex::BlueprintEncodeData()
+
+ifnb.v4 <- JoinLayers(ifnb.filtered)
+sce.ifnb.filtered <- as.SingleCellExperiment(ifnb.v4)
+sce.ifnb.filtered <- logNormCounts(sce.ifnb.filtered)
+
+pred.cnts <- SingleR(
+  test = sce.ifnb.filtered,
+  ref = ref.set,
+  labels = ref.set$label.main
+)
+
+lbls.keep <- table(pred.cnts$labels)>10
+# Add SingleR labels to Seurat metadata
+ifnb.filtered$SingleR.labels <- sce.ifnb.filtered$SingleR.labels
+ifnb.filtered$SingleR.labels <- ifelse(lbls.keep[pred.cnts$labels], pred.cnts$labels, 'Other')
+
+# Run UMAP (based on PCA)
+ifnb.filtered <- RunUMAP(ifnb.filtered, dims = 1:20)
+DimPlot(ifnb.filtered, reduction='umap', group.by='SingleR.labels')
+```
+
+<img src="fig/section2-rendered-unnamed-chunk-13-1.png" style="display: block; margin: auto;" />
+
+:::::::::::::::::::::::::::::::::
+
+:::::::::::::::::::::::::::::::::::
 
 We'll now leverage these new identities to compare DEGs between our
 treatment groups
@@ -217,6 +268,21 @@ treatment groups
 ``` r
 treatment.response.CD16 <- FindMarkers(ifnb.filtered, ident.1 = 'CD16 Mono_STIM', 
                                        ident.2 = 'CD16 Mono_CTRL')
+```
+
+``` output
+For a (much!) faster implementation of the Wilcoxon Rank Sum Test,
+(default method for FindMarkers) please install the presto package
+--------------------------------------------
+install.packages('devtools')
+devtools::install_github('immunogenomics/presto')
+--------------------------------------------
+After installation of presto, Seurat will automatically use the more 
+efficient implementation (no further action necessary).
+This message will be shown once per session
+```
+
+``` r
 head(treatment.response.CD16) # These are the genes that are upregulated in the stimulated versus control group
 ```
 
@@ -239,7 +305,11 @@ FeaturePlot(ifnb.filtered, reduction = 'umap.cca',
             split.by = 'stim', min.cutoff = 'q10')
 ```
 
-<img src="fig/section2-rendered-unnamed-chunk-14-1.png" style="display: block; margin: auto;" />
+``` error
+Error in `object[[reduction]]` at Seurat/R/visualization.R:1216:3:
+! 'umap.cca' not found in this Seurat object
+ 
+```
 
 
 ## Step 5: Create a Heatmap to visualise DEGs between our two conditions + cell types
@@ -278,20 +348,11 @@ top5 <- ifnb.treatVsCtrl.markers %>%
 
 DEG.heatmap <- DoHeatmap(ifnb.filtered, features = top5$gene,
           label = FALSE)
-```
 
-``` warning
-Warning in DoHeatmap(ifnb.filtered, features = top5$gene, label = FALSE): The
-following features were omitted as they were not found in the scale.data layer
-for the RNA assay: EIF1, BLNK, RPS15A, GIMAP5, LINC00926, RPL21, RPL13, RPL7,
-RPS3A, RPS6, RPL14, RPS16, RPL3, PABPC1, CPLX1
-```
-
-``` r
 DEG.heatmap
 ```
 
-<img src="fig/section2-rendered-unnamed-chunk-17-1.png" style="display: block; margin: auto;" />
+<img src="fig/section2-rendered-unnamed-chunk-18-1.png" style="display: block; margin: auto;" />
 
 
 
