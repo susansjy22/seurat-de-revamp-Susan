@@ -316,7 +316,7 @@ conditions + cell types</a></li>
       </div>
       <hr></nav><main id="main-content" class="main-content"><div class="container lesson-content">
         <h1>Section 2: Differential Gene Expression when dealing with two treatment conditions</h1>
-        <p>Last updated on 2025-11-21 |
+        <p>Last updated on 2025-11-22 |
 
         <a href="https://github.com/melbournebioinformatics/workbench-template-rmd/edit/main/episodes/section2.Rmd" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 
@@ -630,15 +630,22 @@ conditions, using CD16 Mono cells as an example<a class="anchor" aria-label="anc
 <span></span>
 <span><span class="co"># Run UMAP (based on PCA)</span></span>
 <span><span class="va">ifnb.filtered</span> <span class="op">&lt;-</span> <span class="fu">RunUMAP</span><span class="op">(</span><span class="va">ifnb.filtered</span>, dims <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">20</span><span class="op">)</span></span>
-<span><span class="fu">DimPlot</span><span class="op">(</span><span class="va">ifnb.filtered</span>, reduction<span class="op">=</span><span class="st">'umap'</span>, group.by<span class="op">=</span><span class="st">'SingleR.labels'</span><span class="op">)</span></span></code></pre>
+<span><span class="fu">DimPlot</span><span class="op">(</span><span class="va">ifnb.filtered</span>, reduction<span class="op">=</span><span class="st">'umap.cca'</span>, group.by<span class="op">=</span><span class="st">'SingleR.labels'</span>,  label <span class="op">=</span> <span class="cn">TRUE</span>, label.size <span class="op">=</span> <span class="fl">3</span> <span class="op">)</span></span></code></pre>
 </div>
-<figure><img src="fig/section2-rendered-unnamed-chunk-13-1.png" style="display: block; margin: auto;" class="figure mx-auto d-block"></figure></div>
+<div class="codewrapper">
+<h3 class="code-label">ERROR<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="error" tabindex="0"><code>Error in `object[[reduction]]` at Seurat/R/visualization.R:901:3:
+! 'umap.cca' not found in this Seurat object
+ </code></pre>
+</div>
+</div>
 </div>
 </div>
 </div>
 <p>We’ll now leverage these new identities to compare DEGs between our
 treatment groups</p>
-<div class="codewrapper sourceCode" id="cb31">
+<div class="codewrapper sourceCode" id="cb32">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -658,7 +665,7 @@ After installation of presto, Seurat will automatically use the more
 efficient implementation (no further action necessary).
 This message will be shown once per session</code></pre>
 </div>
-<div class="codewrapper sourceCode" id="cb33">
+<div class="codewrapper sourceCode" id="cb34">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -676,7 +683,7 @@ IFITM3 1.056793e-161   3.191513 1.000 0.634 1.485111e-157
 IFIT2  7.334976e-159   4.622453 0.974 0.162 1.030784e-154</code></pre>
 </div>
 </section><section><h2 class="section-heading" id="step-4-lets-plot-conserved-features-vs-degs-between-conditions">Step 4: Lets plot conserved features vs DEGs between conditions<a class="anchor" aria-label="anchor" href="#step-4-lets-plot-conserved-features-vs-degs-between-conditions"></a></h2>
-<hr class="half-width"><div class="codewrapper sourceCode" id="cb35">
+<hr class="half-width"><div class="codewrapper sourceCode" id="cb36">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -693,7 +700,7 @@ IFIT2  7.334976e-159   4.622453 0.974 0.162 1.030784e-154</code></pre>
 </div>
 </section><section><h2 class="section-heading" id="step-5-create-a-heatmap-to-visualise-degs-between-our-two-conditions-cell-types">Step 5: Create a Heatmap to visualise DEGs between our two
 conditions + cell types<a class="anchor" aria-label="anchor" href="#step-5-create-a-heatmap-to-visualise-degs-between-our-two-conditions-cell-types"></a></h2>
-<hr class="half-width"><div class="codewrapper sourceCode" id="cb37">
+<hr class="half-width"><div class="codewrapper sourceCode" id="cb38">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -701,7 +708,7 @@ conditions + cell types<a class="anchor" aria-label="anchor" href="#step-5-creat
 <span><span class="va">ifnb.treatVsCtrl.markers</span> <span class="op">&lt;-</span> <span class="fu">FindAllMarkers</span><span class="op">(</span><span class="va">ifnb.filtered</span>,</span>
 <span>                                          only.pos <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre>
 </div>
-<div class="codewrapper sourceCode" id="cb38">
+<div class="codewrapper sourceCode" id="cb39">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -713,7 +720,7 @@ rds file of the output using the code below:</p>
 interpret sometimes (we’ll learn how to make better and clearer custom
 heatmaps using the pheatmap package from our Seurat expression data
 later on).</p>
-<div class="codewrapper sourceCode" id="cb39">
+<div class="codewrapper sourceCode" id="cb40">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -810,8 +817,8 @@ any links that you are not going to use.
   "url": "melbournebioinformatics.github.io/uom-varnish/section2.html",
   "identifier": "melbournebioinformatics.github.io/uom-varnish/section2.html",
   "dateCreated": "2025-11-01",
-  "dateModified": "2025-11-21",
-  "datePublished": "2025-11-21"
+  "dateModified": "2025-11-22",
+  "datePublished": "2025-11-22"
 }
 
   </script><script>
