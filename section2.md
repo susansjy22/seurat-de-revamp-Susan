@@ -252,10 +252,14 @@ ifnb.filtered$SingleR.labels <- ifelse(lbls.keep[pred.cnts$labels], pred.cnts$la
 
 # Run UMAP (based on PCA)
 ifnb.filtered <- RunUMAP(ifnb.filtered, dims = 1:20)
-DimPlot(ifnb.filtered, reduction='umap', group.by='SingleR.labels')
+DimPlot(ifnb.filtered, reduction='umap.cca', group.by='SingleR.labels',  label = TRUE, label.size = 3 )
 ```
 
-<img src="fig/section2-rendered-unnamed-chunk-13-1.png" style="display: block; margin: auto;" />
+``` error
+Error in `object[[reduction]]` at Seurat/R/visualization.R:901:3:
+! 'umap.cca' not found in this Seurat object
+ 
+```
 
 :::::::::::::::::::::::::::::::::
 
