@@ -540,21 +540,21 @@ ifnb.filtered <- RunUMAP(ifnb.filtered, reduction = "harmony", dims = 1:20, redu
 ```
 
 ``` output
-06:28:08 UMAP embedding parameters a = 0.9922 b = 1.112
-06:28:08 Read 13548 rows and found 20 numeric columns
-06:28:08 Using Annoy for neighbor search, n_neighbors = 30
-06:28:08 Building Annoy index with metric = cosine, n_trees = 50
+10:34:08 UMAP embedding parameters a = 0.9922 b = 1.112
+10:34:08 Read 13548 rows and found 20 numeric columns
+10:34:08 Using Annoy for neighbor search, n_neighbors = 30
+10:34:08 Building Annoy index with metric = cosine, n_trees = 50
 0%   10   20   30   40   50   60   70   80   90   100%
 [----|----|----|----|----|----|----|----|----|----|
 **************************************************|
-06:28:09 Writing NN index file to temp file /tmp/Rtmp2IAaiR/file1fdd22e061fc
-06:28:09 Searching Annoy index using 1 thread, search_k = 3000
-06:28:14 Annoy recall = 100%
-06:28:15 Commencing smooth kNN distance calibration using 1 thread with target n_neighbors = 30
-06:28:17 Initializing from normalized Laplacian + noise (using RSpectra)
-06:28:18 Commencing optimization for 200 epochs, with 586822 positive edges
-06:28:18 Using rng type: pcg
-06:28:24 Optimization finished
+10:34:09 Writing NN index file to temp file /tmp/RtmpJ7YTPo/file23e06810dd95
+10:34:09 Searching Annoy index using 1 thread, search_k = 3000
+10:34:14 Annoy recall = 100%
+10:34:15 Commencing smooth kNN distance calibration using 1 thread with target n_neighbors = 30
+10:34:17 Initializing from normalized Laplacian + noise (using RSpectra)
+10:34:17 Commencing optimization for 200 epochs, with 586822 positive edges
+10:34:17 Using rng type: pcg
+10:34:23 Optimization finished
 ```
 
 ``` r
@@ -580,8 +580,7 @@ well
 
 
 
-## Step 5: Integrating our data using an alternative Seurat CCA
-method
+## Step 5: Integrating our data using an alternative Seurat CCA method
 
 
 ``` r
@@ -589,93 +588,9 @@ ifnb.filtered <- IntegrateLayers(object = ifnb.filtered,
                                  method = CCAIntegration,
                                  orig.reduction = "pca", 
                                  new.reduction = "integrated.cca")
-```
 
-``` output
-Finding all pairwise anchors
-```
-
-``` output
-Running CCA
-```
-
-``` output
-Merging objects
-```
-
-``` output
-Finding neighborhoods
-```
-
-``` output
-Finding anchors
-```
-
-``` output
-	Found 13439 anchors
-```
-
-``` output
-Merging dataset 1 into 2
-```
-
-``` output
-Extracting anchors for merged samples
-```
-
-``` output
-Finding integration vectors
-```
-
-``` output
-Finding integration vector weights
-```
-
-``` output
-Integrating data
-```
-
-``` r
 ifnb.filtered <- RunUMAP(ifnb.filtered, reduction = "integrated.cca", dims = 1:20, reduction.name = "umap.cca")
-```
 
-``` output
-06:31:21 UMAP embedding parameters a = 0.9922 b = 1.112
-```
-
-``` output
-06:31:21 Read 13548 rows and found 20 numeric columns
-```
-
-``` output
-06:31:21 Using Annoy for neighbor search, n_neighbors = 30
-```
-
-``` output
-06:31:21 Building Annoy index with metric = cosine, n_trees = 50
-```
-
-``` output
-0%   10   20   30   40   50   60   70   80   90   100%
-```
-
-``` output
-[----|----|----|----|----|----|----|----|----|----|
-```
-
-``` output
-**************************************************|
-06:31:22 Writing NN index file to temp file /tmp/Rtmp2IAaiR/file1fdd217cf190
-06:31:22 Searching Annoy index using 1 thread, search_k = 3000
-06:31:27 Annoy recall = 100%
-06:31:28 Commencing smooth kNN distance calibration using 1 thread with target n_neighbors = 30
-06:31:31 Initializing from normalized Laplacian + noise (using RSpectra)
-06:31:31 Commencing optimization for 200 epochs, with 595526 positive edges
-06:31:31 Using rng type: pcg
-06:31:37 Optimization finished
-```
-
-``` r
 after.seuratCCA <- DimPlot(ifnb.filtered, reduction = "umap.cca", group.by = "stim") +
   ggtitle("After Seurat CCA Integration")
 
