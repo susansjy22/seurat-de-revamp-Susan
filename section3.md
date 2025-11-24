@@ -118,7 +118,6 @@ head(ifnb.pseudobulk.df)
 ```
 
 
-
 ## Step 3: Perform Differential Expression using DESeq2
 
 Just like before, lets make a new column containing the cell type and
@@ -298,8 +297,6 @@ Visualise_Overlapping_DEGs <- function(pseudobulk.de,
 
 Let's use the helper functions above to plot and view the
 overlap/agreement between our pseudobulk versus single-cell approaches
-
- 
         
 
 ``` r

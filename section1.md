@@ -547,21 +547,21 @@ ifnb.filtered <- RunUMAP(ifnb.filtered, reduction = "harmony", dims = 1:20, redu
 ```
 
 ``` output
-12:17:27 UMAP embedding parameters a = 0.9922 b = 1.112
-12:17:27 Read 13548 rows and found 20 numeric columns
-12:17:27 Using Annoy for neighbor search, n_neighbors = 30
-12:17:27 Building Annoy index with metric = cosine, n_trees = 50
+14:25:07 UMAP embedding parameters a = 0.9922 b = 1.112
+14:25:07 Read 13548 rows and found 20 numeric columns
+14:25:07 Using Annoy for neighbor search, n_neighbors = 30
+14:25:07 Building Annoy index with metric = cosine, n_trees = 50
 0%   10   20   30   40   50   60   70   80   90   100%
 [----|----|----|----|----|----|----|----|----|----|
 **************************************************|
-12:17:28 Writing NN index file to temp file /tmp/RtmpE80Nrs/file24254e0f61fb
-12:17:28 Searching Annoy index using 1 thread, search_k = 3000
-12:17:32 Annoy recall = 100%
-12:17:33 Commencing smooth kNN distance calibration using 1 thread with target n_neighbors = 30
-12:17:36 Initializing from normalized Laplacian + noise (using RSpectra)
-12:17:36 Commencing optimization for 200 epochs, with 586822 positive edges
-12:17:36 Using rng type: pcg
-12:17:42 Optimization finished
+14:25:08 Writing NN index file to temp file /tmp/RtmpDX5C6D/file243f7c83f9df
+14:25:08 Searching Annoy index using 1 thread, search_k = 3000
+14:25:13 Annoy recall = 100%
+14:25:14 Commencing smooth kNN distance calibration using 1 thread with target n_neighbors = 30
+14:25:17 Initializing from normalized Laplacian + noise (using RSpectra)
+14:25:17 Commencing optimization for 200 epochs, with 586822 positive edges
+14:25:17 Using rng type: pcg
+14:25:23 Optimization finished
 ```
 
 ``` r
@@ -593,40 +593,16 @@ ifnb.filtered <- IntegrateLayers(object = ifnb.filtered,
                                  method = CCAIntegration,
                                  orig.reduction = "pca", 
                                  new.reduction = "integrated.cca")
-```
 
-``` error
-Error in getGlobalsAndPackages(expr, envir = envir, globals = globals): The total size of the 7 globals exported for future expression ('FUN()') is 500.11 MiB. This exceeds the maximum allowed size 500.00 MiB per by R option "future.globals.maxSize". This limit is set to protect against transfering too large objects to parallel workers by mistake, which may not be intended and could be costly. See help("future.globals.maxSize", package = "future") for further explainations and how to adjust or remove this threshold The three largest globals are 'FUN' (251.28 MiB of class 'function'), 'index' (247.00 MiB of class 'S4') and 'query' (1.82 MiB of class 'numeric')
-```
-
-``` r
 ifnb.filtered <- RunUMAP(ifnb.filtered, reduction = "integrated.cca", dims = 1:20, reduction.name = "umap.cca")
-```
 
-``` error
-Error in `object[[reduction]]` at Seurat/R/dimensional_reduction.R:1912:5:
-! 'integrated.cca' not found in this Seurat object
- 
-```
-
-``` r
 after.seuratCCA <- DimPlot(ifnb.filtered, reduction = "umap.cca", group.by = "stim") +
   ggtitle("After Seurat CCA Integration")
-```
 
-``` error
-Error in `object[[reduction]]` at Seurat/R/visualization.R:901:3:
-! 'umap.cca' not found in this Seurat object
- 
-```
-
-``` r
 before.integration | after.seuratCCA
 ```
 
-``` error
-Error: object 'after.seuratCCA' not found
-```
+<img src="fig/section1-rendered-unnamed-chunk-17-1.png" style="display: block; margin: auto;" />
 
 
 
@@ -635,9 +611,7 @@ Error: object 'after.seuratCCA' not found
 after.harmony | after.seuratCCA
 ```
 
-``` error
-Error: object 'after.seuratCCA' not found
-```
+<img src="fig/section1-rendered-unnamed-chunk-18-1.png" style="display: block; margin: auto;" />
 
 ``` r
 ## Show example slide of integration 'failing' but due to different cell types in each sample ***
@@ -669,11 +643,7 @@ Now that we have integrated the data, do you think the results will be the same 
 DimPlot(ifnb.filtered, reduction = "umap.cca", group.by = "Phase", pt.size = 0.3)
 ```
 
-``` error
-Error in `object[[reduction]]` at Seurat/R/visualization.R:901:3:
-! 'umap.cca' not found in this Seurat object
- 
-```
+<img src="fig/section1-rendered-unnamed-chunk-19-1.png" style="display: block; margin: auto;" />
 
 ``` r
 # Phase composition by cluster and by condition
@@ -702,7 +672,7 @@ Error: object 'tab_phase_cluster' not found
 pheatmap(tab_phase_cond,    main = "Phase (%) by condition (stim)")
 ```
 
-<img src="fig/section1-rendered-unnamed-chunk-19-1.png" style="display: block; margin: auto;" />
+<img src="fig/section1-rendered-unnamed-chunk-19-2.png" style="display: block; margin: auto;" />
 
 :::::::::::::::::::::::::::::::::
 
@@ -720,18 +690,28 @@ and needs to be done before differential expression analysis
 ifnb.filtered <- FindNeighbors(ifnb.filtered, reduction = "integrated.cca", dims = 1:20)
 ```
 
-``` error
-Error in `object[[reduction]]` at Seurat/R/clustering.R:798:5:
-! 'integrated.cca' not found in this Seurat object
- 
+``` output
+Computing nearest neighbor graph
+```
+
+``` output
+Computing SNN
 ```
 
 ``` r
 ifnb.filtered <- FindClusters(ifnb.filtered, resolution = 0.5)
 ```
 
-``` error
-Error in FindClusters.Seurat(ifnb.filtered, resolution = 0.5): Provided graph.name not present in Seurat object
+``` output
+Modularity Optimizer version 1.3.0 by Ludo Waltman and Nees Jan van Eck
+
+Number of nodes: 13548
+Number of edges: 521570
+
+Running Louvain algorithm...
+Maximum modularity in 10 random starts: 0.9002
+Number of communities: 13
+Elapsed time: 2 seconds
 ```
 
 ``` r
@@ -760,31 +740,11 @@ ifnb.filtered$kmeans_k12 <- factor(km$cluster)
 
 # Compare labelings
 p1 <- DimPlot(ifnb.filtered, reduction = "umap.cca", group.by = "seurat_clusters") + ggtitle("Louvain")
-```
-
-``` error
-Error in `object[[reduction]]` at Seurat/R/visualization.R:901:3:
-! 'umap.cca' not found in this Seurat object
- 
-```
-
-``` r
 p2 <- DimPlot(ifnb.filtered, reduction = "umap.cca", group.by = "kmeans_k12") + ggtitle("k-means (K=12)")
-```
-
-``` error
-Error in `object[[reduction]]` at Seurat/R/visualization.R:901:3:
-! 'umap.cca' not found in this Seurat object
- 
-```
-
-``` r
 p1 | p2
 ```
 
-``` error
-Error: object 'p1' not found
-```
+<img src="fig/section1-rendered-unnamed-chunk-21-1.png" style="display: block; margin: auto;" />
 
 ``` r
 # If you decide to proceed with k-means downstream:
