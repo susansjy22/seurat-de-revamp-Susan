@@ -96,13 +96,7 @@ code block.
 ifnb.pseudobulk <- AggregateExpression(ifnb.filtered, assays = "RNA",
                                    group.by = c("stim", "donor_id", "seurat_annotations"),
                                    return.seurat = TRUE)
-```
 
-``` output
-Centering and scaling data matrix
-```
-
-``` r
 ## Centering and scaling data matrix
 # If you want the pseudobulk matrix as a dataframe you can do this:
 ifnb.pseudobulk.df <- AggregateExpression(ifnb.filtered, assays = "RNA",
@@ -117,721 +111,8 @@ We can view the top rows here:
 head(ifnb.pseudobulk.df)
 ```
 
-``` output
-              RNA.CTRL_SNG.101_CD14.Mono RNA.CTRL_SNG.101_CD4.Naive.T
-AL627309.1                             0                            0
-RP11-206L10.2                          0                            0
-LINC00115                              0                            0
-NOC2L                                  7                            3
-KLHL17                                 0                            0
-PLEKHN1                                1                            0
-              RNA.CTRL_SNG.101_CD4.Memory.T RNA.CTRL_SNG.101_CD16.Mono
-AL627309.1                                0                          0
-RP11-206L10.2                             0                          0
-LINC00115                                 0                          0
-NOC2L                                     5                          3
-KLHL17                                    0                          0
-PLEKHN1                                   0                          0
-              RNA.CTRL_SNG.101_B RNA.CTRL_SNG.101_CD8.T
-AL627309.1                     0                      0
-RP11-206L10.2                  0                      0
-LINC00115                      0                      0
-NOC2L                          1                      3
-KLHL17                         0                      0
-PLEKHN1                        0                      1
-              RNA.CTRL_SNG.101_T.activated RNA.CTRL_SNG.101_NK
-AL627309.1                               0                   0
-RP11-206L10.2                            0                   0
-LINC00115                                1                   0
-NOC2L                                    0                   2
-KLHL17                                   0                   0
-PLEKHN1                                  0                   0
-              RNA.CTRL_SNG.101_DC RNA.CTRL_SNG.101_B.Activated
-AL627309.1                      0                            0
-RP11-206L10.2                   0                            0
-LINC00115                       1                            0
-NOC2L                           0                            4
-KLHL17                          0                            0
-PLEKHN1                         0                            0
-              RNA.CTRL_SNG.101_Mk RNA.CTRL_SNG.101_pDC RNA.CTRL_SNG.101_Eryth
-AL627309.1                      0                    0                      0
-RP11-206L10.2                   0                    0                      0
-LINC00115                       0                    0                      1
-NOC2L                           1                    0                      0
-KLHL17                          0                    0                      0
-PLEKHN1                         0                    0                      0
-              RNA.CTRL_SNG.1015_CD14.Mono RNA.CTRL_SNG.1015_CD4.Naive.T
-AL627309.1                              0                             0
-RP11-206L10.2                           0                             0
-LINC00115                               3                             0
-NOC2L                                  23                             7
-KLHL17                                  3                             0
-PLEKHN1                                 2                             0
-              RNA.CTRL_SNG.1015_CD4.Memory.T RNA.CTRL_SNG.1015_CD16.Mono
-AL627309.1                                 0                           0
-RP11-206L10.2                              0                           0
-LINC00115                                  0                           4
-NOC2L                                     16                          14
-KLHL17                                     0                           0
-PLEKHN1                                    0                           0
-              RNA.CTRL_SNG.1015_B RNA.CTRL_SNG.1015_CD8.T
-AL627309.1                      0                       0
-RP11-206L10.2                   0                       0
-LINC00115                       0                       1
-NOC2L                           8                       8
-KLHL17                          0                       0
-PLEKHN1                         0                       0
-              RNA.CTRL_SNG.1015_T.activated RNA.CTRL_SNG.1015_NK
-AL627309.1                                0                    0
-RP11-206L10.2                             0                    0
-LINC00115                                 0                    1
-NOC2L                                     7                    5
-KLHL17                                    0                    0
-PLEKHN1                                   0                    0
-              RNA.CTRL_SNG.1015_DC RNA.CTRL_SNG.1015_B.Activated
-AL627309.1                       0                             0
-RP11-206L10.2                    0                             0
-LINC00115                        0                             0
-NOC2L                            4                            22
-KLHL17                           0                             0
-PLEKHN1                          0                             0
-              RNA.CTRL_SNG.1015_Mk RNA.CTRL_SNG.1015_pDC
-AL627309.1                       0                     0
-RP11-206L10.2                    0                     0
-LINC00115                        1                     1
-NOC2L                            2                     0
-KLHL17                           0                     0
-PLEKHN1                          0                     0
-              RNA.CTRL_SNG.1015_Eryth RNA.CTRL_SNG.1016_CD14.Mono
-AL627309.1                          0                           0
-RP11-206L10.2                       0                           1
-LINC00115                           0                           1
-NOC2L                               1                           5
-KLHL17                              0                           0
-PLEKHN1                             0                           3
-              RNA.CTRL_SNG.1016_CD4.Naive.T RNA.CTRL_SNG.1016_CD4.Memory.T
-AL627309.1                                0                              0
-RP11-206L10.2                             0                              0
-LINC00115                                 1                              2
-NOC2L                                     6                              5
-KLHL17                                    0                              0
-PLEKHN1                                   0                              0
-              RNA.CTRL_SNG.1016_CD16.Mono RNA.CTRL_SNG.1016_B
-AL627309.1                              0                   0
-RP11-206L10.2                           0                   0
-LINC00115                               0                   1
-NOC2L                                   6                   3
-KLHL17                                  0                   0
-PLEKHN1                                 0                   0
-              RNA.CTRL_SNG.1016_CD8.T RNA.CTRL_SNG.1016_T.activated
-AL627309.1                          1                             0
-RP11-206L10.2                       0                             0
-LINC00115                           0                             1
-NOC2L                               8                             9
-KLHL17                              1                             0
-PLEKHN1                             0                             0
-              RNA.CTRL_SNG.1016_NK RNA.CTRL_SNG.1016_DC
-AL627309.1                       0                    0
-RP11-206L10.2                    0                    1
-LINC00115                        0                    0
-NOC2L                            0                    1
-KLHL17                           0                    0
-PLEKHN1                          0                    0
-              RNA.CTRL_SNG.1016_B.Activated RNA.CTRL_SNG.1016_Mk
-AL627309.1                                0                    0
-RP11-206L10.2                             0                    0
-LINC00115                                 0                    0
-NOC2L                                     2                    1
-KLHL17                                    0                    0
-PLEKHN1                                   0                    0
-              RNA.CTRL_SNG.1016_pDC RNA.CTRL_SNG.1016_Eryth
-AL627309.1                        0                       0
-RP11-206L10.2                     0                       0
-LINC00115                         0                       0
-NOC2L                             0                       0
-KLHL17                            0                       0
-PLEKHN1                           0                       0
-              RNA.CTRL_SNG.1039_CD14.Mono RNA.CTRL_SNG.1039_CD4.Naive.T
-AL627309.1                              0                             0
-RP11-206L10.2                           0                             0
-LINC00115                               0                             0
-NOC2L                                   3                             4
-KLHL17                                  0                             0
-PLEKHN1                                 0                             0
-              RNA.CTRL_SNG.1039_CD4.Memory.T RNA.CTRL_SNG.1039_CD16.Mono
-AL627309.1                                 0                           0
-RP11-206L10.2                              0                           0
-LINC00115                                  0                           0
-NOC2L                                      7                           3
-KLHL17                                     0                           0
-PLEKHN1                                    0                           1
-              RNA.CTRL_SNG.1039_B RNA.CTRL_SNG.1039_CD8.T
-AL627309.1                      0                       0
-RP11-206L10.2                   0                       0
-LINC00115                       0                       0
-NOC2L                           1                       2
-KLHL17                          0                       0
-PLEKHN1                         0                       0
-              RNA.CTRL_SNG.1039_T.activated RNA.CTRL_SNG.1039_NK
-AL627309.1                                0                    0
-RP11-206L10.2                             0                    0
-LINC00115                                 0                    0
-NOC2L                                     1                    0
-KLHL17                                    0                    1
-PLEKHN1                                   0                    0
-              RNA.CTRL_SNG.1039_DC RNA.CTRL_SNG.1039_B.Activated
-AL627309.1                       0                             0
-RP11-206L10.2                    0                             0
-LINC00115                        0                             0
-NOC2L                            0                             0
-KLHL17                           0                             0
-PLEKHN1                          0                             0
-              RNA.CTRL_SNG.1039_Mk RNA.CTRL_SNG.1039_pDC
-AL627309.1                       0                     0
-RP11-206L10.2                    0                     0
-LINC00115                        0                     0
-NOC2L                            1                     1
-KLHL17                           0                     0
-PLEKHN1                          0                     0
-              RNA.CTRL_SNG.107_CD14.Mono RNA.CTRL_SNG.107_CD4.Naive.T
-AL627309.1                             0                            0
-RP11-206L10.2                          0                            0
-LINC00115                              1                            0
-NOC2L                                  8                            3
-KLHL17                                 0                            0
-PLEKHN1                                1                            0
-              RNA.CTRL_SNG.107_CD4.Memory.T RNA.CTRL_SNG.107_CD16.Mono
-AL627309.1                                0                          0
-RP11-206L10.2                             0                          0
-LINC00115                                 0                          0
-NOC2L                                     4                          3
-KLHL17                                    0                          0
-PLEKHN1                                   0                          0
-              RNA.CTRL_SNG.107_B RNA.CTRL_SNG.107_CD8.T
-AL627309.1                     0                      0
-RP11-206L10.2                  0                      0
-LINC00115                      0                      0
-NOC2L                          3                      0
-KLHL17                         0                      0
-PLEKHN1                        0                      0
-              RNA.CTRL_SNG.107_T.activated RNA.CTRL_SNG.107_NK
-AL627309.1                               0                   0
-RP11-206L10.2                            0                   0
-LINC00115                                0                   0
-NOC2L                                    0                   1
-KLHL17                                   0                   0
-PLEKHN1                                  0                   0
-              RNA.CTRL_SNG.107_DC RNA.CTRL_SNG.107_B.Activated
-AL627309.1                      0                            0
-RP11-206L10.2                   0                            0
-LINC00115                       0                            0
-NOC2L                           1                            2
-KLHL17                          0                            0
-PLEKHN1                         0                            0
-              RNA.CTRL_SNG.107_Mk RNA.CTRL_SNG.107_pDC
-AL627309.1                      0                    0
-RP11-206L10.2                   0                    0
-LINC00115                       0                    0
-NOC2L                           0                    1
-KLHL17                          0                    0
-PLEKHN1                         0                    0
-              RNA.CTRL_SNG.1244_CD14.Mono RNA.CTRL_SNG.1244_CD4.Naive.T
-AL627309.1                              0                             0
-RP11-206L10.2                           0                             0
-LINC00115                               3                             0
-NOC2L                                   5                            27
-KLHL17                                  0                             1
-PLEKHN1                                 1                             0
-              RNA.CTRL_SNG.1244_CD4.Memory.T RNA.CTRL_SNG.1244_CD16.Mono
-AL627309.1                                 1                           0
-RP11-206L10.2                              0                           0
-LINC00115                                  1                           0
-NOC2L                                     13                           5
-KLHL17                                     0                           2
-PLEKHN1                                    0                           0
-              RNA.CTRL_SNG.1244_B RNA.CTRL_SNG.1244_CD8.T
-AL627309.1                      0                       0
-RP11-206L10.2                   0                       0
-LINC00115                       0                       0
-NOC2L                           5                       8
-KLHL17                          0                       0
-PLEKHN1                         0                       0
-              RNA.CTRL_SNG.1244_T.activated RNA.CTRL_SNG.1244_NK
-AL627309.1                                0                    0
-RP11-206L10.2                             0                    0
-LINC00115                                 1                    0
-NOC2L                                     2                    2
-KLHL17                                    0                    0
-PLEKHN1                                   0                    0
-              RNA.CTRL_SNG.1244_DC RNA.CTRL_SNG.1244_B.Activated
-AL627309.1                       0                             0
-RP11-206L10.2                    0                             0
-LINC00115                        0                             0
-NOC2L                            7                             6
-KLHL17                           0                             0
-PLEKHN1                          0                             0
-              RNA.CTRL_SNG.1244_Mk RNA.CTRL_SNG.1244_pDC
-AL627309.1                       0                     0
-RP11-206L10.2                    0                     0
-LINC00115                        0                     0
-NOC2L                            2                     0
-KLHL17                           0                     0
-PLEKHN1                          0                     0
-              RNA.CTRL_SNG.1244_Eryth RNA.CTRL_SNG.1256_CD14.Mono
-AL627309.1                          0                           0
-RP11-206L10.2                       0                           0
-LINC00115                           0                           1
-NOC2L                               0                          11
-KLHL17                              0                           2
-PLEKHN1                             0                           2
-              RNA.CTRL_SNG.1256_CD4.Naive.T RNA.CTRL_SNG.1256_CD4.Memory.T
-AL627309.1                                0                              0
-RP11-206L10.2                             0                              0
-LINC00115                                 1                              0
-NOC2L                                    35                              9
-KLHL17                                    1                              0
-PLEKHN1                                   1                              0
-              RNA.CTRL_SNG.1256_CD16.Mono RNA.CTRL_SNG.1256_B
-AL627309.1                              0                   0
-RP11-206L10.2                           0                   1
-LINC00115                               0                   0
-NOC2L                                   3                   7
-KLHL17                                  0                   1
-PLEKHN1                                 0                   0
-              RNA.CTRL_SNG.1256_CD8.T RNA.CTRL_SNG.1256_T.activated
-AL627309.1                          0                             0
-RP11-206L10.2                       0                             0
-LINC00115                           0                             2
-NOC2L                               1                            11
-KLHL17                              0                             0
-PLEKHN1                             0                             0
-              RNA.CTRL_SNG.1256_NK RNA.CTRL_SNG.1256_DC
-AL627309.1                       0                    0
-RP11-206L10.2                    0                    0
-LINC00115                        0                    0
-NOC2L                            3                    3
-KLHL17                           0                    0
-PLEKHN1                          0                    0
-              RNA.CTRL_SNG.1256_B.Activated RNA.CTRL_SNG.1256_Mk
-AL627309.1                                0                    1
-RP11-206L10.2                             0                    0
-LINC00115                                 0                    0
-NOC2L                                     9                    2
-KLHL17                                    0                    0
-PLEKHN1                                   0                    0
-              RNA.CTRL_SNG.1256_pDC RNA.CTRL_SNG.1256_Eryth
-AL627309.1                        0                       0
-RP11-206L10.2                     0                       0
-LINC00115                         0                       0
-NOC2L                             0                       0
-KLHL17                            0                       0
-PLEKHN1                           0                       0
-              RNA.CTRL_SNG.1488_CD14.Mono RNA.CTRL_SNG.1488_CD4.Naive.T
-AL627309.1                              0                             1
-RP11-206L10.2                           0                             1
-LINC00115                               0                             0
-NOC2L                                  11                            23
-KLHL17                                  0                             0
-PLEKHN1                                 3                             0
-              RNA.CTRL_SNG.1488_CD4.Memory.T RNA.CTRL_SNG.1488_CD16.Mono
-AL627309.1                                 0                           0
-RP11-206L10.2                              0                           0
-LINC00115                                  1                           0
-NOC2L                                     12                           6
-KLHL17                                     0                           0
-PLEKHN1                                    0                           0
-              RNA.CTRL_SNG.1488_B RNA.CTRL_SNG.1488_CD8.T
-AL627309.1                      0                       0
-RP11-206L10.2                   0                       0
-LINC00115                       0                       0
-NOC2L                           7                       0
-KLHL17                          0                       0
-PLEKHN1                         0                       0
-              RNA.CTRL_SNG.1488_T.activated RNA.CTRL_SNG.1488_NK
-AL627309.1                                0                    0
-RP11-206L10.2                             0                    0
-LINC00115                                 2                    4
-NOC2L                                     3                    2
-KLHL17                                    0                    0
-PLEKHN1                                   0                    1
-              RNA.CTRL_SNG.1488_DC RNA.CTRL_SNG.1488_B.Activated
-AL627309.1                       0                             0
-RP11-206L10.2                    0                             0
-LINC00115                        0                             0
-NOC2L                            2                             6
-KLHL17                           0                             0
-PLEKHN1                          0                             0
-              RNA.CTRL_SNG.1488_Mk RNA.CTRL_SNG.1488_pDC
-AL627309.1                       0                     0
-RP11-206L10.2                    0                     0
-LINC00115                        0                     0
-NOC2L                            1                     0
-KLHL17                           0                     0
-PLEKHN1                          0                     0
-              RNA.CTRL_SNG.1488_Eryth RNA.STIM_SNG.101_CD14.Mono
-AL627309.1                          0                          0
-RP11-206L10.2                       0                          0
-LINC00115                           0                          0
-NOC2L                               0                          1
-KLHL17                              0                          0
-PLEKHN1                             0                          3
-              RNA.STIM_SNG.101_CD4.Naive.T RNA.STIM_SNG.101_CD4.Memory.T
-AL627309.1                               0                             0
-RP11-206L10.2                            0                             0
-LINC00115                                0                             0
-NOC2L                                    4                             6
-KLHL17                                   0                             0
-PLEKHN1                                  0                             1
-              RNA.STIM_SNG.101_CD16.Mono RNA.STIM_SNG.101_B
-AL627309.1                             0                  0
-RP11-206L10.2                          0                  0
-LINC00115                              1                  0
-NOC2L                                  4                  6
-KLHL17                                 1                  0
-PLEKHN1                                2                  0
-              RNA.STIM_SNG.101_CD8.T RNA.STIM_SNG.101_T.activated
-AL627309.1                         0                            0
-RP11-206L10.2                      0                            0
-LINC00115                          0                            1
-NOC2L                              2                            3
-KLHL17                             0                            0
-PLEKHN1                            1                            0
-              RNA.STIM_SNG.101_NK RNA.STIM_SNG.101_DC
-AL627309.1                      0                   0
-RP11-206L10.2                   0                   0
-LINC00115                       0                   0
-NOC2L                           2                   1
-KLHL17                          0                   0
-PLEKHN1                         2                   1
-              RNA.STIM_SNG.101_B.Activated RNA.STIM_SNG.101_Mk
-AL627309.1                               0                   0
-RP11-206L10.2                            0                   0
-LINC00115                                0                   0
-NOC2L                                    5                   1
-KLHL17                                   0                   0
-PLEKHN1                                  0                   0
-              RNA.STIM_SNG.101_pDC RNA.STIM_SNG.101_Eryth
-AL627309.1                       0                      0
-RP11-206L10.2                    0                      0
-LINC00115                        0                      0
-NOC2L                            0                      0
-KLHL17                           0                      0
-PLEKHN1                          0                      0
-              RNA.STIM_SNG.1015_CD14.Mono RNA.STIM_SNG.1015_CD4.Naive.T
-AL627309.1                              0                             0
-RP11-206L10.2                           0                             0
-LINC00115                               4                             0
-NOC2L                                   8                             6
-KLHL17                                  0                             0
-PLEKHN1                                16                             0
-              RNA.STIM_SNG.1015_CD4.Memory.T RNA.STIM_SNG.1015_CD16.Mono
-AL627309.1                                 0                           0
-RP11-206L10.2                              0                           0
-LINC00115                                  0                           0
-NOC2L                                      8                           0
-KLHL17                                     0                           0
-PLEKHN1                                    4                           0
-              RNA.STIM_SNG.1015_B RNA.STIM_SNG.1015_CD8.T
-AL627309.1                      0                       0
-RP11-206L10.2                   0                       0
-LINC00115                       0                       1
-NOC2L                          13                       7
-KLHL17                          1                       0
-PLEKHN1                         1                       0
-              RNA.STIM_SNG.1015_T.activated RNA.STIM_SNG.1015_NK
-AL627309.1                                0                    0
-RP11-206L10.2                             0                    0
-LINC00115                                 0                    1
-NOC2L                                     4                    7
-KLHL17                                    0                    0
-PLEKHN1                                   0                    0
-              RNA.STIM_SNG.1015_DC RNA.STIM_SNG.1015_B.Activated
-AL627309.1                       0                             0
-RP11-206L10.2                    0                             0
-LINC00115                        0                             0
-NOC2L                            1                            13
-KLHL17                           0                             0
-PLEKHN1                          0                             0
-              RNA.STIM_SNG.1015_Mk RNA.STIM_SNG.1015_pDC
-AL627309.1                       0                     0
-RP11-206L10.2                    0                     0
-LINC00115                        0                     0
-NOC2L                            1                     0
-KLHL17                           0                     0
-PLEKHN1                          0                     0
-              RNA.STIM_SNG.1015_Eryth RNA.STIM_SNG.1016_CD14.Mono
-AL627309.1                          0                           0
-RP11-206L10.2                       0                           0
-LINC00115                           1                           2
-NOC2L                               0                           4
-KLHL17                              0                           0
-PLEKHN1                             0                           4
-              RNA.STIM_SNG.1016_CD4.Naive.T RNA.STIM_SNG.1016_CD4.Memory.T
-AL627309.1                                0                              0
-RP11-206L10.2                             0                              0
-LINC00115                                 0                              0
-NOC2L                                     8                              4
-KLHL17                                    0                              0
-PLEKHN1                                   0                              0
-              RNA.STIM_SNG.1016_CD16.Mono RNA.STIM_SNG.1016_B
-AL627309.1                              0                   0
-RP11-206L10.2                           0                   0
-LINC00115                               0                   0
-NOC2L                                   4                   2
-KLHL17                                  0                   0
-PLEKHN1                                 0                   0
-              RNA.STIM_SNG.1016_CD8.T RNA.STIM_SNG.1016_T.activated
-AL627309.1                          0                             0
-RP11-206L10.2                       0                             0
-LINC00115                           0                             0
-NOC2L                               8                            11
-KLHL17                              0                             0
-PLEKHN1                             1                             0
-              RNA.STIM_SNG.1016_NK RNA.STIM_SNG.1016_DC
-AL627309.1                       0                    0
-RP11-206L10.2                    0                    0
-LINC00115                        0                    0
-NOC2L                            0                    0
-KLHL17                           0                    0
-PLEKHN1                          0                    2
-              RNA.STIM_SNG.1016_B.Activated RNA.STIM_SNG.1016_Mk
-AL627309.1                                0                    0
-RP11-206L10.2                             0                    0
-LINC00115                                 0                    0
-NOC2L                                     2                    1
-KLHL17                                    0                    0
-PLEKHN1                                   0                    0
-              RNA.STIM_SNG.1016_pDC RNA.STIM_SNG.1016_Eryth
-AL627309.1                        0                       0
-RP11-206L10.2                     0                       0
-LINC00115                         0                       0
-NOC2L                             1                       0
-KLHL17                            0                       0
-PLEKHN1                           0                       0
-              RNA.STIM_SNG.1039_CD14.Mono RNA.STIM_SNG.1039_CD4.Naive.T
-AL627309.1                              0                             0
-RP11-206L10.2                           0                             0
-LINC00115                               0                             0
-NOC2L                                   2                            15
-KLHL17                                  0                             0
-PLEKHN1                                 2                             0
-              RNA.STIM_SNG.1039_CD4.Memory.T RNA.STIM_SNG.1039_CD16.Mono
-AL627309.1                                 0                           0
-RP11-206L10.2                              0                           0
-LINC00115                                  0                           0
-NOC2L                                      4                           0
-KLHL17                                     0                           0
-PLEKHN1                                    1                           1
-              RNA.STIM_SNG.1039_B RNA.STIM_SNG.1039_CD8.T
-AL627309.1                      0                       0
-RP11-206L10.2                   0                       0
-LINC00115                       0                       0
-NOC2L                           2                       1
-KLHL17                          0                       0
-PLEKHN1                         0                       0
-              RNA.STIM_SNG.1039_T.activated RNA.STIM_SNG.1039_NK
-AL627309.1                                0                    0
-RP11-206L10.2                             0                    0
-LINC00115                                 1                    0
-NOC2L                                     4                    0
-KLHL17                                    0                    0
-PLEKHN1                                   0                    0
-              RNA.STIM_SNG.1039_DC RNA.STIM_SNG.1039_B.Activated
-AL627309.1                       0                             0
-RP11-206L10.2                    0                             0
-LINC00115                        0                             0
-NOC2L                            0                             1
-KLHL17                           0                             0
-PLEKHN1                          0                             0
-              RNA.STIM_SNG.1039_Mk RNA.STIM_SNG.1039_pDC
-AL627309.1                       0                     0
-RP11-206L10.2                    0                     0
-LINC00115                        0                     0
-NOC2L                            2                     1
-KLHL17                           0                     0
-PLEKHN1                          0                     0
-              RNA.STIM_SNG.1039_Eryth RNA.STIM_SNG.107_CD14.Mono
-AL627309.1                          0                          0
-RP11-206L10.2                       0                          0
-LINC00115                           0                          0
-NOC2L                               0                          0
-KLHL17                              0                          0
-PLEKHN1                             0                          0
-              RNA.STIM_SNG.107_CD4.Naive.T RNA.STIM_SNG.107_CD4.Memory.T
-AL627309.1                               0                             0
-RP11-206L10.2                            0                             0
-LINC00115                                0                             0
-NOC2L                                    3                             8
-KLHL17                                   0                             0
-PLEKHN1                                  0                             0
-              RNA.STIM_SNG.107_CD16.Mono RNA.STIM_SNG.107_B
-AL627309.1                             0                  0
-RP11-206L10.2                          0                  0
-LINC00115                              0                  0
-NOC2L                                  0                  6
-KLHL17                                 0                  0
-PLEKHN1                                0                  0
-              RNA.STIM_SNG.107_CD8.T RNA.STIM_SNG.107_T.activated
-AL627309.1                         0                            0
-RP11-206L10.2                      0                            0
-LINC00115                          0                            0
-NOC2L                              2                            2
-KLHL17                             0                            0
-PLEKHN1                            0                            0
-              RNA.STIM_SNG.107_NK RNA.STIM_SNG.107_DC
-AL627309.1                      0                   0
-RP11-206L10.2                   0                   0
-LINC00115                       0                   0
-NOC2L                           1                   0
-KLHL17                          0                   0
-PLEKHN1                         0                   0
-              RNA.STIM_SNG.107_B.Activated RNA.STIM_SNG.107_Mk
-AL627309.1                               0                   0
-RP11-206L10.2                            0                   0
-LINC00115                                0                   0
-NOC2L                                    2                   1
-KLHL17                                   0                   0
-PLEKHN1                                  0                   0
-              RNA.STIM_SNG.107_pDC RNA.STIM_SNG.1244_CD14.Mono
-AL627309.1                       0                           0
-RP11-206L10.2                    0                           0
-LINC00115                        0                           0
-NOC2L                            0                           2
-KLHL17                           0                           0
-PLEKHN1                          0                           2
-              RNA.STIM_SNG.1244_CD4.Naive.T RNA.STIM_SNG.1244_CD4.Memory.T
-AL627309.1                                0                              0
-RP11-206L10.2                             0                              0
-LINC00115                                 0                              1
-NOC2L                                    45                              6
-KLHL17                                    0                              0
-PLEKHN1                                   0                              0
-              RNA.STIM_SNG.1244_CD16.Mono RNA.STIM_SNG.1244_B
-AL627309.1                              0                   0
-RP11-206L10.2                           0                   0
-LINC00115                               0                   0
-NOC2L                                   1                   7
-KLHL17                                  0                   0
-PLEKHN1                                 0                   0
-              RNA.STIM_SNG.1244_CD8.T RNA.STIM_SNG.1244_T.activated
-AL627309.1                          0                             0
-RP11-206L10.2                       0                             0
-LINC00115                           0                             0
-NOC2L                               5                             5
-KLHL17                              0                             0
-PLEKHN1                             0                             0
-              RNA.STIM_SNG.1244_NK RNA.STIM_SNG.1244_DC
-AL627309.1                       0                    0
-RP11-206L10.2                    0                    0
-LINC00115                        0                    0
-NOC2L                            2                    0
-KLHL17                           0                    0
-PLEKHN1                          0                    0
-              RNA.STIM_SNG.1244_B.Activated RNA.STIM_SNG.1244_Mk
-AL627309.1                                0                    0
-RP11-206L10.2                             0                    0
-LINC00115                                 0                    0
-NOC2L                                     6                    2
-KLHL17                                    0                    0
-PLEKHN1                                   0                    0
-              RNA.STIM_SNG.1244_pDC RNA.STIM_SNG.1244_Eryth
-AL627309.1                        0                       0
-RP11-206L10.2                     0                       0
-LINC00115                         0                       0
-NOC2L                             0                       0
-KLHL17                            0                       0
-PLEKHN1                           0                       0
-              RNA.STIM_SNG.1256_CD14.Mono RNA.STIM_SNG.1256_CD4.Naive.T
-AL627309.1                              0                             0
-RP11-206L10.2                           0                             0
-LINC00115                               1                             0
-NOC2L                                   4                            46
-KLHL17                                  0                             0
-PLEKHN1                                 1                             0
-              RNA.STIM_SNG.1256_CD4.Memory.T RNA.STIM_SNG.1256_CD16.Mono
-AL627309.1                                 0                           0
-RP11-206L10.2                              0                           0
-LINC00115                                  0                           0
-NOC2L                                     12                           0
-KLHL17                                     0                           0
-PLEKHN1                                    1                           0
-              RNA.STIM_SNG.1256_B RNA.STIM_SNG.1256_CD8.T
-AL627309.1                      0                       0
-RP11-206L10.2                   0                       0
-LINC00115                       1                       0
-NOC2L                           7                       3
-KLHL17                          0                       0
-PLEKHN1                         0                       0
-              RNA.STIM_SNG.1256_T.activated RNA.STIM_SNG.1256_NK
-AL627309.1                                0                    0
-RP11-206L10.2                             0                    0
-LINC00115                                 1                    0
-NOC2L                                     3                    7
-KLHL17                                    0                    1
-PLEKHN1                                   0                    0
-              RNA.STIM_SNG.1256_DC RNA.STIM_SNG.1256_B.Activated
-AL627309.1                       0                             0
-RP11-206L10.2                    0                             0
-LINC00115                        0                             0
-NOC2L                            1                             4
-KLHL17                           0                             0
-PLEKHN1                          0                             0
-              RNA.STIM_SNG.1256_Mk RNA.STIM_SNG.1256_pDC
-AL627309.1                       0                     0
-RP11-206L10.2                    0                     0
-LINC00115                        0                     0
-NOC2L                            1                     3
-KLHL17                           0                     0
-PLEKHN1                          0                     0
-              RNA.STIM_SNG.1256_Eryth RNA.STIM_SNG.1488_CD14.Mono
-AL627309.1                          0                           0
-RP11-206L10.2                       0                           0
-LINC00115                           0                           1
-NOC2L                               0                           3
-KLHL17                              0                           1
-PLEKHN1                             0                           5
-              RNA.STIM_SNG.1488_CD4.Naive.T RNA.STIM_SNG.1488_CD4.Memory.T
-AL627309.1                                0                              0
-RP11-206L10.2                             0                              0
-LINC00115                                 0                              1
-NOC2L                                    50                              7
-KLHL17                                    0                              0
-PLEKHN1                                   1                              0
-              RNA.STIM_SNG.1488_CD16.Mono RNA.STIM_SNG.1488_B
-AL627309.1                              0                   0
-RP11-206L10.2                           0                   0
-LINC00115                               1                   0
-NOC2L                                   1                   5
-KLHL17                                  0                   0
-PLEKHN1                                 1                   1
-              RNA.STIM_SNG.1488_CD8.T RNA.STIM_SNG.1488_T.activated
-AL627309.1                          0                             0
-RP11-206L10.2                       0                             0
-LINC00115                           0                             2
-NOC2L                               1                             4
-KLHL17                              0                             0
-PLEKHN1                             0                             0
-              RNA.STIM_SNG.1488_NK RNA.STIM_SNG.1488_DC
-AL627309.1                       0                    0
-RP11-206L10.2                    0                    0
-LINC00115                        0                    0
-NOC2L                            0                    0
-KLHL17                           0                    0
-PLEKHN1                          0                    1
-              RNA.STIM_SNG.1488_B.Activated RNA.STIM_SNG.1488_Mk
-AL627309.1                                0                    0
-RP11-206L10.2                             0                    0
-LINC00115                                 0                    0
-NOC2L                                     8                    3
-KLHL17                                    0                    0
-PLEKHN1                                   0                    0
-              RNA.STIM_SNG.1488_pDC RNA.STIM_SNG.1488_Eryth
-AL627309.1                        0                       0
-RP11-206L10.2                     0                       0
-LINC00115                         0                       0
-NOC2L                             2                       0
-KLHL17                            0                       0
-PLEKHN1                           0                       0
+``` error
+Error in h(simpleError(msg, call)): error in evaluating the argument 'x' in selecting a method for function 'head': object 'ifnb.pseudobulk.df' not found
 ```
 
 
@@ -858,9 +139,21 @@ start.
 
 ``` r
 ifnb.pseudobulk$celltype.and.stim <- paste(ifnb.pseudobulk$seurat_annotations, ifnb.pseudobulk$stim, sep = "_")
+```
+
+``` error
+Error: object 'ifnb.pseudobulk' not found
+```
+
+``` r
 Idents(ifnb.pseudobulk) <- "celltype.and.stim"
+```
 
+``` error
+Error: object 'ifnb.pseudobulk' not found
+```
 
+``` r
 # Lets run a DEG test between treated and control CD 16 monocytes using the same FindMarkers function but with DESeq2
 treatment.response.CD16.pseudo <- FindMarkers(object = ifnb.pseudobulk, 
                                       ident.1 = 'CD16 Mono_STIM', 
@@ -868,34 +161,16 @@ treatment.response.CD16.pseudo <- FindMarkers(object = ifnb.pseudobulk,
                                       test.use = "DESeq2")
 ```
 
-``` output
-converting counts to integer mode
-```
-
-``` output
-gene-wise dispersion estimates
-```
-
-``` output
-mean-dispersion relationship
-```
-
-``` output
-final dispersion estimates
+``` error
+Error: object 'ifnb.pseudobulk' not found
 ```
 
 ``` r
 head(treatment.response.CD16.pseudo)
 ```
 
-``` output
-               p_val avg_log2FC pct.1 pct.2     p_val_adj
-IFIT3  1.564083e-134   4.601427     1     1 2.198006e-130
-IFIT2   2.122691e-84   4.613021     1     1  2.983017e-80
-ISG20   1.401656e-81   4.038272     1     1  1.969747e-77
-DDX58   1.366535e-73   3.448721     1     1  1.920392e-69
-NT5C3A  5.127048e-66   3.942571     1     1  7.205040e-62
-OASL    1.186412e-63   4.025025     1     1  1.667265e-59
+``` error
+Error in h(simpleError(msg, call)): error in evaluating the argument 'x' in selecting a method for function 'head': object 'treatment.response.CD16.pseudo' not found
 ```
 
 ``` r
@@ -903,10 +178,8 @@ OASL    1.186412e-63   4.025025     1     1  1.667265e-59
 head(Cells(ifnb.pseudobulk)) # our 'cells' are no longer barcodes, but have been renamed according to stim-donor-annotation when we aggregated our data earlier
 ```
 
-``` output
-[1] "CTRL_SNG-101_CD14 Mono"    "CTRL_SNG-101_CD4 Naive T" 
-[3] "CTRL_SNG-101_CD4 Memory T" "CTRL_SNG-101_CD16 Mono"   
-[5] "CTRL_SNG-101_B"            "CTRL_SNG-101_CD8 T"       
+``` error
+Error in h(simpleError(msg, call)): error in evaluating the argument 'x' in selecting a method for function 'head': object 'ifnb.pseudobulk' not found
 ```
 
 ## Step 4: Assessing differences between our pseudbulk DEGs and single-cell DEGs
@@ -941,14 +214,8 @@ IFIT2  7.334976e-159   4.622453 0.974 0.162 1.030784e-154
 head(treatment.response.CD16.pseudo)
 ```
 
-``` output
-               p_val avg_log2FC pct.1 pct.2     p_val_adj
-IFIT3  1.564083e-134   4.601427     1     1 2.198006e-130
-IFIT2   2.122691e-84   4.613021     1     1  2.983017e-80
-ISG20   1.401656e-81   4.038272     1     1  1.969747e-77
-DDX58   1.366535e-73   3.448721     1     1  1.920392e-69
-NT5C3A  5.127048e-66   3.942571     1     1  7.205040e-62
-OASL    1.186412e-63   4.025025     1     1  1.667265e-59
+``` error
+Error in h(simpleError(msg, call)): error in evaluating the argument 'x' in selecting a method for function 'head': object 'treatment.response.CD16.pseudo' not found
 ```
 
 Next let's take a look at the degree of overlap between the actual DEGs
@@ -1022,6 +289,13 @@ overlap/agreement between our pseudobulk versus single-cell approaches
 ``` r
 merged_deg_data <- Merge_DEG_dataframes(pseudobulk.de = treatment.response.CD16.pseudo,
                                         singlecell.de = treatment.response.CD16)
+```
+
+``` error
+Error: object 'treatment.response.CD16.pseudo' not found
+```
+
+``` r
 merged_deg_data %>% 
   dplyr::select(gene, 
                 p_val.sc, p_val.bulk,
@@ -1029,29 +303,27 @@ merged_deg_data %>%
   head(10)
 ```
 
-``` output
-       gene      p_val.sc    p_val.bulk  p_val_adj.sc p_val_adj.bulk
-2866  IFIT3 1.413978e-164 1.564083e-134 1.987063e-160  2.198006e-130
-2865  IFIT2 7.334976e-159  2.122691e-84 1.030784e-154   2.983017e-80
-2992  ISG20 6.983755e-164  1.401656e-81 9.814270e-160   1.969747e-77
-1626  DDX58 2.340153e-109  1.366535e-73 3.288617e-105   1.920392e-69
-4129 NT5C3A 5.806396e-117  5.127048e-66 8.159728e-113   7.205040e-62
-4185   OASL 5.497910e-147  1.186412e-63 7.726213e-143   1.667265e-59
-4544 PLSCR1 6.905174e-116  3.783863e-61 9.703841e-112   5.317463e-57
-3859 MYL12A  2.476988e-83  7.623767e-61  3.480912e-79   1.071368e-56
-2859  IFI35  4.701828e-99  2.527378e-58  6.607479e-95   3.551724e-54
-2661  HERC5  1.578848e-92  1.829060e-56  2.218755e-88   2.570378e-52
+``` error
+Error in h(simpleError(msg, call)): error in evaluating the argument 'x' in selecting a method for function 'head': object 'merged_deg_data' not found
 ```
 
 ``` r
 # How many DEGs overlap between our two methods? Is there anything in the merged_deg_data frame that stands out to you?
 overlap.bar.plt <- Visualise_Overlapping_DEGs(pseudobulk.de = treatment.response.CD16.pseudo,
                                               singlecell.de = treatment.response.CD16)
+```
 
+``` error
+Error: object 'treatment.response.CD16.pseudo' not found
+```
+
+``` r
 overlap.bar.plt
 ```
 
-<img src="fig/section3-rendered-unnamed-chunk-8-1.png" style="display: block; margin: auto;" />
+``` error
+Error: object 'overlap.bar.plt' not found
+```
 
 :::: discussion
         
@@ -1070,10 +342,28 @@ Let's create lists of genes in each of our categories first
 ``` r
 common <- merged_deg_data$gene[which(merged_deg_data$p_val.bulk < 0.05 & 
                                        merged_deg_data$p_val.sc < 0.05)]
+```
+
+``` error
+Error: object 'merged_deg_data' not found
+```
+
+``` r
 only_sc <- merged_deg_data$gene[which(merged_deg_data$p_val.bulk > 0.05 & 
                                         merged_deg_data$p_val.sc < 0.05)]
+```
+
+``` error
+Error: object 'merged_deg_data' not found
+```
+
+``` r
 only_pseudobulk <- merged_deg_data$gene[which(merged_deg_data$p_val.bulk < 0.05 & 
                                           merged_deg_data$p_val.sc > 0.05)]
+```
+
+``` error
+Error: object 'merged_deg_data' not found
 ```
 
 Now I want to look at the expression of genes that only appear in our sc
@@ -1154,6 +444,10 @@ CD16.sig.markers <- treatment.response.CD16.pseudo %>%
   dplyr::mutate(gene = rownames(.))
 ```
 
+``` error
+Error: object 'treatment.response.CD16.pseudo' not found
+```
+
 This is how we can pull our average (scaled) pseudobulk expression
 values from our seurat obj:
 
@@ -1173,6 +467,10 @@ As of Seurat v5, we recommend using AggregateExpression to perform pseudo-bulk a
 This message is displayed once per session.
 ```
 
+``` error
+Error: object 'CD16.sig.markers' not found
+```
+
 ``` r
 ## As of Seurat v5, we recommend using AggregateExpression to perform pseudo-bulk analysis.
 ## This message is displayed once per session.
@@ -1188,7 +486,13 @@ Now lets make sure we're only using data from the CD16 cell type
 CD16.sig.avg.Expression.mat <- all.sig.avg.Expression.mat$RNA %>%
   as.data.frame() %>%
   dplyr::select(starts_with("CD16 Mono"))
+```
 
+``` error
+Error in h(simpleError(msg, call)): error in evaluating the argument 'x' in selecting a method for function 'as.data.frame': object 'all.sig.avg.Expression.mat' not found
+```
+
+``` r
 # View(CD16.sig.avg.Expression.mat)
 ```
 
@@ -1207,7 +511,9 @@ pheatmap::pheatmap(CD16.sig.avg.Expression.mat,
          height = 20)
 ```
 
-<img src="fig/section3-rendered-unnamed-chunk-17-1.png" style="display: block; margin: auto;" />
+``` error
+Error: object 'CD16.sig.avg.Expression.mat' not found
+```
 
 
 
@@ -1223,7 +529,13 @@ cluster_metadata <- data.frame(
     Cell_Type = "CD16 Mono",
     Treatment_Group = ifelse(str_detect(row.names(.), "STIM|CTRL"), 
                       str_extract(row.names(.), "STIM|CTRL")))
+```
 
+``` error
+Error in h(simpleError(msg, call)): error in evaluating the argument 'x' in selecting a method for function 'colnames': object 'CD16.sig.avg.Expression.mat' not found
+```
+
+``` r
 sig.DEG.heatmap <- pheatmap::pheatmap(CD16.sig.avg.Expression.mat,
          cluster_rows = TRUE,
          show_rownames = FALSE,
@@ -1234,11 +546,19 @@ sig.DEG.heatmap <- pheatmap::pheatmap(CD16.sig.avg.Expression.mat,
          fontsize_row = 10, 
          height = 20,
          annotation_names_col = FALSE)
+```
 
+``` error
+Error: object 'CD16.sig.avg.Expression.mat' not found
+```
+
+``` r
 sig.DEG.heatmap
 ```
 
-<img src="fig/section3-rendered-unnamed-chunk-18-1.png" style="display: block; margin: auto;" />
+``` error
+Error: object 'sig.DEG.heatmap' not found
+```
 
 
 
