@@ -1069,21 +1069,21 @@ This message is displayed once per session.</code></pre>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="output" tabindex="0"><code>09:16:08 UMAP embedding parameters a = 0.9922 b = 1.112
-09:16:08 Read 13548 rows and found 20 numeric columns
-09:16:08 Using Annoy for neighbor search, n_neighbors = 30
-09:16:08 Building Annoy index with metric = cosine, n_trees = 50
+<pre class="output" tabindex="0"><code>12:17:27 UMAP embedding parameters a = 0.9922 b = 1.112
+12:17:27 Read 13548 rows and found 20 numeric columns
+12:17:27 Using Annoy for neighbor search, n_neighbors = 30
+12:17:27 Building Annoy index with metric = cosine, n_trees = 50
 0%   10   20   30   40   50   60   70   80   90   100%
 [----|----|----|----|----|----|----|----|----|----|
 **************************************************|
-09:16:09 Writing NN index file to temp file /tmp/Rtmph3Rh1G/file24003311d53f
-09:16:09 Searching Annoy index using 1 thread, search_k = 3000
-09:16:13 Annoy recall = 100%
-09:16:14 Commencing smooth kNN distance calibration using 1 thread with target n_neighbors = 30
-09:16:17 Initializing from normalized Laplacian + noise (using RSpectra)
-09:16:17 Commencing optimization for 200 epochs, with 586822 positive edges
-09:16:17 Using rng type: pcg
-09:16:23 Optimization finished</code></pre>
+12:17:28 Writing NN index file to temp file /tmp/RtmpE80Nrs/file24254e0f61fb
+12:17:28 Searching Annoy index using 1 thread, search_k = 3000
+12:17:32 Annoy recall = 100%
+12:17:33 Commencing smooth kNN distance calibration using 1 thread with target n_neighbors = 30
+12:17:36 Initializing from normalized Laplacian + noise (using RSpectra)
+12:17:36 Commencing optimization for 200 epochs, with 586822 positive edges
+12:17:36 Using rng type: pcg
+12:17:42 Optimization finished</code></pre>
 </div>
 <div class="codewrapper sourceCode" id="cb39">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -1907,7 +1907,8 @@ we’ve done here?</p>
 <span>  <span class="kw">return</span><span class="op">(</span><span class="va">seu.obj</span><span class="op">)</span></span>
 <span><span class="op">}</span></span>
 <span></span>
-<span><span class="va">ifnb.filtered</span> <span class="op">&lt;-</span> <span class="fu">loadDonorMetadata</span><span class="op">(</span><span class="va">ifnb.filtered</span><span class="op">)</span></span></code></pre>
+<span><span class="va">ifnb.filtered</span> <span class="op">&lt;-</span> <span class="fu">loadDonorMetadata</span><span class="op">(</span><span class="va">ifnb.filtered</span><span class="op">)</span></span>
+<span><span class="co">#ifnb.filtered@meta.data</span></span></code></pre>
 </div>
 </section><section><h2 class="section-heading" id="step-2-aggregate-our-counts-based-on-treatment-group-cell-type-and-donor-id">Step 2: Aggregate our counts based on treatment group, cell-type,
 and donor id<a class="anchor" aria-label="anchor" href="#step-2-aggregate-our-counts-based-on-treatment-group-cell-type-and-donor-id"></a>
@@ -1925,25 +1926,29 @@ code block.</p>
 <pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ifnb.pseudobulk</span> <span class="op">&lt;-</span> <span class="fu">AggregateExpression</span><span class="op">(</span><span class="va">ifnb.filtered</span>, assays <span class="op">=</span> <span class="st">"RNA"</span>,</span>
 <span>                                   group.by <span class="op">=</span> <span class="fu">c</span><span class="op">(</span><span class="st">"stim"</span>, <span class="st">"donor_id"</span>, <span class="st">"seurat_annotations"</span><span class="op">)</span>,</span>
-<span>                                   return.seurat <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co">## Centering and scaling data matrix</span></span>
+<span>                                   return.seurat <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre>
+</div>
+<div class="codewrapper">
+<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="output" tabindex="0"><code>Centering and scaling data matrix</code></pre>
+</div>
+<div class="codewrapper sourceCode" id="cb5">
+<h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co">## Centering and scaling data matrix</span></span>
 <span><span class="co"># If you want the pseudobulk matrix as a dataframe you can do this:</span></span>
 <span><span class="va">ifnb.pseudobulk.df</span> <span class="op">&lt;-</span> <span class="fu">AggregateExpression</span><span class="op">(</span><span class="va">ifnb.filtered</span>, assays <span class="op">=</span> <span class="st">"RNA"</span>,</span>
 <span>                                          group.by <span class="op">=</span> <span class="fu">c</span><span class="op">(</span><span class="st">"stim"</span>, <span class="st">"donor_id"</span>, <span class="st">"seurat_annotations"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> </span>
 <span>  <span class="fu">as.data.frame</span><span class="op">(</span><span class="op">)</span></span></code></pre>
 </div>
 <p>We can view the top rows here:</p>
-<div class="codewrapper sourceCode" id="cb4">
+<div class="codewrapper sourceCode" id="cb6">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">head</span><span class="op">(</span><span class="va">ifnb.pseudobulk.df</span><span class="op">)</span></span></code></pre>
-</div>
-<div class="codewrapper">
-<h3 class="code-label">ERROR<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="error" tabindex="0"><code>Error in h(simpleError(msg, call)): error in evaluating the argument 'x' in selecting a method for function 'head': object 'ifnb.pseudobulk.df' not found</code></pre>
 </div>
 </section><section><h2 class="section-heading" id="step-3-perform-differential-expression-using-deseq2">Step 3: Perform Differential Expression using DESeq2<a class="anchor" aria-label="anchor" href="#step-3-perform-differential-expression-using-deseq2"></a>
 </h2>
@@ -1964,42 +1969,39 @@ see the other pseudobulk DE methods you can use. Do keep in mind that to
 use some of the DE tests, you need to install that package and load it
 as a library separately to Seurat, as we’ve done here with DESeq2 at the
 start.</p>
-<div class="codewrapper sourceCode" id="cb6">
+<div class="codewrapper sourceCode" id="cb7">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">ifnb.pseudobulk</span><span class="op">$</span><span class="va">celltype.and.stim</span> <span class="op">&lt;-</span> <span class="fu">paste</span><span class="op">(</span><span class="va">ifnb.pseudobulk</span><span class="op">$</span><span class="va">seurat_annotations</span>, <span class="va">ifnb.pseudobulk</span><span class="op">$</span><span class="va">stim</span>, sep <span class="op">=</span> <span class="st">"_"</span><span class="op">)</span></span></code></pre>
-</div>
-<div class="codewrapper">
-<h3 class="code-label">ERROR<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="error" tabindex="0"><code>Error: object 'ifnb.pseudobulk' not found</code></pre>
-</div>
-<div class="codewrapper sourceCode" id="cb8">
-<h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">Idents</span><span class="op">(</span><span class="va">ifnb.pseudobulk</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="st">"celltype.and.stim"</span></span></code></pre>
-</div>
-<div class="codewrapper">
-<h3 class="code-label">ERROR<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="error" tabindex="0"><code>Error: object 'ifnb.pseudobulk' not found</code></pre>
-</div>
-<div class="codewrapper sourceCode" id="cb10">
-<h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Lets run a DEG test between treated and control CD 16 monocytes using the same FindMarkers function but with DESeq2</span></span>
+<code class="sourceCode R"><span><span class="va">ifnb.pseudobulk</span><span class="op">$</span><span class="va">celltype.and.stim</span> <span class="op">&lt;-</span> <span class="fu">paste</span><span class="op">(</span><span class="va">ifnb.pseudobulk</span><span class="op">$</span><span class="va">seurat_annotations</span>, <span class="va">ifnb.pseudobulk</span><span class="op">$</span><span class="va">stim</span>, sep <span class="op">=</span> <span class="st">"_"</span><span class="op">)</span></span>
+<span><span class="fu">Idents</span><span class="op">(</span><span class="va">ifnb.pseudobulk</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="st">"celltype.and.stim"</span></span>
+<span></span>
+<span></span>
+<span><span class="co"># Lets run a DEG test between treated and control CD 16 monocytes using the same FindMarkers function but with DESeq2</span></span>
 <span><span class="va">treatment.response.CD16.pseudo</span> <span class="op">&lt;-</span> <span class="fu">FindMarkers</span><span class="op">(</span>object <span class="op">=</span> <span class="va">ifnb.pseudobulk</span>, </span>
 <span>                                      ident.1 <span class="op">=</span> <span class="st">'CD16 Mono_STIM'</span>, </span>
 <span>                                      ident.2 <span class="op">=</span> <span class="st">'CD16 Mono_CTRL'</span>,</span>
 <span>                                      test.use <span class="op">=</span> <span class="st">"DESeq2"</span><span class="op">)</span></span></code></pre>
 </div>
 <div class="codewrapper">
-<h3 class="code-label">ERROR<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="error" tabindex="0"><code>Error: object 'ifnb.pseudobulk' not found</code></pre>
+<pre class="output" tabindex="0"><code>converting counts to integer mode</code></pre>
+</div>
+<div class="codewrapper">
+<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="output" tabindex="0"><code>gene-wise dispersion estimates</code></pre>
+</div>
+<div class="codewrapper">
+<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="output" tabindex="0"><code>mean-dispersion relationship</code></pre>
+</div>
+<div class="codewrapper">
+<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="output" tabindex="0"><code>final dispersion estimates</code></pre>
 </div>
 <div class="codewrapper sourceCode" id="cb12">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -2008,9 +2010,15 @@ start.</p>
 <code class="sourceCode R"><span><span class="fu">head</span><span class="op">(</span><span class="va">treatment.response.CD16.pseudo</span><span class="op">)</span></span></code></pre>
 </div>
 <div class="codewrapper">
-<h3 class="code-label">ERROR<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="error" tabindex="0"><code>Error in h(simpleError(msg, call)): error in evaluating the argument 'x' in selecting a method for function 'head': object 'treatment.response.CD16.pseudo' not found</code></pre>
+<pre class="output" tabindex="0"><code>               p_val avg_log2FC pct.1 pct.2     p_val_adj
+IFIT3  1.564083e-134   4.601427     1     1 2.198006e-130
+IFIT2   2.122691e-84   4.613021     1     1  2.983017e-80
+ISG20   1.401656e-81   4.038272     1     1  1.969747e-77
+DDX58   1.366535e-73   3.448721     1     1  1.920392e-69
+NT5C3A  5.127048e-66   3.942571     1     1  7.205040e-62
+OASL    1.186412e-63   4.025025     1     1  1.667265e-59</code></pre>
 </div>
 <div class="codewrapper sourceCode" id="cb14">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -2020,9 +2028,11 @@ start.</p>
 <span><span class="fu">head</span><span class="op">(</span><span class="fu">Cells</span><span class="op">(</span><span class="va">ifnb.pseudobulk</span><span class="op">)</span><span class="op">)</span> <span class="co"># our 'cells' are no longer barcodes, but have been renamed according to stim-donor-annotation when we aggregated our data earlier</span></span></code></pre>
 </div>
 <div class="codewrapper">
-<h3 class="code-label">ERROR<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="error" tabindex="0"><code>Error in h(simpleError(msg, call)): error in evaluating the argument 'x' in selecting a method for function 'head': object 'ifnb.pseudobulk' not found</code></pre>
+<pre class="output" tabindex="0"><code>[1] "CTRL_SNG-101_CD14 Mono"    "CTRL_SNG-101_CD4 Naive T"
+[3] "CTRL_SNG-101_CD4 Memory T" "CTRL_SNG-101_CD16 Mono"
+[5] "CTRL_SNG-101_B"            "CTRL_SNG-101_CD8 T"       </code></pre>
 </div>
 </section><section><h2 class="section-heading" id="step-4-assessing-differences-between-our-pseudbulk-degs-and-single-cell-degs">Step 4: Assessing differences between our pseudbulk DEGs and
 single-cell DEGs<a class="anchor" aria-label="anchor" href="#step-4-assessing-differences-between-our-pseudbulk-degs-and-single-cell-degs"></a>
@@ -2066,9 +2076,15 @@ IFIT2  7.334976e-159   4.622453 0.974 0.162 1.030784e-154</code></pre>
 <code class="sourceCode R"><span><span class="fu">head</span><span class="op">(</span><span class="va">treatment.response.CD16.pseudo</span><span class="op">)</span></span></code></pre>
 </div>
 <div class="codewrapper">
-<h3 class="code-label">ERROR<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="error" tabindex="0"><code>Error in h(simpleError(msg, call)): error in evaluating the argument 'x' in selecting a method for function 'head': object 'treatment.response.CD16.pseudo' not found</code></pre>
+<pre class="output" tabindex="0"><code>               p_val avg_log2FC pct.1 pct.2     p_val_adj
+IFIT3  1.564083e-134   4.601427     1     1 2.198006e-130
+IFIT2   2.122691e-84   4.613021     1     1  2.983017e-80
+ISG20   1.401656e-81   4.038272     1     1  1.969747e-77
+DDX58   1.366535e-73   3.448721     1     1  1.920392e-69
+NT5C3A  5.127048e-66   3.942571     1     1  7.205040e-62
+OASL    1.186412e-63   4.025025     1     1  1.667265e-59</code></pre>
 </div>
 <p>Next let’s take a look at the degree of overlap between the actual
 DEGs in both approaches.</p>
@@ -2139,53 +2155,39 @@ approaches</p>
 </h3>
 <pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">merged_deg_data</span> <span class="op">&lt;-</span> <span class="fu">Merge_DEG_dataframes</span><span class="op">(</span>pseudobulk.de <span class="op">=</span> <span class="va">treatment.response.CD16.pseudo</span>,</span>
-<span>                                        singlecell.de <span class="op">=</span> <span class="va">treatment.response.CD16</span><span class="op">)</span></span></code></pre>
-</div>
-<div class="codewrapper">
-<h3 class="code-label">ERROR<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="error" tabindex="0"><code>Error: object 'treatment.response.CD16.pseudo' not found</code></pre>
-</div>
-<div class="codewrapper sourceCode" id="cb23">
-<h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">merged_deg_data</span> <span class="op">%&gt;%</span> </span>
+<span>                                        singlecell.de <span class="op">=</span> <span class="va">treatment.response.CD16</span><span class="op">)</span></span>
+<span><span class="va">merged_deg_data</span> <span class="op">%&gt;%</span> </span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu">select</span><span class="op">(</span><span class="va">gene</span>, </span>
 <span>                <span class="va">p_val.sc</span>, <span class="va">p_val.bulk</span>,</span>
 <span>                <span class="va">p_val_adj.sc</span>, <span class="va">p_val_adj.bulk</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu">head</span><span class="op">(</span><span class="fl">10</span><span class="op">)</span></span></code></pre>
 </div>
 <div class="codewrapper">
-<h3 class="code-label">ERROR<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="error" tabindex="0"><code>Error in h(simpleError(msg, call)): error in evaluating the argument 'x' in selecting a method for function 'head': object 'merged_deg_data' not found</code></pre>
+<pre class="output" tabindex="0"><code>       gene      p_val.sc    p_val.bulk  p_val_adj.sc p_val_adj.bulk
+2866  IFIT3 1.413978e-164 1.564083e-134 1.987063e-160  2.198006e-130
+2865  IFIT2 7.334976e-159  2.122691e-84 1.030784e-154   2.983017e-80
+2992  ISG20 6.983755e-164  1.401656e-81 9.814270e-160   1.969747e-77
+1626  DDX58 2.340153e-109  1.366535e-73 3.288617e-105   1.920392e-69
+4129 NT5C3A 5.806396e-117  5.127048e-66 8.159728e-113   7.205040e-62
+4185   OASL 5.497910e-147  1.186412e-63 7.726213e-143   1.667265e-59
+4544 PLSCR1 6.905174e-116  3.783863e-61 9.703841e-112   5.317463e-57
+3859 MYL12A  2.476988e-83  7.623767e-61  3.480912e-79   1.071368e-56
+2859  IFI35  4.701828e-99  2.527378e-58  6.607479e-95   3.551724e-54
+2661  HERC5  1.578848e-92  1.829060e-56  2.218755e-88   2.570378e-52</code></pre>
 </div>
-<div class="codewrapper sourceCode" id="cb25">
+<div class="codewrapper sourceCode" id="cb23">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># How many DEGs overlap between our two methods? Is there anything in the merged_deg_data frame that stands out to you?</span></span>
 <span><span class="va">overlap.bar.plt</span> <span class="op">&lt;-</span> <span class="fu">Visualise_Overlapping_DEGs</span><span class="op">(</span>pseudobulk.de <span class="op">=</span> <span class="va">treatment.response.CD16.pseudo</span>,</span>
-<span>                                              singlecell.de <span class="op">=</span> <span class="va">treatment.response.CD16</span><span class="op">)</span></span></code></pre>
+<span>                                              singlecell.de <span class="op">=</span> <span class="va">treatment.response.CD16</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">overlap.bar.plt</span></span></code></pre>
 </div>
-<div class="codewrapper">
-<h3 class="code-label">ERROR<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="error" tabindex="0"><code>Error: object 'treatment.response.CD16.pseudo' not found</code></pre>
-</div>
-<div class="codewrapper sourceCode" id="cb27">
-<h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">overlap.bar.plt</span></span></code></pre>
-</div>
-<div class="codewrapper">
-<h3 class="code-label">ERROR<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="error" tabindex="0"><code>Error: object 'overlap.bar.plt' not found</code></pre>
-</div>
-<div id="discussion3" class="callout discussion">
+<figure><img src="../fig/section3-rendered-unnamed-chunk-8-1.png" style="display: block; margin: auto;" class="figure mx-auto d-block"></figure><div id="discussion3" class="callout discussion">
 <div class="callout-square">
 <i class="callout-icon" data-feather="message-circle"></i>
 </div>
@@ -2202,46 +2204,21 @@ single-cell DE closer<a class="anchor" aria-label="anchor" href="#step-5-investi
 </h2>
 <hr class="half-width">
 <p>Let’s create lists of genes in each of our categories first</p>
-<div class="codewrapper sourceCode" id="cb29">
+<div class="codewrapper sourceCode" id="cb24">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">common</span> <span class="op">&lt;-</span> <span class="va">merged_deg_data</span><span class="op">$</span><span class="va">gene</span><span class="op">[</span><span class="fu">which</span><span class="op">(</span><span class="va">merged_deg_data</span><span class="op">$</span><span class="va">p_val.bulk</span> <span class="op">&lt;</span> <span class="fl">0.05</span> <span class="op">&amp;</span> </span>
-<span>                                       <span class="va">merged_deg_data</span><span class="op">$</span><span class="va">p_val.sc</span> <span class="op">&lt;</span> <span class="fl">0.05</span><span class="op">)</span><span class="op">]</span></span></code></pre>
-</div>
-<div class="codewrapper">
-<h3 class="code-label">ERROR<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="error" tabindex="0"><code>Error: object 'merged_deg_data' not found</code></pre>
-</div>
-<div class="codewrapper sourceCode" id="cb31">
-<h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">only_sc</span> <span class="op">&lt;-</span> <span class="va">merged_deg_data</span><span class="op">$</span><span class="va">gene</span><span class="op">[</span><span class="fu">which</span><span class="op">(</span><span class="va">merged_deg_data</span><span class="op">$</span><span class="va">p_val.bulk</span> <span class="op">&gt;</span> <span class="fl">0.05</span> <span class="op">&amp;</span> </span>
-<span>                                        <span class="va">merged_deg_data</span><span class="op">$</span><span class="va">p_val.sc</span> <span class="op">&lt;</span> <span class="fl">0.05</span><span class="op">)</span><span class="op">]</span></span></code></pre>
-</div>
-<div class="codewrapper">
-<h3 class="code-label">ERROR<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="error" tabindex="0"><code>Error: object 'merged_deg_data' not found</code></pre>
-</div>
-<div class="codewrapper sourceCode" id="cb33">
-<h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">only_pseudobulk</span> <span class="op">&lt;-</span> <span class="va">merged_deg_data</span><span class="op">$</span><span class="va">gene</span><span class="op">[</span><span class="fu">which</span><span class="op">(</span><span class="va">merged_deg_data</span><span class="op">$</span><span class="va">p_val.bulk</span> <span class="op">&lt;</span> <span class="fl">0.05</span> <span class="op">&amp;</span> </span>
+<span>                                       <span class="va">merged_deg_data</span><span class="op">$</span><span class="va">p_val.sc</span> <span class="op">&lt;</span> <span class="fl">0.05</span><span class="op">)</span><span class="op">]</span></span>
+<span><span class="va">only_sc</span> <span class="op">&lt;-</span> <span class="va">merged_deg_data</span><span class="op">$</span><span class="va">gene</span><span class="op">[</span><span class="fu">which</span><span class="op">(</span><span class="va">merged_deg_data</span><span class="op">$</span><span class="va">p_val.bulk</span> <span class="op">&gt;</span> <span class="fl">0.05</span> <span class="op">&amp;</span> </span>
+<span>                                        <span class="va">merged_deg_data</span><span class="op">$</span><span class="va">p_val.sc</span> <span class="op">&lt;</span> <span class="fl">0.05</span><span class="op">)</span><span class="op">]</span></span>
+<span><span class="va">only_pseudobulk</span> <span class="op">&lt;-</span> <span class="va">merged_deg_data</span><span class="op">$</span><span class="va">gene</span><span class="op">[</span><span class="fu">which</span><span class="op">(</span><span class="va">merged_deg_data</span><span class="op">$</span><span class="va">p_val.bulk</span> <span class="op">&lt;</span> <span class="fl">0.05</span> <span class="op">&amp;</span> </span>
 <span>                                          <span class="va">merged_deg_data</span><span class="op">$</span><span class="va">p_val.sc</span> <span class="op">&gt;</span> <span class="fl">0.05</span><span class="op">)</span><span class="op">]</span></span></code></pre>
-</div>
-<div class="codewrapper">
-<h3 class="code-label">ERROR<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="error" tabindex="0"><code>Error: object 'merged_deg_data' not found</code></pre>
 </div>
 <p>Now I want to look at the expression of genes that only appear in our
 sc deg test and not in our pseudobulk deg test I’ve picked two genes
 from the ‘only_sc’ variable we just defined</p>
-<div class="codewrapper sourceCode" id="cb35">
+<div class="codewrapper sourceCode" id="cb25">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -2254,7 +2231,7 @@ from the ‘only_sc’ variable we just defined</p>
 <span>        idents <span class="op">=</span> <span class="fu">c</span><span class="op">(</span><span class="st">"CD16 Mono_CTRL"</span>, <span class="st">"CD16 Mono_STIM"</span><span class="op">)</span>, </span>
 <span>        group.by <span class="op">=</span> <span class="st">"stim"</span><span class="op">)</span> </span></code></pre>
 </div>
-<figure><img src="../fig/section3-rendered-unnamed-chunk-10-1.png" style="display: block; margin: auto;" class="figure mx-auto d-block"></figure><div class="codewrapper sourceCode" id="cb36">
+<figure><img src="../fig/section3-rendered-unnamed-chunk-10-1.png" style="display: block; margin: auto;" class="figure mx-auto d-block"></figure><div class="codewrapper sourceCode" id="cb26">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -2276,7 +2253,7 @@ about some of the pitfalls of single-cell DE approaches?</p>
 </div>
 <p>Now lets take a look at some genes that show agreement across both sc
 and pseudobulk deg tests</p>
-<div class="codewrapper sourceCode" id="cb37">
+<div class="codewrapper sourceCode" id="cb27">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -2284,7 +2261,7 @@ and pseudobulk deg tests</p>
 <span>        idents <span class="op">=</span> <span class="fu">c</span><span class="op">(</span><span class="st">"CD16 Mono_CTRL"</span>, <span class="st">"CD16 Mono_STIM"</span><span class="op">)</span>, </span>
 <span>        group.by <span class="op">=</span> <span class="st">"stim"</span><span class="op">)</span> </span></code></pre>
 </div>
-<figure><img src="../fig/section3-rendered-unnamed-chunk-12-1.png" style="display: block; margin: auto;" class="figure mx-auto d-block"></figure><div class="codewrapper sourceCode" id="cb38">
+<figure><img src="../fig/section3-rendered-unnamed-chunk-12-1.png" style="display: block; margin: auto;" class="figure mx-auto d-block"></figure><div class="codewrapper sourceCode" id="cb28">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -2302,7 +2279,7 @@ the pheatmap (‘pretty heatmap’) package to visualise our DEGs with
 adjusted p values &lt; 0.05.</p>
 <p>First lets look at our significant DEGs as defined by our pseudobulk
 approach</p>
-<div class="codewrapper sourceCode" id="cb39">
+<div class="codewrapper sourceCode" id="cb29">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -2310,14 +2287,9 @@ approach</p>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu">filter</span><span class="op">(</span><span class="va">p_val_adj</span> <span class="op">&lt;</span> <span class="fl">0.05</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu">mutate</span><span class="op">(</span>gene <span class="op">=</span> <span class="fu">rownames</span><span class="op">(</span><span class="va">.</span><span class="op">)</span><span class="op">)</span></span></code></pre>
 </div>
-<div class="codewrapper">
-<h3 class="code-label">ERROR<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="error" tabindex="0"><code>Error: object 'treatment.response.CD16.pseudo' not found</code></pre>
-</div>
 <p>This is how we can pull our average (scaled) pseudobulk expression
 values from our seurat obj:</p>
-<div class="codewrapper sourceCode" id="cb41">
+<div class="codewrapper sourceCode" id="cb30">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -2335,12 +2307,7 @@ values from our seurat obj:</p>
 <pre class="output" tabindex="0"><code>As of Seurat v5, we recommend using AggregateExpression to perform pseudo-bulk analysis.
 This message is displayed once per session.</code></pre>
 </div>
-<div class="codewrapper">
-<h3 class="code-label">ERROR<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="error" tabindex="0"><code>Error: object 'CD16.sig.markers' not found</code></pre>
-</div>
-<div class="codewrapper sourceCode" id="cb44">
+<div class="codewrapper sourceCode" id="cb32">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -2351,28 +2318,19 @@ This message is displayed once per session.</code></pre>
 <span><span class="co">#  as.data.frame())</span></span></code></pre>
 </div>
 <p>Now lets make sure we’re only using data from the CD16 cell type</p>
-<div class="codewrapper sourceCode" id="cb45">
+<div class="codewrapper sourceCode" id="cb33">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">CD16.sig.avg.Expression.mat</span> <span class="op">&lt;-</span> <span class="va">all.sig.avg.Expression.mat</span><span class="op">$</span><span class="va">RNA</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu">as.data.frame</span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu">select</span><span class="op">(</span><span class="fu">starts_with</span><span class="op">(</span><span class="st">"CD16 Mono"</span><span class="op">)</span><span class="op">)</span></span></code></pre>
-</div>
-<div class="codewrapper">
-<h3 class="code-label">ERROR<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="error" tabindex="0"><code>Error in h(simpleError(msg, call)): error in evaluating the argument 'x' in selecting a method for function 'as.data.frame': object 'all.sig.avg.Expression.mat' not found</code></pre>
-</div>
-<div class="codewrapper sourceCode" id="cb47">
-<h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># View(CD16.sig.avg.Expression.mat)</span></span></code></pre>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu">select</span><span class="op">(</span><span class="fu">starts_with</span><span class="op">(</span><span class="st">"CD16 Mono"</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># View(CD16.sig.avg.Expression.mat)</span></span></code></pre>
 </div>
 <p>Let’s finally view our heatmap with averaged pseudobulk scaled
 expression values for our signficant DEGs</p>
-<div class="codewrapper sourceCode" id="cb48">
+<div class="codewrapper sourceCode" id="cb34">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -2385,14 +2343,9 @@ expression values for our signficant DEGs</p>
 <span>         fontsize_row <span class="op">=</span> <span class="fl">10</span>, </span>
 <span>         height <span class="op">=</span> <span class="fl">20</span><span class="op">)</span></span></code></pre>
 </div>
-<div class="codewrapper">
-<h3 class="code-label">ERROR<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="error" tabindex="0"><code>Error: object 'CD16.sig.avg.Expression.mat' not found</code></pre>
-</div>
-<p>The cool thing about pheatmap is that we can customise our heatmap
+<figure><img src="../fig/section3-rendered-unnamed-chunk-17-1.png" style="display: block; margin: auto;" class="figure mx-auto d-block"></figure><p>The cool thing about pheatmap is that we can customise our heatmap
 with added metadata</p>
-<div class="codewrapper sourceCode" id="cb50">
+<div class="codewrapper sourceCode" id="cb35">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -2402,18 +2355,9 @@ with added metadata</p>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu">mutate</span><span class="op">(</span></span>
 <span>    Cell_Type <span class="op">=</span> <span class="st">"CD16 Mono"</span>,</span>
 <span>    Treatment_Group <span class="op">=</span> <span class="fu">ifelse</span><span class="op">(</span><span class="fu">str_detect</span><span class="op">(</span><span class="fu">row.names</span><span class="op">(</span><span class="va">.</span><span class="op">)</span>, <span class="st">"STIM|CTRL"</span><span class="op">)</span>, </span>
-<span>                      <span class="fu">str_extract</span><span class="op">(</span><span class="fu">row.names</span><span class="op">(</span><span class="va">.</span><span class="op">)</span>, <span class="st">"STIM|CTRL"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre>
-</div>
-<div class="codewrapper">
-<h3 class="code-label">ERROR<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="error" tabindex="0"><code>Error in h(simpleError(msg, call)): error in evaluating the argument 'x' in selecting a method for function 'colnames': object 'CD16.sig.avg.Expression.mat' not found</code></pre>
-</div>
-<div class="codewrapper sourceCode" id="cb52">
-<h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">sig.DEG.heatmap</span> <span class="op">&lt;-</span> <span class="fu">pheatmap</span><span class="fu">::</span><span class="fu">pheatmap</span><span class="op">(</span><span class="va">CD16.sig.avg.Expression.mat</span>,</span>
+<span>                      <span class="fu">str_extract</span><span class="op">(</span><span class="fu">row.names</span><span class="op">(</span><span class="va">.</span><span class="op">)</span>, <span class="st">"STIM|CTRL"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">sig.DEG.heatmap</span> <span class="op">&lt;-</span> <span class="fu">pheatmap</span><span class="fu">::</span><span class="fu">pheatmap</span><span class="op">(</span><span class="va">CD16.sig.avg.Expression.mat</span>,</span>
 <span>         cluster_rows <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>         show_rownames <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>         annotation <span class="op">=</span> <span class="va">cluster_metadata</span><span class="op">[</span>, <span class="fu">c</span><span class="op">(</span><span class="st">"Treatment_Group"</span>, <span class="st">"Cell_Type"</span><span class="op">)</span><span class="op">]</span>, </span>
@@ -2422,27 +2366,13 @@ with added metadata</p>
 <span>         scale <span class="op">=</span> <span class="st">"row"</span>, </span>
 <span>         fontsize_row <span class="op">=</span> <span class="fl">10</span>, </span>
 <span>         height <span class="op">=</span> <span class="fl">20</span>,</span>
-<span>         annotation_names_col <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre>
+<span>         annotation_names_col <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">sig.DEG.heatmap</span></span></code></pre>
 </div>
-<div class="codewrapper">
-<h3 class="code-label">ERROR<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="error" tabindex="0"><code>Error: object 'CD16.sig.avg.Expression.mat' not found</code></pre>
-</div>
-<div class="codewrapper sourceCode" id="cb54">
-<h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">sig.DEG.heatmap</span></span></code></pre>
-</div>
-<div class="codewrapper">
-<h3 class="code-label">ERROR<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="error" tabindex="0"><code>Error: object 'sig.DEG.heatmap' not found</code></pre>
-</div>
-<p>Lets save our heatmap using the grid library (very useful package!)
+<figure><img src="../fig/section3-rendered-unnamed-chunk-18-1.png" style="display: block; margin: auto;" class="figure mx-auto d-block"></figure><p>Lets save our heatmap using the grid library (very useful package!)
 Code from: <a href="https://stackoverflow.com/questions/43051525/how-to-draw-pheatmap-plot-to-screen-and-also-save-to-file" class="external-link uri">https://stackoverflow.com/questions/43051525/how-to-draw-pheatmap-plot-to-screen-and-also-save-to-file</a></p>
-<div class="codewrapper sourceCode" id="cb56">
+<div class="codewrapper sourceCode" id="cb36">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -2475,12 +2405,12 @@ see any differences?</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
 <div class="accordion-body">
 <p>Run the same code as above but with the
 <code>treatment.response.CD16</code> variable instead of
 <code>treatment.response.CD16.pseudo</code> variable.</p>
-<div class="codewrapper sourceCode" id="cb57">
+<div class="codewrapper sourceCode" id="cb37">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -2517,7 +2447,7 @@ see any differences?</p>
 <span>         fontsize_row <span class="op">=</span> <span class="fl">10</span>, </span>
 <span>         height <span class="op">=</span> <span class="fl">20</span><span class="op">)</span></span></code></pre>
 </div>
-<figure><img src="../fig/section3-rendered-unnamed-chunk-20-1.png" style="display: block; margin: auto;" class="figure mx-auto d-block"></figure><div class="codewrapper sourceCode" id="cb58">
+<figure><img src="../fig/section3-rendered-unnamed-chunk-20-1.png" style="display: block; margin: auto;" class="figure mx-auto d-block"></figure><div class="codewrapper sourceCode" id="cb38">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
