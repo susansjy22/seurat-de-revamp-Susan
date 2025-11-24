@@ -1069,21 +1069,21 @@ This message is displayed once per session.</code></pre>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="output" tabindex="0"><code>07:38:03 UMAP embedding parameters a = 0.9922 b = 1.112
-07:38:03 Read 13548 rows and found 20 numeric columns
-07:38:03 Using Annoy for neighbor search, n_neighbors = 30
-07:38:03 Building Annoy index with metric = cosine, n_trees = 50
+<pre class="output" tabindex="0"><code>08:00:41 UMAP embedding parameters a = 0.9922 b = 1.112
+08:00:41 Read 13548 rows and found 20 numeric columns
+08:00:41 Using Annoy for neighbor search, n_neighbors = 30
+08:00:41 Building Annoy index with metric = cosine, n_trees = 50
 0%   10   20   30   40   50   60   70   80   90   100%
 [----|----|----|----|----|----|----|----|----|----|
 **************************************************|
-07:38:04 Writing NN index file to temp file /tmp/RtmpdbJKfv/file23f956d0b2c1
-07:38:04 Searching Annoy index using 1 thread, search_k = 3000
-07:38:09 Annoy recall = 100%
-07:38:10 Commencing smooth kNN distance calibration using 1 thread with target n_neighbors = 30
-07:38:13 Initializing from normalized Laplacian + noise (using RSpectra)
-07:38:13 Commencing optimization for 200 epochs, with 586822 positive edges
-07:38:13 Using rng type: pcg
-07:38:19 Optimization finished</code></pre>
+08:00:42 Writing NN index file to temp file /tmp/RtmpM5BAxG/file24071cfe22eb
+08:00:42 Searching Annoy index using 1 thread, search_k = 3000
+08:00:47 Annoy recall = 100%
+08:00:48 Commencing smooth kNN distance calibration using 1 thread with target n_neighbors = 30
+08:00:51 Initializing from normalized Laplacian + noise (using RSpectra)
+08:00:51 Commencing optimization for 200 epochs, with 586822 positive edges
+08:00:51 Using rng type: pcg
+08:00:57 Optimization finished</code></pre>
 </div>
 <div class="codewrapper sourceCode" id="cb39">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -1267,9 +1267,9 @@ context.</p>
 <code class="sourceCode R"><span><span class="co"># K-means</span></span>
 <span><span class="va">emb</span> <span class="op">&lt;-</span> <span class="fu">Embeddings</span><span class="op">(</span><span class="va">ifnb.filtered</span>, <span class="st">"pca"</span><span class="op">)</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">20</span><span class="op">]</span></span>
 <span><span class="fu">set.seed</span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></span>
-<span><span class="va">km</span> <span class="op">&lt;-</span> <span class="fu">kmeans</span><span class="op">(</span><span class="va">emb</span>, centers <span class="op">=</span> <span class="fl">5</span>, nstart <span class="op">=</span> <span class="fl">50</span><span class="op">)</span></span>
+<span><span class="va">km</span> <span class="op">&lt;-</span> <span class="fu">kmeans</span><span class="op">(</span><span class="va">emb</span>, centers <span class="op">=</span> <span class="fl">12</span>, nstart <span class="op">=</span> <span class="fl">50</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">ifnb.filtered</span><span class="op">$</span><span class="va">kmeans_k5</span> <span class="op">&lt;-</span> <span class="fu">factor</span><span class="op">(</span><span class="va">km</span><span class="op">$</span><span class="va">cluster</span><span class="op">)</span></span>
+<span><span class="va">ifnb.filtered</span><span class="op">$</span><span class="va">kmeans_k12</span> <span class="op">&lt;-</span> <span class="fu">factor</span><span class="op">(</span><span class="va">km</span><span class="op">$</span><span class="va">cluster</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Compare labelings</span></span>
 <span><span class="va">p1</span> <span class="op">&lt;-</span> <span class="fu">DimPlot</span><span class="op">(</span><span class="va">ifnb.filtered</span>, reduction <span class="op">=</span> <span class="st">"umap.cca"</span>, group.by <span class="op">=</span> <span class="st">"seurat_clusters"</span><span class="op">)</span> <span class="op">+</span> <span class="fu">ggtitle</span><span class="op">(</span><span class="st">"Louvain"</span><span class="op">)</span></span></code></pre>
@@ -1285,7 +1285,7 @@ context.</p>
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">p2</span> <span class="op">&lt;-</span> <span class="fu">DimPlot</span><span class="op">(</span><span class="va">ifnb.filtered</span>, reduction <span class="op">=</span> <span class="st">"umap.cca"</span>, group.by <span class="op">=</span> <span class="st">"kmeans_k5"</span><span class="op">)</span> <span class="op">+</span> <span class="fu">ggtitle</span><span class="op">(</span><span class="st">"k-means (K=5)"</span><span class="op">)</span></span></code></pre>
+<code class="sourceCode R"><span><span class="va">p2</span> <span class="op">&lt;-</span> <span class="fu">DimPlot</span><span class="op">(</span><span class="va">ifnb.filtered</span>, reduction <span class="op">=</span> <span class="st">"umap.cca"</span>, group.by <span class="op">=</span> <span class="st">"kmeans_k12"</span><span class="op">)</span> <span class="op">+</span> <span class="fu">ggtitle</span><span class="op">(</span><span class="st">"k-means (K=12)"</span><span class="op">)</span></span></code></pre>
 </div>
 <div class="codewrapper">
 <h3 class="code-label">ERROR<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -1310,7 +1310,7 @@ context.</p>
 </h3>
 <pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># If you decide to proceed with k-means downstream:</span></span>
-<span><span class="fu">Idents</span><span class="op">(</span><span class="va">ifnb.filtered</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="st">"kmeans_k5"</span></span></code></pre>
+<span><span class="fu">Idents</span><span class="op">(</span><span class="va">ifnb.filtered</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="st">"kmeans_k12"</span></span></code></pre>
 </div>
 </div>
 </div>
@@ -1645,7 +1645,7 @@ detail in the Intro to scRNA-seq workshop material.</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
 <div class="accordion-body">
 <div class="codewrapper sourceCode" id="cb16">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -3122,7 +3122,7 @@ see any differences?</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
 <div class="accordion-body">
 <p>Run the same code as above but with the
 <code>treatment.response.CD16</code> variable instead of
