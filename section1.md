@@ -50,6 +50,8 @@ library(metap)
 library(harmony)
 library(DropletUtils)
 library(ggplot2)
+library(SingleR)
+library(Celldex)
 
 set.seed(4242) # Set Seed for Reproducibility
 ```
@@ -419,7 +421,12 @@ DimPlot(ifnb.filtered, reduction = 'pca', group.by = 'stim') # lets see how our 
 
 
 ::::::::::::::::::::::::::::::::::::: challenge 
-Cell Cycle Check 1 — BEFORE integration (after PCA / pre-Harmony/CCA) 
+
+**Cell Cycle Check 1 — BEFORE integration (after PCA / pre-Harmony / CCA)** 
+
+`Seurat` also features a function, `CellCyleScoring` to calculate which phase each individual cell is in the cell cycle using canonical markers. You can read more about it [here](https://satijalab.org/seurat/articles/cell_cycle_vignette.html).
+
+Which phase in the cell cycle are the clusters in primarily? Are they different or the same between clusters?
 
 :::::::::::::::::::::::: solution 
 
@@ -540,21 +547,21 @@ ifnb.filtered <- RunUMAP(ifnb.filtered, reduction = "harmony", dims = 1:20, redu
 ```
 
 ``` output
-10:34:08 UMAP embedding parameters a = 0.9922 b = 1.112
-10:34:08 Read 13548 rows and found 20 numeric columns
-10:34:08 Using Annoy for neighbor search, n_neighbors = 30
-10:34:08 Building Annoy index with metric = cosine, n_trees = 50
+08:06:44 UMAP embedding parameters a = 0.9922 b = 1.112
+08:06:44 Read 13548 rows and found 20 numeric columns
+08:06:44 Using Annoy for neighbor search, n_neighbors = 30
+08:06:44 Building Annoy index with metric = cosine, n_trees = 50
 0%   10   20   30   40   50   60   70   80   90   100%
 [----|----|----|----|----|----|----|----|----|----|
 **************************************************|
-10:34:09 Writing NN index file to temp file /tmp/RtmpJ7YTPo/file23e06810dd95
-10:34:09 Searching Annoy index using 1 thread, search_k = 3000
-10:34:14 Annoy recall = 100%
-10:34:15 Commencing smooth kNN distance calibration using 1 thread with target n_neighbors = 30
-10:34:17 Initializing from normalized Laplacian + noise (using RSpectra)
-10:34:17 Commencing optimization for 200 epochs, with 586822 positive edges
-10:34:17 Using rng type: pcg
-10:34:23 Optimization finished
+08:06:45 Writing NN index file to temp file /tmp/RtmpqfAIOR/file23ef5b4afef1
+08:06:45 Searching Annoy index using 1 thread, search_k = 3000
+08:06:50 Annoy recall = 100%
+08:06:51 Commencing smooth kNN distance calibration using 1 thread with target n_neighbors = 30
+08:06:53 Initializing from normalized Laplacian + noise (using RSpectra)
+08:06:53 Commencing optimization for 200 epochs, with 586822 positive edges
+08:06:53 Using rng type: pcg
+08:07:00 Optimization finished
 ```
 
 ``` r
@@ -572,9 +579,7 @@ before.integration | after.harmony
 :::: discussion
 
 Looking at the UMAPs above, do you think integration was
-successful? Have a slide on what if its just different cell types. !!!
-question Try looking at the PC1 and PC2 plots for harmony and seurat as
-well
+successful?
 
 ::::
 
@@ -588,16 +593,40 @@ ifnb.filtered <- IntegrateLayers(object = ifnb.filtered,
                                  method = CCAIntegration,
                                  orig.reduction = "pca", 
                                  new.reduction = "integrated.cca")
+```
 
+``` error
+Error in getGlobalsAndPackages(expr, envir = envir, globals = globals): The total size of the 7 globals exported for future expression ('FUN()') is 500.11 MiB. This exceeds the maximum allowed size 500.00 MiB per by R option "future.globals.maxSize". This limit is set to protect against transfering too large objects to parallel workers by mistake, which may not be intended and could be costly. See help("future.globals.maxSize", package = "future") for further explainations and how to adjust or remove this threshold The three largest globals are 'FUN' (251.28 MiB of class 'function'), 'index' (247.00 MiB of class 'S4') and 'query' (1.82 MiB of class 'numeric')
+```
+
+``` r
 ifnb.filtered <- RunUMAP(ifnb.filtered, reduction = "integrated.cca", dims = 1:20, reduction.name = "umap.cca")
+```
 
+``` error
+Error in `object[[reduction]]` at Seurat/R/dimensional_reduction.R:1912:5:
+! 'integrated.cca' not found in this Seurat object
+ 
+```
+
+``` r
 after.seuratCCA <- DimPlot(ifnb.filtered, reduction = "umap.cca", group.by = "stim") +
   ggtitle("After Seurat CCA Integration")
+```
 
+``` error
+Error in `object[[reduction]]` at Seurat/R/visualization.R:901:3:
+! 'umap.cca' not found in this Seurat object
+ 
+```
+
+``` r
 before.integration | after.seuratCCA
 ```
 
-<img src="fig/section1-rendered-unnamed-chunk-17-1.png" style="display: block; margin: auto;" />
+``` error
+Error: object 'after.seuratCCA' not found
+```
 
 
 
@@ -606,7 +635,9 @@ before.integration | after.seuratCCA
 after.harmony | after.seuratCCA
 ```
 
-<img src="fig/section1-rendered-unnamed-chunk-18-1.png" style="display: block; margin: auto;" />
+``` error
+Error: object 'after.seuratCCA' not found
+```
 
 ``` r
 ## Show example slide of integration 'failing' but due to different cell types in each sample ***
@@ -623,88 +654,10 @@ What do you think of the integration results now?
         
 **Hint:** Also look at the PC1 and PC2 plots for each integration method.
 
-
-## Step 6: Perform standard clustering steps after integration
-
-This step collapses individual control and treatment datasets together
-and needs to be done before differential expression analysis
-
-
-``` r
-ifnb.filtered <- FindNeighbors(ifnb.filtered, reduction = "integrated.cca", dims = 1:20)
-```
-
-``` output
-Computing nearest neighbor graph
-```
-
-``` output
-Computing SNN
-```
-
-``` r
-ifnb.filtered <- FindClusters(ifnb.filtered, resolution = 0.5)
-```
-
-``` output
-Modularity Optimizer version 1.3.0 by Ludo Waltman and Nees Jan van Eck
-
-Number of nodes: 13548
-Number of edges: 521570
-
-Running Louvain algorithm...
-Maximum modularity in 10 random starts: 0.9002
-Number of communities: 13
-Elapsed time: 2 seconds
-```
-
-``` r
-ifnb.filtered <- JoinLayers(ifnb.filtered)
-```
-
-
-::::::::::::::::::::::::::::::::::::: keypoints 
-
-- QC filtering removes low-quality cells (e.g., low gene count or high mitochondrial %).
-- Integration corrects sample-to-sample variation so cells group by biology, not by batch.
-- Harmony and CCA both align shared cell states but use different mathematical strategies.
-
-::::::::::::::::::::::::::::::::::::::::::::::::
-
 ::::::::::::::::::::::::::::::::::::: challenge 
-K-means clustering
+Cell Cycle Check 2 — AFTER integration (after umap.cca + clustering)
 
-:::::::::::::::::::::::: solution 
-
-
-``` r
-# K-means
-emb <- Embeddings(ifnb.filtered, "pca")[, 1:20]
-set.seed(1)
-km <- kmeans(emb, centers = 5, nstart = 50)
-
-ifnb.filtered$kmeans_k5 <- factor(km$cluster)
-
-# Compare labelings
-p1 <- DimPlot(ifnb.filtered, reduction = "umap.cca", group.by = "seurat_clusters") + ggtitle("Louvain")
-p2 <- DimPlot(ifnb.filtered, reduction = "umap.cca", group.by = "kmeans_k5") + ggtitle("k-means (K=5)")
-p1 | p2
-```
-
-<img src="fig/section1-rendered-unnamed-chunk-20-1.png" style="display: block; margin: auto;" />
-
-``` r
-# If you decide to proceed with k-means downstream:
-Idents(ifnb.filtered) <- "kmeans_k5"
-```
-
-:::::::::::::::::::::::::::::::::
-
-:::::::::::::::::::::::::::::::::::
-
-
-::::::::::::::::::::::::::::::::::::: challenge 
-Cell-Cycle Check 2 — AFTER integration (after umap.cca + clustering)
+Now that we have integrated the data, do you think the results will be the same or different?
 
 :::::::::::::::::::::::: solution 
 
@@ -716,11 +669,24 @@ Cell-Cycle Check 2 — AFTER integration (after umap.cca + clustering)
 DimPlot(ifnb.filtered, reduction = "umap.cca", group.by = "Phase", pt.size = 0.3)
 ```
 
-<img src="fig/section1-rendered-unnamed-chunk-21-1.png" style="display: block; margin: auto;" />
+``` error
+Error in `object[[reduction]]` at Seurat/R/visualization.R:901:3:
+! 'umap.cca' not found in this Seurat object
+ 
+```
 
 ``` r
 # Phase composition by cluster and by condition
 tab_phase_cluster <- prop.table(table(ifnb.filtered$seurat_clusters, ifnb.filtered$Phase), 1) * 100
+```
+
+``` error
+Error in `x[[i, drop = TRUE]]` at SeuratObject/R/seurat.R:2939:3:
+! 'seurat_clusters' not found in this Seurat object
+ Did you mean "seurat_annotations"?
+```
+
+``` r
 tab_phase_cond    <- prop.table(table(ifnb.filtered$stim,            ifnb.filtered$Phase), 1) * 100
 pheatmap(tab_phase_cluster,
          main = "Phase (%) by cluster",
@@ -728,15 +694,112 @@ pheatmap(tab_phase_cluster,
          number_format = "%.1f")
 ```
 
-<img src="fig/section1-rendered-unnamed-chunk-21-2.png" style="display: block; margin: auto;" />
+``` error
+Error: object 'tab_phase_cluster' not found
+```
 
 ``` r
 pheatmap(tab_phase_cond,    main = "Phase (%) by condition (stim)")
 ```
 
-<img src="fig/section1-rendered-unnamed-chunk-21-3.png" style="display: block; margin: auto;" />
+<img src="fig/section1-rendered-unnamed-chunk-19-1.png" style="display: block; margin: auto;" />
 
 :::::::::::::::::::::::::::::::::
 
 :::::::::::::::::::::::::::::::::::
 
+
+
+## Step 6: Perform standard clustering steps after integration
+
+This step collapses individual control and treatment datasets together
+and needs to be done before differential expression analysis
+
+
+``` r
+ifnb.filtered <- FindNeighbors(ifnb.filtered, reduction = "integrated.cca", dims = 1:20)
+```
+
+``` error
+Error in `object[[reduction]]` at Seurat/R/clustering.R:798:5:
+! 'integrated.cca' not found in this Seurat object
+ 
+```
+
+``` r
+ifnb.filtered <- FindClusters(ifnb.filtered, resolution = 0.5)
+```
+
+``` error
+Error in FindClusters.Seurat(ifnb.filtered, resolution = 0.5): Provided graph.name not present in Seurat object
+```
+
+``` r
+ifnb.filtered <- JoinLayers(ifnb.filtered)
+```
+
+
+## Additional Challenges
+
+::::::::::::::::::::::::::::::::::::: challenge 
+
+You can also use K-means clustering to cluster the data to compare to other clustering methods. How can you use the `kmeans()` function from `stats` to cluster the data and visualise it using `DimPlot()`?
+
+In this example, we used k = 5 purely for illustration. As you can see, it produces fewer clusters compared to the default Louvain algorithm. You are welcome to try different k values in your own time to explore whether k-means clustering is a suitable option in this context.
+
+:::::::::::::::::::::::: solution 
+
+
+``` r
+# K-means
+emb <- Embeddings(ifnb.filtered, "pca")[, 1:20]
+set.seed(1)
+km <- kmeans(emb, centers = 12, nstart = 50)
+
+ifnb.filtered$kmeans_k12 <- factor(km$cluster)
+
+# Compare labelings
+p1 <- DimPlot(ifnb.filtered, reduction = "umap.cca", group.by = "seurat_clusters") + ggtitle("Louvain")
+```
+
+``` error
+Error in `object[[reduction]]` at Seurat/R/visualization.R:901:3:
+! 'umap.cca' not found in this Seurat object
+ 
+```
+
+``` r
+p2 <- DimPlot(ifnb.filtered, reduction = "umap.cca", group.by = "kmeans_k12") + ggtitle("k-means (K=12)")
+```
+
+``` error
+Error in `object[[reduction]]` at Seurat/R/visualization.R:901:3:
+! 'umap.cca' not found in this Seurat object
+ 
+```
+
+``` r
+p1 | p2
+```
+
+``` error
+Error: object 'p1' not found
+```
+
+``` r
+# If you decide to proceed with k-means downstream:
+Idents(ifnb.filtered) <- "kmeans_k12"
+```
+
+:::::::::::::::::::::::::::::::::
+
+:::::::::::::::::::::::::::::::::::
+
+
+::::::::::::::::::::::::::::::::::::: keypoints 
+
+- QC filtering removes low-quality cells (e.g., low gene count or high mitochondrial %).
+- Integration corrects sample-to-sample variation so cells group by biology, not by batch.
+- Harmony and CCA both align shared cell states but use different mathematical strategies.
+
+::::::::::::::::::::::::::::::::::::::::::::::::
