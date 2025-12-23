@@ -27,11 +27,13 @@ exercises: 2
 
 
 ``` error
-Error in library(DESeq2): there is no package called 'DESeq2'
+Error in `library()`:
+! there is no package called 'DESeq2'
 ```
 
 ``` error
-Error in library(metap): there is no package called 'metap'
+Error in `library()`:
+! there is no package called 'metap'
 ```
 
 ``` output
@@ -159,7 +161,8 @@ treatment.response.CD16.pseudo <- FindMarkers(object = ifnb.pseudobulk,
 ```
 
 ``` error
-Error in DESeq2DETest(data.use = data.use, cells.1 = cells.1, cells.2 = cells.2, : Please install DESeq2 - learn more at https://bioconductor.org/packages/release/bioc/html/DESeq2.html
+Error in `DESeq2DETest()`:
+! Please install DESeq2 - learn more at https://bioconductor.org/packages/release/bioc/html/DESeq2.html
 ```
 
 ``` r
@@ -167,7 +170,8 @@ head(treatment.response.CD16.pseudo)
 ```
 
 ``` error
-Error: object 'treatment.response.CD16.pseudo' not found
+Error:
+! object 'treatment.response.CD16.pseudo' not found
 ```
 
 ``` r
@@ -214,7 +218,8 @@ head(treatment.response.CD16.pseudo)
 ```
 
 ``` error
-Error: object 'treatment.response.CD16.pseudo' not found
+Error:
+! object 'treatment.response.CD16.pseudo' not found
 ```
 
 Next let's take a look at the degree of overlap between the actual DEGs
@@ -289,7 +294,8 @@ merged_deg_data <- Merge_DEG_dataframes(pseudobulk.de = treatment.response.CD16.
 ```
 
 ``` error
-Error: object 'treatment.response.CD16.pseudo' not found
+Error:
+! object 'treatment.response.CD16.pseudo' not found
 ```
 
 ``` r
@@ -301,7 +307,8 @@ merged_deg_data %>%
 ```
 
 ``` error
-Error: object 'merged_deg_data' not found
+Error:
+! object 'merged_deg_data' not found
 ```
 
 ``` r
@@ -311,7 +318,8 @@ overlap.bar.plt <- Visualise_Overlapping_DEGs(pseudobulk.de = treatment.response
 ```
 
 ``` error
-Error: object 'treatment.response.CD16.pseudo' not found
+Error:
+! object 'treatment.response.CD16.pseudo' not found
 ```
 
 ``` r
@@ -319,7 +327,8 @@ overlap.bar.plt
 ```
 
 ``` error
-Error: object 'overlap.bar.plt' not found
+Error:
+! object 'overlap.bar.plt' not found
 ```
 
 :::: discussion
@@ -342,7 +351,8 @@ common <- merged_deg_data$gene[which(merged_deg_data$p_val.bulk < 0.05 &
 ```
 
 ``` error
-Error: object 'merged_deg_data' not found
+Error:
+! object 'merged_deg_data' not found
 ```
 
 ``` r
@@ -351,7 +361,8 @@ only_sc <- merged_deg_data$gene[which(merged_deg_data$p_val.bulk > 0.05 &
 ```
 
 ``` error
-Error: object 'merged_deg_data' not found
+Error:
+! object 'merged_deg_data' not found
 ```
 
 ``` r
@@ -360,7 +371,8 @@ only_pseudobulk <- merged_deg_data$gene[which(merged_deg_data$p_val.bulk < 0.05 
 ```
 
 ``` error
-Error: object 'merged_deg_data' not found
+Error:
+! object 'merged_deg_data' not found
 ```
 
 Now I want to look at the expression of genes that only appear in our sc
@@ -379,7 +391,7 @@ VlnPlot(ifnb.filtered, features = c("PABPC1", "SRGN"),
         group.by = "stim") 
 ```
 
-<img src="fig/section3-rendered-unnamed-chunk-10-1.png" style="display: block; margin: auto;" />
+<img src="fig/section3-rendered-unnamed-chunk-10-1.png" alt="" style="display: block; margin: auto;" />
 
 
 
@@ -390,7 +402,7 @@ VlnPlot(ifnb.filtered, features = c("PABPC1", "SRGN"),
         group.by = "donor_id.and.stim", ncol = 1)
 ```
 
-<img src="fig/section3-rendered-unnamed-chunk-11-1.png" style="display: block; margin: auto;" />
+<img src="fig/section3-rendered-unnamed-chunk-11-1.png" alt="" style="display: block; margin: auto;" />
 
 
 :::: discussion
@@ -410,7 +422,7 @@ VlnPlot(ifnb.filtered, features = c("IFIT2", "PSMA4"),
         group.by = "stim") 
 ```
 
-<img src="fig/section3-rendered-unnamed-chunk-12-1.png" style="display: block; margin: auto;" />
+<img src="fig/section3-rendered-unnamed-chunk-12-1.png" alt="" style="display: block; margin: auto;" />
 
 
 
@@ -421,7 +433,7 @@ VlnPlot(ifnb.filtered, features = c("IFIT2", "PSMA4"),
         group.by = "donor_id.and.stim", ncol = 1) 
 ```
 
-<img src="fig/section3-rendered-unnamed-chunk-13-1.png" style="display: block; margin: auto;" />
+<img src="fig/section3-rendered-unnamed-chunk-13-1.png" alt="" style="display: block; margin: auto;" />
 
 
 ## Step 6: Creating our own custom visualisations for DEG analysis between cell-types in two different experimental groups
@@ -442,7 +454,8 @@ CD16.sig.markers <- treatment.response.CD16.pseudo %>%
 ```
 
 ``` error
-Error: object 'treatment.response.CD16.pseudo' not found
+Error:
+! object 'treatment.response.CD16.pseudo' not found
 ```
 
 This is how we can pull our average (scaled) pseudobulk expression
@@ -465,7 +478,8 @@ This message is displayed once per session.
 ```
 
 ``` error
-Error: object 'CD16.sig.markers' not found
+Error:
+! object 'CD16.sig.markers' not found
 ```
 
 ``` r
@@ -486,7 +500,8 @@ CD16.sig.avg.Expression.mat <- all.sig.avg.Expression.mat$RNA %>%
 ```
 
 ``` error
-Error: object 'all.sig.avg.Expression.mat' not found
+Error:
+! object 'all.sig.avg.Expression.mat' not found
 ```
 
 ``` r
@@ -509,7 +524,8 @@ pheatmap::pheatmap(CD16.sig.avg.Expression.mat,
 ```
 
 ``` error
-Error: object 'CD16.sig.avg.Expression.mat' not found
+Error:
+! object 'CD16.sig.avg.Expression.mat' not found
 ```
 
 
@@ -529,7 +545,8 @@ cluster_metadata <- data.frame(
 ```
 
 ``` error
-Error: object 'CD16.sig.avg.Expression.mat' not found
+Error:
+! object 'CD16.sig.avg.Expression.mat' not found
 ```
 
 ``` r
@@ -546,7 +563,8 @@ sig.DEG.heatmap <- pheatmap::pheatmap(CD16.sig.avg.Expression.mat,
 ```
 
 ``` error
-Error: object 'CD16.sig.avg.Expression.mat' not found
+Error:
+! object 'CD16.sig.avg.Expression.mat' not found
 ```
 
 ``` r
@@ -554,7 +572,8 @@ sig.DEG.heatmap
 ```
 
 ``` error
-Error: object 'sig.DEG.heatmap' not found
+Error:
+! object 'sig.DEG.heatmap' not found
 ```
 
 
@@ -624,7 +643,7 @@ pheatmap::pheatmap(CD16.sig.avg.Expression.mat,
          height = 20)
 ```
 
-<img src="fig/section3-rendered-unnamed-chunk-20-1.png" style="display: block; margin: auto;" />
+<img src="fig/section3-rendered-unnamed-chunk-20-1.png" alt="" style="display: block; margin: auto;" />
 
 ``` r
 cluster_metadata <- data.frame(
@@ -649,7 +668,7 @@ sig.DEG.heatmap <- pheatmap::pheatmap(CD16.sig.avg.Expression.mat,
 sig.DEG.heatmap
 ```
 
-<img src="fig/section3-rendered-unnamed-chunk-20-2.png" style="display: block; margin: auto;" />
+<img src="fig/section3-rendered-unnamed-chunk-20-2.png" alt="" style="display: block; margin: auto;" />
 :::::
 
 :::::
