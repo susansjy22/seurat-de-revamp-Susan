@@ -571,21 +571,21 @@ ifnb.filtered <- RunUMAP(ifnb.filtered, reduction = "harmony", dims = 1:20, redu
 ```
 
 ``` output
-01:04:06 UMAP embedding parameters a = 0.9922 b = 1.112
-01:04:06 Read 13548 rows and found 20 numeric columns
-01:04:06 Using Annoy for neighbor search, n_neighbors = 30
-01:04:06 Building Annoy index with metric = cosine, n_trees = 50
+01:05:18 UMAP embedding parameters a = 0.9922 b = 1.112
+01:05:18 Read 13548 rows and found 20 numeric columns
+01:05:18 Using Annoy for neighbor search, n_neighbors = 30
+01:05:18 Building Annoy index with metric = cosine, n_trees = 50
 0%   10   20   30   40   50   60   70   80   90   100%
 [----|----|----|----|----|----|----|----|----|----|
 **************************************************|
-01:04:08 Writing NN index file to temp file /tmp/Rtmp5wEpuO/file1e661b7f8d2d
-01:04:08 Searching Annoy index using 1 thread, search_k = 3000
-01:04:12 Annoy recall = 100%
-01:04:12 Commencing smooth kNN distance calibration using 1 thread with target n_neighbors = 30
-01:04:13 Initializing from normalized Laplacian + noise (using RSpectra)
-01:04:14 Commencing optimization for 200 epochs, with 586822 positive edges
-01:04:14 Using rng type: pcg
-01:04:19 Optimization finished
+01:05:19 Writing NN index file to temp file /tmp/Rtmp9J75jS/file20ac52220ecd
+01:05:19 Searching Annoy index using 1 thread, search_k = 3000
+01:05:23 Annoy recall = 100%
+01:05:24 Commencing smooth kNN distance calibration using 1 thread with target n_neighbors = 30
+01:05:25 Initializing from normalized Laplacian + noise (using RSpectra)
+01:05:25 Commencing optimization for 200 epochs, with 586822 positive edges
+01:05:25 Using rng type: pcg
+01:05:30 Optimization finished
 ```
 
 ``` r
